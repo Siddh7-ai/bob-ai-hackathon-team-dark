@@ -12,5 +12,8 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build: {
+    sourcemap: false // Disables source map generation to prevent DevTools from revealing raw code files
   }
 })

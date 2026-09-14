@@ -41,5 +41,49 @@
     "dispatched_at": "2026-09-14 23:20:11",
     "dispatched_time": "11:20:11 PM",
     "status": "DISPATCHED"
+  },
+  {
+    "work_order_id": "WO-2026-AC1016",
+    "asset_id": "AC-1016",
+    "model_name": "Netra AEW&C",
+    "unit": "12th Air Surveillance Squadron",
+    "action_code": "INSPECT",
+    "action_label": "Non-Destructive Diagnostic Inspection",
+    "failing_component": "Turbine Blade Assembly",
+    "parts_reserved": [
+      "Standard Sensor Calibration Probe",
+      "Spectrometric Oil Sample Kit"
+    ],
+    "parts_reserved_count": 2,
+    "estimated_labor_hours": 3,
+    "urgency": "MEDIUM",
+    "assigned_crew": "Bravo Depot Repair Team - Hangar 2",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-14 23:34:23",
+    "dispatched_time": "11:34:23 PM",
+    "status": "DISPATCHED"
+  },
+  {
+    "work_order_id": "WO-2026-AC1013",
+    "asset_id": "AC-1013",
+    "model_name": "Light Specialist Vehicle (LSV) 4x4",
+    "unit": "3rd Armoured Brigade",
+    "action_code": "INSPECT",
+    "action_label": "Non-Destructive Diagnostic Inspection",
+    "failing_component": "Turbine Blade Assembly",
+    "parts_reserved": [
+      "Standard Sensor Calibration Probe",
+      "Spectrometric Oil Sample Kit"
+    ],
+    "parts_reserved_count": 2,
+    "estimated_labor_hours": 3,
+    "urgency": "MEDIUM",
+    "assigned_crew": "Bravo Depot Repair Team - Hangar 2",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-14 23:46:42",
+    "dispatched_time": "11:46:42 PM",
+    "status": "DISPATCHED"
   }
 ]
