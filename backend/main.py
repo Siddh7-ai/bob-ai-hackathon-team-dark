@@ -8,6 +8,7 @@ import os
 import sys
 import json
 from typing import Optional, List, Dict, Any
+from datetime import datetime
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -243,3 +244,159 @@ def regenerate_synthetic_data(req: RegenerateRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class WorkOrderDispatchRequest(BaseModel):
+    asset_id: str
+    action_code: Optional[str] = "EMERGENCY_REPLACE"
+    action_label: Optional[str] = None
+    failing_component: Optional[str] = None
+    parts_required: Optional[List[str]] = []
+    estimated_labor_hours: Optional[int] = 8
+    urgency: Optional[str] = "HIGH"
+    unit: Optional[str] = None
+    model_name: Optional[str] = None
+
+
+@app.get("/api/work-orders")
+def get_work_orders():
+    """Returns list of all dispatched work orders."""
+    file_path = os.path.join(DATA_PROCESSED_DIR, "work_orders.json")
+    orders = load_json(file_path, default=[])
+    return orders
+
+
+@app.post("/api/work-orders/dispatch")
+def dispatch_work_order(req: WorkOrderDispatchRequest):
+    """
+    Dispatches an official military maintenance work order.
+    Reserves spare parts from inventory, assigns maintenance crew, locks flight status to grounded,
+    and returns full work order confirmation receipt.
+    """
+    file_path = os.path.join(DATA_PROCESSED_DIR, "work_orders.json")
+    orders = load_json(file_path, default=[])
+
+    clean_id = req.asset_id.replace("-", "").upper()
+    wo_id = f"WO-2026-{clean_id}"
+
+    now_dt = datetime.now()
+    now_str = now_dt.strftime("%Y-%m-%d %H:%M:%S")
+    time_str = now_dt.strftime("%I:%M:%S %p")
+
+    crew_name = "Alpha Maintenance Squad - Bay 3" if req.urgency == "IMMEDIATE" else "Bravo Depot Repair Team - Hangar 2"
+
+    new_order = {
+        "work_order_id": wo_id,
+        "asset_id": req.asset_id,
+        "model_name": req.model_name or "Military Platform",
+        "unit": req.unit or "Base Squadron",
+        "action_code": req.action_code,
+        "action_label": req.action_label or "Depot Maintenance",
+        "failing_component": req.failing_component or "Subsystem",
+        "parts_reserved": req.parts_required or [],
+        "parts_reserved_count": len(req.parts_required or []),
+        "estimated_labor_hours": req.estimated_labor_hours or 8,
+        "urgency": req.urgency,
+        "assigned_crew": crew_name,
+        "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+        "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+        "dispatched_at": now_str,
+        "dispatched_time": time_str,
+        "status": "DISPATCHED"
+    }
+
+    # Upsert order in work_orders.json
+    orders = [o for o in orders if o.get("asset_id", "").upper() != req.asset_id.upper()]
+    orders.append(new_order)
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(orders, f, indent=2)
+
+    # Persist asset status grounding in fleet_status.json
+    fleet_path = os.path.join(DATA_PROCESSED_DIR, "fleet_status.json")
+    fleet = load_json(fleet_path, default=[])
+    for a in fleet:
+        if a.get("asset_id", "").upper() == req.asset_id.upper():
+            a["status"] = "Under-Maintenance"
+            a["flight_roster_status"] = "GROUNDED_FOR_MAINTENANCE"
+            a["active_work_order"] = wo_id
+            a["work_order_dispatched_at"] = now_str
+
+    with open(fleet_path, "w", encoding="utf-8") as f:
+        json.dump(fleet, f, indent=2)
+
+    return {
+        "status": "SUCCESS",
+        "message": f"Work Order {wo_id} successfully dispatched for asset {req.asset_id}.",
+        "work_order": new_order
+    }
+
+
+@app.get("/api/activity-log")
+def get_activity_log():
+    """
+    Returns unified maintenance audit trail combining real-time dispatched work orders
+    and historical depot service records across all assets.
+    """
+    fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
+    asset_map = {a["asset_id"].upper(): a for a in fleet}
+
+    wo_file = os.path.join(DATA_PROCESSED_DIR, "work_orders.json")
+    work_orders = load_json(wo_file, default=[])
+
+    activity_log = []
+
+    # 1. Real-time Dispatched Work Orders
+    for wo in work_orders:
+        aid = wo.get("asset_id", "").upper()
+        asset_info = asset_map.get(aid, {})
+        activity_log.append({
+            "id": wo.get("work_order_id"),
+            "timestamp": wo.get("dispatched_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+            "asset_id": wo.get("asset_id"),
+            "model_name": wo.get("model_name") or asset_info.get("model_name", "Military Platform"),
+            "category": asset_info.get("category", "Defense Platform"),
+            "unit": wo.get("unit") or asset_info.get("unit", "Base Squadron"),
+            "event_type": "WORK_ORDER_DISPATCH",
+            "action_title": wo.get("action_label", "Work Order Dispatched"),
+            "component": wo.get("failing_component", "Subsystem"),
+            "parts_reserved": wo.get("parts_reserved", []),
+            "assigned_crew": wo.get("assigned_crew", "Base Depot Crew"),
+            "estimated_hours": wo.get("estimated_labor_hours", 8),
+            "urgency": wo.get("urgency", "HIGH"),
+            "status": "DISPATCHED_TO_DEPOT",
+            "notes": f"Work Order {wo.get('work_order_id')} issued. Inventory reserved & flight roster locked."
+        })
+
+    # 2. Historical Service Logs
+    try:
+        ingestion = HUMSDataIngestion(data_dir=DATA_RAW_DIR)
+        _, _, services_df, _ = ingestion.load_data()
+        for _, srow in services_df.iterrows():
+            aid = str(srow["asset_id"]).upper()
+            asset_info = asset_map.get(aid, {})
+            activity_log.append({
+                "id": str(srow["record_id"]),
+                "timestamp": str(srow["service_date"]) + " 09:00:00",
+                "asset_id": str(srow["asset_id"]),
+                "model_name": asset_info.get("model_name", "Military Platform"),
+                "category": asset_info.get("category", "Defense Platform"),
+                "unit": asset_info.get("unit", "Base Squadron"),
+                "event_type": "DEPOT_SERVICE_RECORD",
+                "action_title": f"{srow['service_type']} Depot Servicing",
+                "component": str(srow["component_serviced"]),
+                "parts_reserved": ["Standard Calibration Kit"],
+                "assigned_crew": "Base Maintenance Squadron",
+                "estimated_hours": 6,
+                "urgency": "ROUTINE",
+                "status": "COMPLETED",
+                "notes": str(srow["technician_notes"])
+            })
+    except Exception as e:
+        print("Historical service load note:", e)
+
+    # Sort descending by timestamp
+    activity_log.sort(key=lambda x: x["timestamp"], reverse=True)
+    return activity_log
+
+

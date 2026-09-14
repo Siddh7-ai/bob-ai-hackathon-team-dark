@@ -38,3 +38,7 @@ frontend/dist/
 frontend/.oxlintrc.json
 .DS_Store
 *.log
+
+# Scratch
+scratch/
+

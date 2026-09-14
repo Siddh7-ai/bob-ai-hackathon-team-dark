@@ -1,9 +1,9 @@
 {
   "total_assets": 40,
-  "ready_count": 26,
-  "at_risk_count": 13,
-  "not_ready_count": 1,
-  "fleet_readiness_pct": 65.0,
-  "average_health_score": 91.0,
-  "critical_maintenance_actions": 14
+  "ready_count": 16,
+  "at_risk_count": 19,
+  "not_ready_count": 5,
+  "fleet_readiness_pct": 40.0,
+  "average_health_score": 85.8,
+  "critical_maintenance_actions": 24
 }

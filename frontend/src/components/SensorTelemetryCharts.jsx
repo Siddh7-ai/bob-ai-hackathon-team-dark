@@ -75,9 +75,9 @@ export default function SensorTelemetryCharts({ telemetryHistory }) {
                 contentStyle={{ backgroundColor: 'var(--bg-tooltip)', borderColor: 'var(--border-strong)', borderRadius: '8px', fontSize: '12px', color: 'var(--text-tooltip)' }}
                 labelStyle={{ color: 'var(--text-tooltip)' }}
               />
-              <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '12px' }} />
-              <ReferenceLine yAxisId="left" y={2.8} stroke="var(--status-at-risk-dot)" strokeDasharray="4 4" label={{ value: 'Safe Limit 2.8', fill: 'var(--status-at-risk-dot)', fontSize: 10 }} />
-              <ReferenceLine yAxisId="left" y={4.5} stroke="var(--status-not-ready-dot)" strokeDasharray="3 3" label={{ value: 'Critical 4.5', fill: 'var(--status-not-ready-dot)', fontSize: 10 }} />
+              <Legend verticalAlign="top" align="left" height={32} wrapperStyle={{ fontSize: '12px', paddingLeft: '40px' }} />
+              <ReferenceLine yAxisId="left" y={2.8} stroke="var(--status-at-risk-dot)" strokeDasharray="4 4" label={{ value: 'Safe Limit 2.8', position: 'insideTopRight', dy: 4, fill: 'var(--status-at-risk-dot)', fontSize: 11, fontWeight: 700 }} />
+              <ReferenceLine yAxisId="left" y={4.5} stroke="var(--status-not-ready-dot)" strokeDasharray="3 3" label={{ value: 'Critical 4.5', position: 'insideTopRight', dy: 4, fill: 'var(--status-not-ready-dot)', fontSize: 11, fontWeight: 700 }} />
               <Line yAxisId="left" type="monotone" dataKey="vibration_level" name="Vibration (mm/s)" stroke="var(--accent-iaf)" strokeWidth={2.2} dot={false} isAnimationActive={false} />
               <Line yAxisId="right" type="monotone" dataKey="oil_debris_count" name="Oil Debris (ppm)" stroke="var(--status-at-risk-dot)" strokeWidth={1.8} dot={false} isAnimationActive={false} />
             </LineChart>
@@ -93,9 +93,9 @@ export default function SensorTelemetryCharts({ telemetryHistory }) {
                 contentStyle={{ backgroundColor: 'var(--bg-tooltip)', borderColor: 'var(--border-strong)', borderRadius: '8px', fontSize: '12px', color: 'var(--text-tooltip)' }}
                 labelStyle={{ color: 'var(--text-tooltip)' }}
               />
-              <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '12px' }} />
-              <ReferenceLine yAxisId="left" y={710} stroke="var(--status-at-risk-dot)" strokeDasharray="4 4" label={{ value: 'Safe Temp 710°C', fill: 'var(--status-at-risk-dot)', fontSize: 10 }} />
-              <ReferenceLine yAxisId="right" y={12.0} stroke="var(--text-muted)" strokeDasharray="4 4" label={{ value: 'Min Pressure 12.0', fill: 'var(--text-muted)', fontSize: 10 }} />
+              <Legend verticalAlign="top" align="left" height={32} wrapperStyle={{ fontSize: '12px', paddingLeft: '40px' }} />
+              <ReferenceLine yAxisId="left" y={710} stroke="var(--status-at-risk-dot)" strokeDasharray="4 4" label={{ value: 'Safe Temp 710°C', position: 'insideTopRight', dy: 4, fill: 'var(--status-at-risk-dot)', fontSize: 11, fontWeight: 700 }} />
+              <ReferenceLine yAxisId="right" y={12.0} stroke="var(--text-muted)" strokeDasharray="4 4" label={{ value: 'Min Pressure 12.0', position: 'insideTopRight', dy: 14, fill: 'var(--text-muted)', fontSize: 11, fontWeight: 700 }} />
               <Line yAxisId="left" type="monotone" dataKey="engine_temp_c" name="Exhaust Temp (°C)" stroke="var(--status-not-ready-dot)" strokeWidth={2.2} dot={false} isAnimationActive={false} />
               <Line yAxisId="right" type="monotone" dataKey="pressure_ratio" name="Pressure Ratio" stroke="var(--accent-iaf)" strokeWidth={1.8} dot={false} isAnimationActive={false} />
             </LineChart>
@@ -111,8 +111,8 @@ export default function SensorTelemetryCharts({ telemetryHistory }) {
                 contentStyle={{ backgroundColor: 'var(--bg-tooltip)', borderColor: 'var(--border-strong)', borderRadius: '8px', fontSize: '12px', color: 'var(--text-tooltip)' }}
                 labelStyle={{ color: 'var(--text-tooltip)' }}
               />
-              <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '12px' }} />
-              <ReferenceLine yAxisId="left" y={2.35} stroke="var(--status-at-risk-dot)" strokeDasharray="4 4" label={{ value: 'Safe Fuel 2.35', fill: 'var(--status-at-risk-dot)', fontSize: 10 }} />
+              <Legend verticalAlign="top" align="left" height={32} wrapperStyle={{ fontSize: '12px', paddingLeft: '40px' }} />
+              <ReferenceLine yAxisId="left" y={2.35} stroke="var(--status-at-risk-dot)" strokeDasharray="4 4" label={{ value: 'Safe Fuel 2.35', position: 'insideTopRight', dy: 4, fill: 'var(--status-at-risk-dot)', fontSize: 11, fontWeight: 700 }} />
               <Line yAxisId="left" type="monotone" dataKey="fuel_flow_rate" name="Fuel Flow (kg/s)" stroke="var(--status-ready-dot)" strokeWidth={2.2} dot={false} isAnimationActive={false} />
               <Line yAxisId="right" type="monotone" dataKey="rotational_speed_rpm" name="Shaft Speed (RPM)" stroke="var(--accent-iaf)" strokeWidth={1.8} dot={false} isAnimationActive={false} />
             </LineChart>

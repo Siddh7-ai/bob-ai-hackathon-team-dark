@@ -103,6 +103,9 @@ class MaintenancePlanRanker:
             ranked_items.append({
                 "asset_id": item.get("asset_id"),
                 "asset_type": item.get("asset_type"),
+                "model_name": item.get("model_name"),
+                "category": item.get("category"),
+                "image_url": item.get("image_url"),
                 "unit": item.get("unit"),
                 "status": status,
                 "health_score": item.get("health_score"),

@@ -1,0 +1,45 @@
+[
+  {
+    "work_order_id": "WO-2026-AC1031",
+    "asset_id": "AC-1031",
+    "model_name": "Mi-17V-5 Tactical Transport",
+    "unit": "101st Tactical Fighter Squadron",
+    "action_code": "DEPOT_REPAIR",
+    "action_label": "Depot-Level Precision Repair & Recalibration",
+    "failing_component": "Turbine Blade Assembly",
+    "parts_reserved": [
+      "Turbine Blade Assembly Gasket Set",
+      "Borescope Inspection Kit"
+    ],
+    "parts_reserved_count": 2,
+    "estimated_labor_hours": 8,
+    "urgency": "HIGH",
+    "assigned_crew": "Bravo Depot Repair Team - Hangar 2",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-14 21:32:42",
+    "dispatched_time": "09:32:42 PM",
+    "status": "DISPATCHED"
+  },
+  {
+    "work_order_id": "WO-2026-AC1011",
+    "asset_id": "AC-1011",
+    "model_name": "Tatra Heavy Truck",
+    "unit": "82nd Airborne Combat Aviation",
+    "action_code": "EMERGENCY_OVERHAUL",
+    "action_label": "Emergency Component Replacement",
+    "failing_component": "Hydraulic Pump",
+    "parts_reserved": [
+      "Hydraulic Pump Kit"
+    ],
+    "parts_reserved_count": 1,
+    "estimated_labor_hours": 18,
+    "urgency": "IMMEDIATE",
+    "assigned_crew": "Alpha Maintenance Squad - Bay 3",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-14 23:20:11",
+    "dispatched_time": "11:20:11 PM",
+    "status": "DISPATCHED"
+  }
+]

@@ -4,6 +4,7 @@ import { Shield, RefreshCw, BarChart2, Sun, Moon } from './Icons';
 export default function Header({ 
   activeTab, 
   setActiveTab, 
+  unreadLogCount = 0,
   onOpenEvaluation, 
   onRegenerate, 
   isRegenerating,
@@ -24,16 +25,16 @@ export default function Header({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '16px'
+        gap: '16px',
+        overflowX: 'auto'
       }}>
         {/* Left: Branding & Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
           <img 
             src="/IAF_logo.png" 
             alt="Indian Air Force Logo" 
             style={{
-              height: '44px',
+              height: '38px',
               width: 'auto',
               objectFit: 'contain',
               filter: 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2))'
@@ -41,12 +42,12 @@ export default function Header({
           />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>
+              <span style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>
                 APEX HUMS
               </span>
               <span style={{
-                fontSize: '11px',
-                fontWeight: 600,
+                fontSize: '10px',
+                fontWeight: 700,
                 padding: '1px 6px',
                 borderRadius: '4px',
                 backgroundColor: 'var(--bg-subtle)',
@@ -56,7 +57,7 @@ export default function Header({
                 IAF Operational Spec
               </span>
             </div>
-            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '1px' }}>
               Health & Usage Monitoring System • NASA CMAPSS Analog
             </p>
           </div>
@@ -69,12 +70,14 @@ export default function Header({
           backgroundColor: 'var(--bg-subtle)',
           padding: '3px',
           borderRadius: '7px',
-          border: '1px solid var(--border-subtle)'
+          border: '1px solid var(--border-subtle)',
+          flexShrink: 0
         }}>
           {[
             { id: 'fleet', label: 'Fleet Telemetry', count: kpis?.total_assets },
             { id: 'maintenance', label: 'Prioritised Maintenance', count: kpis?.critical_maintenance_actions, alert: true },
-            { id: 'matrix', label: 'Squadron Readiness' }
+            { id: 'matrix', label: 'Squadron Readiness' },
+            { id: 'log', label: 'Activity Audit Log', unread: unreadLogCount }
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -87,17 +90,35 @@ export default function Header({
                   border: isActive ? '1px solid var(--border-default)' : '1px solid transparent',
                   padding: '6px 14px',
                   borderRadius: '5px',
-                  fontSize: '13px',
-                  fontWeight: isActive ? 600 : 500,
+                  fontSize: '12px',
+                  fontWeight: isActive ? 700 : 500,
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
+                  gap: '6px',
                   boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
-                  transition: 'all 0.15s ease'
+                  transition: 'all 0.15s ease',
+                  position: 'relative'
                 }}
               >
                 <span>{tab.label}</span>
+
+                {/* Unread Dispatch Notification Badge */}
+                {tab.unread > 0 && (
+                  <span className="mono-num" style={{
+                    fontSize: '10px',
+                    fontWeight: 800,
+                    padding: '1px 6px',
+                    borderRadius: '10px',
+                    backgroundColor: 'var(--status-not-ready-bg)',
+                    color: 'var(--status-not-ready-text)',
+                    border: '1px solid var(--status-not-ready-border)',
+                    boxShadow: '0 0 8px rgba(239, 68, 68, 0.4)'
+                  }}>
+                    {tab.unread} NEW
+                  </span>
+                )}
+
                 {tab.count !== undefined && (
                   <span className="mono-num" style={{
                     fontSize: '11px',
@@ -116,7 +137,7 @@ export default function Header({
         </nav>
 
         {/* Right: Theme Toggle & Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
           {/* Theme Toggle Button */}
           <button
             onClick={onToggleTheme}

@@ -20,98 +20,171 @@ from datetime import datetime, timedelta
 PLATFORM_TAXONOMY = {
     "Aircraft": {
         "Fighter Jet": {
-            "models": ["Su-30MKI Flanker-H", "Tejas Mk1A", "Rafale DH", "Mirage 2000"],
+            "models": {
+                "Su-30MKI Flanker-H": "/images/assets/fighter_jet.jpg",
+                "Tejas Mk1A": "/images/assets/tejas_mk1a.jpg",
+                "Rafale DH": "/images/assets/rafale_dh.jpg",
+                "Mirage 2000": "/images/assets/mirage_2000.jpg"
+            },
             "image": "/images/assets/fighter_jet.jpg",
             "criticality": 3.0
         },
         "Transport Plane": {
-            "models": ["C-130J Super Hercules", "An-32 Tactical Transport", "C-295MW"],
+            "models": {
+                "C-130J Super Hercules": "/images/assets/c130j_hercules.jpg",
+                "An-32 Tactical Transport": "/images/assets/an32_transport.jpg",
+                "C-295MW": "/images/assets/c295_transport.jpg"
+            },
             "image": "/images/assets/cargo_plane.jpg",
             "criticality": 2.5
         },
         "Surveillance Plane": {
-            "models": ["Netra AEW&C", "Phalcon AWACS", "Dornier 228 Maritime"],
+            "models": {
+                "Netra AEW&C": "/images/assets/surveillance_plane.jpg",
+                "Phalcon AWACS": "/images/assets/phalcon_awacs.jpg",
+                "Dornier 228 Maritime": "/images/assets/dornier_228.jpg"
+            },
             "image": "/images/assets/surveillance_plane.jpg",
             "criticality": 2.8
         },
         "Cargo Plane": {
-            "models": ["C-17 Globemaster III", "IL-76 Gajraj Heavy Lifter"],
+            "models": {
+                "C-17 Globemaster III": "/images/assets/cargo_plane.jpg",
+                "IL-76 Gajraj Heavy Lifter": "/images/assets/il76_gajraj.jpg"
+            },
             "image": "/images/assets/cargo_plane.jpg",
             "criticality": 2.6
         }
     },
     "Helicopters": {
         "Transport Helicopter": {
-            "models": ["Mi-17V-5 Tactical Transport", "Chinook CH-47F Heavy Lift", "ALH Dhruv Mk-III"],
+            "models": {
+                "Mi-17V-5 Tactical Transport": "/images/assets/transport_helicopter.jpg",
+                "Chinook CH-47F Heavy Lift": "/images/assets/chinook_ch47.jpg",
+                "ALH Dhruv Mk-III": "/images/assets/rescue_medical_helicopter.jpg"
+            },
             "image": "/images/assets/transport_helicopter.jpg",
             "criticality": 2.2
         },
         "Attack Helicopter": {
-            "models": ["AH-64E Apache Guardian", "LCH Prachand Combat Heli", "Rudra Armed Helicopter"],
+            "models": {
+                "AH-64E Apache Guardian": "/images/assets/attack_helicopter.jpg",
+                "LCH Prachand Combat Heli": "/images/assets/lch_prachand.jpg",
+                "Rudra Armed Helicopter": "/images/assets/rudra_armed_heli.jpg"
+            },
             "image": "/images/assets/attack_helicopter.jpg",
             "criticality": 2.8
         },
         "Rescue Helicopter": {
-            "models": ["Chetak Search & Rescue", "ALH Dhruv SAR Lifesaver"],
+            "models": {
+                "Chetak Search & Rescue": "/images/assets/chetak_sar.jpg",
+                "ALH Dhruv SAR Lifesaver": "/images/assets/rescue_medical_helicopter.jpg"
+            },
             "image": "/images/assets/rescue_medical_helicopter.jpg",
             "criticality": 2.0
         },
         "Medical Helicopter": {
-            "models": ["ALH Dhruv Air Ambulance", "Mi-17 MEDEVAC Unit"],
+            "models": {
+                "ALH Dhruv Air Ambulance": "/images/assets/rescue_medical_helicopter.jpg",
+                "Mi-17 MEDEVAC Unit": "/images/assets/transport_helicopter.jpg"
+            },
             "image": "/images/assets/rescue_medical_helicopter.jpg",
             "criticality": 2.2
         }
     },
     "Vehicles": {
         "Tank": {
-            "models": ["T-90 Bhishma Main Battle Tank", "Arjun Mk-1A Heavy Tank", "T-72 Ajeya Combat Tank"],
+            "models": {
+                "T-90 Bhishma Main Battle Tank": "/images/assets/tank_t90.jpg",
+                "Arjun Mk-1A Heavy Tank": "/images/assets/arjun_mk1a.jpg",
+                "T-72 Ajeya Combat Tank": "/images/assets/t72_ajeya.jpg"
+            },
             "image": "/images/assets/tank_t90.jpg",
             "criticality": 2.0
         },
         "Armored Vehicle": {
-            "models": ["BMP-2 Sarath Infantry Vehicle", "K9 Vajra-T Self-Propelled Howitzer", "WhAP 8x8 Armoured Carrier"],
+            "models": {
+                "BMP-2 Sarath Infantry Vehicle": "/images/assets/armored_vehicle.jpg",
+                "K9 Vajra-T Self-Propelled Howitzer": "/images/assets/k9_vajra.jpg",
+                "WhAP 8x8 Armoured Carrier": "/images/assets/whap_8x8.jpg"
+            },
             "image": "/images/assets/armored_vehicle.jpg",
             "criticality": 1.8
         },
         "Military Truck": {
-            "models": ["Ashok Leyland Stallion 4x4", "Tatra 8x8 Heavy Tactical Truck", "Swaraj Mazda Gun Towing Truck"],
+            "models": {
+                "Ashok Leyland Stallion 4x4": "/images/assets/military_truck.jpg",
+                "Tatra 8x8 Heavy Tactical Truck": "/images/assets/tatra_8x8.jpg",
+                "Swaraj Mazda Gun Towing Truck": "/images/assets/swaraj_mazda.jpg"
+            },
             "image": "/images/assets/military_truck.jpg",
             "criticality": 1.4
         },
         "Fuel Vehicle": {
-            "models": ["Tactical Airfield Fuel Bowser 6x6", "Heavy Refueler Tanker Bowser", "Jet-A1 Mobile Dispenser"],
+            "models": {
+                "Tactical Airfield Fuel Bowser 6x6": "/images/assets/fuel_vehicle.jpg",
+                "Heavy Refueler Tanker Bowser": "/images/assets/fuel_vehicle.jpg",
+                "Jet-A1 Mobile Dispenser": "/images/assets/jet_a1_dispenser.jpg"
+            },
             "image": "/images/assets/fuel_vehicle.jpg",
             "criticality": 1.6
         },
         "Transport Vehicle": {
-            "models": ["Light Specialist Vehicle (LSV) 4x4", "Troop Carrier Heavy Transport", "Airfield Equipment Tug"],
+            "models": {
+                "Light Specialist Vehicle (LSV) 4x4": "/images/assets/lsv_4x4.jpg",
+                "Troop Carrier Heavy Transport": "/images/assets/tatra_8x8.jpg",
+                "Airfield Equipment Tug": "/images/assets/airfield_tug.jpg"
+            },
             "image": "/images/assets/military_truck.jpg",
             "criticality": 1.3
         }
     }
 }
 
-# Flattened list for quick selection
+# Exact 1-to-1 Model-to-Photograph mapping for every military platform
+MODEL_IMAGES = {}
 FLATTENED_TYPES = []
+
 for cat, subdict in PLATFORM_TAXONOMY.items():
     for sub, data in subdict.items():
+        models_data = data["models"]
+        if isinstance(models_data, dict):
+            models_list = list(models_data.keys())
+            for m_name, m_img in models_data.items():
+                MODEL_IMAGES[m_name] = m_img
+        else:
+            models_list = list(models_data)
+            for m_name in models_list:
+                MODEL_IMAGES[m_name] = data.get("image", "/images/assets/fighter_jet.jpg")
+
         FLATTENED_TYPES.append({
             "category": cat,
             "asset_type": sub,
-            "models": data["models"],
+            "models": models_list,
             "image": data["image"],
             "criticality": data["criticality"]
         })
 
-# Units and Squadrons
-UNITS = [
-    "101st Tactical Fighter Squadron",
-    "4th Strike Fighter Wing",
-    "3rd Armoured Brigade",
-    "7th Mechanized Recon Cavalry",
-    "82nd Airborne Combat Aviation",
-    "10th Mountain Aviation Support"
-]
+
+# Realistic Military Squadron & Brigade Units mapped by Category
+CATEGORY_UNITS = {
+    "Aircraft": [
+        "101st Tactical Fighter Squadron",
+        "4th Strike Fighter Wing",
+        "22nd Heavy Cargo Airlift Wing",
+        "12th Air Surveillance Squadron"
+    ],
+    "Helicopters": [
+        "82nd Airborne Combat Aviation",
+        "10th Mountain Aviation Support",
+        "15th Tactical Helicopter Squadron"
+    ],
+    "Vehicles": [
+        "3rd Armoured Brigade",
+        "7th Mechanized Recon Cavalry",
+        "50th Tactical Logistics Regiment"
+    ]
+}
 
 COMPONENTS = [
     "Main Bearing",
@@ -161,9 +234,10 @@ def generate_synthetic_hums_data(
         category = type_info["category"]
         asset_type = type_info["asset_type"]
         model_name = type_info["models"][(i - 1) % len(type_info["models"])]
-        image_url = type_info["image"]
+        image_url = MODEL_IMAGES.get(model_name, type_info["image"])
         criticality = type_info["criticality"]
-        unit = UNITS[(i - 1) % len(UNITS)]
+        unit_options = CATEGORY_UNITS.get(category, CATEGORY_UNITS["Aircraft"])
+        unit = unit_options[(i - 1) % len(unit_options)]
         commission_days_ago = random.randint(400, 1200)
         commission_date = (base_date - timedelta(days=commission_days_ago)).strftime("%Y-%m-%d")
         

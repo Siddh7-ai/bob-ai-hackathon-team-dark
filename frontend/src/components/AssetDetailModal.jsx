@@ -3,23 +3,29 @@ import { X, FileText, Cpu } from './Icons';
 import AssetIcon from './AssetIcon';
 import SensorTelemetryCharts from './SensorTelemetryCharts';
 import { getAssetRealImage } from '../utils/assetImages';
+import FighterJetLoader from './FighterJetLoader';
 
 export default function AssetDetailModal({ assetId, onClose }) {
   const [detailData, setDetailData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [workOrder, setWorkOrder] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (assetId) {
       document.body.style.overflow = 'hidden';
       setLoading(true);
-      fetch(`/api/assets/${assetId}`)
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          setDetailData(data);
+      
+      Promise.all([
+        fetch(`/api/assets/${assetId}`).then(res => res.ok ? res.json() : null),
+        fetch('/api/work-orders').then(res => res.ok ? res.json() : [])
+      ])
+        .then(([data, orders]) => {
+          if (data) setDetailData(data);
+          if (Array.isArray(orders)) {
+            const match = orders.find(o => o.asset_id.toUpperCase() === assetId.toUpperCase());
+            setWorkOrder(match || null);
+          }
           setLoading(false);
         })
         .catch(err => {
@@ -82,6 +88,8 @@ export default function AssetDetailModal({ assetId, onClose }) {
           maxWidth: '1080px',
           maxHeight: '90vh',
           overflowY: 'auto',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
           overscrollBehavior: 'contain',
           padding: '28px',
           backgroundColor: 'var(--bg-surface)',
@@ -144,8 +152,8 @@ export default function AssetDetailModal({ assetId, onClose }) {
         </div>
 
         {loading && (
-          <div style={{ padding: '60px', textAlign: 'center', color: 'var(--text-muted)' }}>
-            <p className="mono-num">Interrogating HUMS telemetry bus for {assetId}...</p>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '60px 0', minHeight: '180px' }}>
+            <FighterJetLoader variant="inline" size="sm" />
           </div>
         )}
 
@@ -157,6 +165,47 @@ export default function AssetDetailModal({ assetId, onClose }) {
 
         {detailData && (
           <div>
+            {/* Active Dispatched Work Order Banner */}
+            {workOrder && (
+              <div style={{
+                backgroundColor: 'var(--status-ready-bg)',
+                border: '1px solid var(--status-ready-border)',
+                borderRadius: '8px',
+                padding: '14px 18px',
+                marginBottom: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '10px'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span className="mono-num" style={{
+                    fontSize: '12px',
+                    fontWeight: 800,
+                    padding: '3px 8px',
+                    borderRadius: '4px',
+                    backgroundColor: 'var(--status-ready-dot)',
+                    color: '#FFFFFF'
+                  }}>
+                    {workOrder.work_order_id}
+                  </span>
+                  <div>
+                    <div style={{ fontSize: '13px', fontWeight: 800, color: 'var(--status-ready-text)' }}>
+                      OFFICIAL WORK ORDER DISPATCHED: {workOrder.action_label}
+                    </div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                      Assigned Crew: <strong>{workOrder.assigned_crew}</strong> ({workOrder.estimated_labor_hours}h) · Flight Roster Status: <strong style={{ color: 'var(--status-not-ready-text)' }}>{workOrder.flight_roster_status}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mono-num" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                  Dispatched {workOrder.dispatched_time}
+                </div>
+              </div>
+            )}
+
             {/* Quick Metrics Bar */}
             <div style={{
               display: 'grid',

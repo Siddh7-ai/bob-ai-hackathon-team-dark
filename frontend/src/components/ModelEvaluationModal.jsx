@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Award, ShieldCheck } from './Icons';
+import FighterJetLoader from './FighterJetLoader';
 
 export default function ModelEvaluationModal({ isOpen, onClose }) {
   const [evalData, setEvalData] = useState(null);
@@ -37,6 +38,8 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
           maxWidth: '900px',
           maxHeight: '88vh',
           overflowY: 'auto',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
           overscrollBehavior: 'contain',
           padding: '28px',
           backgroundColor: 'var(--bg-surface)',
@@ -80,7 +83,11 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        {loading && <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>Loading model telemetry evaluation...</div>}
+        {loading && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '60px 0', minHeight: '180px' }}>
+            <FighterJetLoader variant="inline" size="sm" />
+          </div>
+        )}
 
         {evalData && (
           <div>

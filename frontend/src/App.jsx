@@ -4,8 +4,10 @@ import FleetKpiOverview from './components/FleetKpiOverview';
 import AssetList from './components/AssetList';
 import MaintenancePlanTable from './components/MaintenancePlanTable';
 import SquadronMatrix from './components/SquadronMatrix';
+import ActivityLog from './components/ActivityLog';
 import AssetDetailModal from './components/AssetDetailModal';
 import ModelEvaluationModal from './components/ModelEvaluationModal';
+import FighterJetLoader from './components/FighterJetLoader';
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -19,6 +21,20 @@ export default function App() {
   const [isEvalOpen, setIsEvalOpen] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadProgress, setLoadProgress] = useState(15);
+  const [unreadLogCount, setUnreadLogCount] = useState(0);
+
+  const handleTabSelect = (tabId) => {
+    setActiveTab(tabId);
+    if (tabId === 'log') {
+      setUnreadLogCount(0);
+    }
+  };
+
+  const handleOrderDispatched = () => {
+    setUnreadLogCount(prev => prev + 1);
+    fetchDashboardData();
+  };
 
   // Sync theme to document element
   useEffect(() => {
@@ -32,12 +48,23 @@ export default function App() {
 
   const fetchDashboardData = async () => {
     try {
+      setLoadProgress(20);
       const t = Date.now();
-      const [kpiRes, assetsRes, planRes] = await Promise.all([
-        fetch(`/api/fleet/summary?_t=${t}`),
-        fetch(`/api/assets?_t=${t}`),
-        fetch(`/api/maintenance/plan?_t=${t}`)
-      ]);
+      
+      const kpiPromise = fetch(`/api/fleet/summary?_t=${t}`).then(res => {
+        setLoadProgress(prev => Math.max(prev, 55));
+        return res;
+      });
+      const assetsPromise = fetch(`/api/assets?_t=${t}`).then(res => {
+        setLoadProgress(prev => Math.max(prev, 80));
+        return res;
+      });
+      const planPromise = fetch(`/api/maintenance/plan?_t=${t}`).then(res => {
+        setLoadProgress(prev => Math.max(prev, 95));
+        return res;
+      });
+
+      const [kpiRes, assetsRes, planRes] = await Promise.all([kpiPromise, assetsPromise, planPromise]);
 
       if (kpiRes.ok && assetsRes.ok && planRes.ok) {
         const kpiData = await kpiRes.json();
@@ -47,11 +74,14 @@ export default function App() {
         setKpis(kpiData);
         setAssets(assetsData.assets || []);
         setMaintenancePlan(planData || []);
+        setLoadProgress(100);
       }
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 350);
     }
   };
 
@@ -91,12 +121,36 @@ export default function App() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <FighterJetLoader
+        variant="fullscreen"
+        progress={loadProgress}
+        statusText="LOADING..."
+      />
+    );
+  }
+
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      {/* Ongoing Transparent Working Loader Overlay when Regenerating Telemetry */}
+      {isRegenerating && (
+        <div style={{
+          position: 'fixed',
+          top: '75px',
+          right: '32px',
+          zIndex: 9999,
+          pointerEvents: 'none'
+        }}>
+          <FighterJetLoader variant="inline" size="sm" />
+        </div>
+      )}
+
       {/* Top Header */}
       <Header
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleTabSelect}
+        unreadLogCount={unreadLogCount}
         onOpenEvaluation={() => setIsEvalOpen(true)}
         onRegenerate={handleRegenerate}
         isRegenerating={isRegenerating}
@@ -111,23 +165,18 @@ export default function App() {
         <FleetKpiOverview kpis={kpis} />
 
         {/* View Switcher */}
-        {isLoading ? (
-          <div style={{ textAlign: 'center', padding: '80px', color: 'var(--text-muted)' }}>
-            <p className="mono-text" style={{ fontSize: '15px' }}>Initializing HUMS Mission Diagnostics Bus...</p>
-          </div>
-        ) : (
-          <>
-            {activeTab === 'fleet' && (
-              <AssetList
-                assets={assets}
-                onSelectAsset={(id) => setSelectedAssetId(id)}
-              />
-            )}
+        {activeTab === 'fleet' && (
+          <AssetList
+            assets={assets}
+            onSelectAsset={(id) => setSelectedAssetId(id)}
+          />
+        )}
 
             {activeTab === 'maintenance' && (
               <MaintenancePlanTable
                 plan={maintenancePlan}
                 onSelectAsset={(id) => setSelectedAssetId(id)}
+                onOrderDispatched={handleOrderDispatched}
               />
             )}
 
@@ -137,8 +186,12 @@ export default function App() {
                 onSelectAsset={(id) => setSelectedAssetId(id)}
               />
             )}
-          </>
-        )}
+
+            {activeTab === 'log' && (
+              <ActivityLog
+                onSelectAsset={(id) => setSelectedAssetId(id)}
+              />
+            )}
       </main>
 
       {/* Detail Drilldown Modal */}

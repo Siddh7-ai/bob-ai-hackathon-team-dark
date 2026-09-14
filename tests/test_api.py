@@ -91,3 +91,35 @@ def test_explanation_endpoint():
     assert "executive_summary" in data
     assert "action_recommendation" in data
     assert "suspected_subsystem" in data
+
+
+def test_work_order_dispatch_and_activity_log():
+    dispatch_resp = client.post(
+        "/api/work-orders/dispatch",
+        json={
+            "asset_id": "AC-1011",
+            "action_code": "EMERGENCY_OVERHAUL",
+            "action_label": "Emergency Component Replacement",
+            "failing_component": "Hydraulic Pump",
+            "parts_required": ["Hydraulic Pump Kit"],
+            "estimated_labor_hours": 18,
+            "urgency": "IMMEDIATE",
+            "unit": "82nd Airborne Combat Aviation",
+            "model_name": "Tatra Heavy Truck"
+        }
+    )
+    assert dispatch_resp.status_code == 200
+    res_data = dispatch_resp.json()
+    assert res_data["status"] == "SUCCESS"
+    assert "work_order" in res_data
+    assert res_data["work_order"]["work_order_id"] == "WO-2026-AC1011"
+
+    # Verify order is returned in /api/activity-log
+    log_resp = client.get("/api/activity-log")
+    assert log_resp.status_code == 200
+    logs = log_resp.json()
+    dispatched_items = [l for l in logs if l.get("id") == "WO-2026-AC1011"]
+    assert len(dispatched_items) == 1
+    assert dispatched_items[0]["event_type"] == "WORK_ORDER_DISPATCH"
+    assert dispatched_items[0]["asset_id"] == "AC-1011"
+
