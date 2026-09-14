@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Plane, Shield, Truck, AlertCircle, Clock, ChevronRight, Activity } from './Icons';
+import { Search, ChevronRight } from './Icons';
+import AssetIcon from './AssetIcon';
+import Tooltip, { InfoIcon } from './Tooltip';
 
 export default function AssetList({ assets, onSelectAsset }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,6 +21,7 @@ export default function AssetList({ assets, onSelectAsset }) {
       const matchSearch = (
         item.asset_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.asset_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (item.model_name && item.model_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
         item.unit.toLowerCase().includes(searchTerm.toLowerCase())
       );
       const matchStatus = statusFilter === 'ALL' || item.status.toUpperCase() === statusFilter.toUpperCase();
@@ -29,31 +32,62 @@ export default function AssetList({ assets, onSelectAsset }) {
     });
   }, [assets, searchTerm, statusFilter, typeFilter, unitFilter]);
 
-  const getPlatformIcon = (type) => {
-    if (type.includes('Jet')) return <Plane size={18} color="var(--accent-cyan)" />;
-    if (type.includes('Helicopter')) return <Activity size={18} color="#38BDF8" />;
-    return <Truck size={18} color="#A78BFA" />;
+  const getStatusBadge = (status) => {
+    let bg, text, border, label;
+    if (status === 'Ready') {
+      bg = 'var(--status-ready-bg)';
+      text = 'var(--status-ready-text)';
+      border = 'var(--status-ready-border)';
+      label = 'READY';
+    } else if (status === 'At-Risk') {
+      bg = 'var(--status-at-risk-bg)';
+      text = 'var(--status-at-risk-text)';
+      border = 'var(--status-at-risk-border)';
+      label = 'AT-RISK';
+    } else {
+      bg = 'var(--status-not-ready-bg)';
+      text = 'var(--status-not-ready-text)';
+      border = 'var(--status-not-ready-border)';
+      label = 'NOT-READY';
+    }
+
+    return (
+      <span style={{
+        fontSize: '11px',
+        fontWeight: 600,
+        letterSpacing: '0.04em',
+        padding: '3px 10px',
+        borderRadius: '5px',
+        backgroundColor: bg,
+        color: text,
+        border: `1px solid ${border}`
+      }}>
+        {label}
+      </span>
+    );
   };
 
-  const getStatusBadge = (status) => {
-    if (status === 'Ready') {
-      return <span className="mono-text badge-ready" style={{ fontSize: '11px', padding: '3px 10px', borderRadius: '6px', fontWeight: 600 }}>READY</span>;
-    }
-    if (status === 'At-Risk') {
-      return <span className="mono-text badge-at-risk" style={{ fontSize: '11px', padding: '3px 10px', borderRadius: '6px', fontWeight: 600 }}>AT-RISK</span>;
-    }
-    return <span className="mono-text badge-not-ready" style={{ fontSize: '11px', padding: '3px 10px', borderRadius: '6px', fontWeight: 700 }}>NOT-READY</span>;
+  const getCriticalityLabel = (crit) => {
+    if (crit >= 3.0) return 'High';
+    if (crit >= 2.0) return 'Medium';
+    return 'Low';
+  };
+
+  const getHealthBarColor = (status) => {
+    if (status === 'Ready') return 'var(--status-ready-dot)';
+    if (status === 'At-Risk') return 'var(--status-at-risk-dot)';
+    return 'var(--status-not-ready-dot)';
   };
 
   return (
     <div>
-      {/* Controls Bar */}
-      <div className="glass-panel" style={{
-        padding: '16px 20px',
+      {/* Controls / Filter Bar */}
+      <div className="clean-panel" style={{
+        padding: '14px 18px',
         marginBottom: '20px',
         display: 'flex',
         flexWrap: 'wrap',
-        gap: '16px',
+        gap: '14px',
         alignItems: 'center',
         justifyContent: 'space-between'
       }}>
@@ -63,59 +97,69 @@ export default function AssetList({ assets, onSelectAsset }) {
           flex: '1 1 240px',
           minWidth: '220px'
         }}>
-          <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+          <Search size={15} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
-            placeholder="Search Asset ID, Platform or Unit..."
+            placeholder="Search by Asset ID, Model or Squadron..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               width: '100%',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid var(--border-subtle)',
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border-default)',
               color: 'var(--text-primary)',
-              borderRadius: '8px',
-              padding: '8px 12px 8px 36px',
+              borderRadius: '6px',
+              padding: '7px 12px 7px 34px',
               fontSize: '13px',
-              outline: 'none',
-              fontFamily: 'inherit'
+              outline: 'none'
             }}
           />
         </div>
 
         {/* Status Filter Tabs */}
-        <div style={{ display: 'flex', gap: '6px', background: 'rgba(255, 255, 255, 0.03)', padding: '4px', borderRadius: '8px' }}>
-          {['ALL', 'READY', 'AT-RISK', 'NOT-READY'].map((st) => (
-            <button
-              key={st}
-              onClick={() => setStatusFilter(st)}
-              style={{
-                background: statusFilter === st ? 'rgba(6, 182, 212, 0.2)' : 'transparent',
-                color: statusFilter === st ? '#FFFFFF' : 'var(--text-secondary)',
-                border: statusFilter === st ? '1px solid var(--accent-cyan)' : '1px solid transparent',
-                borderRadius: '6px',
-                padding: '6px 12px',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              {st}
-            </button>
-          ))}
+        <div style={{
+          display: 'flex',
+          gap: '3px',
+          backgroundColor: 'var(--bg-subtle)',
+          padding: '3px',
+          borderRadius: '7px',
+          border: '1px solid var(--border-subtle)'
+        }}>
+          {['ALL', 'READY', 'AT-RISK', 'NOT-READY'].map((st) => {
+            const isSelected = statusFilter === st;
+            return (
+              <button
+                key={st}
+                onClick={() => setStatusFilter(st)}
+                style={{
+                  backgroundColor: isSelected ? 'var(--bg-surface)' : 'transparent',
+                  color: isSelected ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: isSelected ? '1px solid var(--border-default)' : '1px solid transparent',
+                  borderRadius: '5px',
+                  padding: '5px 12px',
+                  fontSize: '12px',
+                  fontWeight: isSelected ? 600 : 500,
+                  cursor: 'pointer',
+                  boxShadow: isSelected ? 'var(--shadow-sm)' : 'none',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                {st}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Platform Filter */}
+        {/* Dropdown Selects */}
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
             style={{
-              background: 'rgba(15, 23, 42, 0.9)',
-              border: '1px solid var(--border-subtle)',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-default)',
               color: 'var(--text-primary)',
-              borderRadius: '8px',
+              borderRadius: '6px',
               padding: '6px 12px',
               fontSize: '12px',
               outline: 'none',
@@ -128,15 +172,14 @@ export default function AssetList({ assets, onSelectAsset }) {
             <option value="Armoured Vehicle">Armoured Vehicle</option>
           </select>
 
-          {/* Squadron Filter */}
           <select
             value={unitFilter}
             onChange={(e) => setUnitFilter(e.target.value)}
             style={{
-              background: 'rgba(15, 23, 42, 0.9)',
-              border: '1px solid var(--border-subtle)',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-default)',
               color: 'var(--text-primary)',
-              borderRadius: '8px',
+              borderRadius: '6px',
               padding: '6px 12px',
               fontSize: '12px',
               outline: 'none',
@@ -144,7 +187,7 @@ export default function AssetList({ assets, onSelectAsset }) {
             }}
           >
             {units.map(u => (
-              <option key={u} value={u}>{u === 'ALL' ? 'All Squadrons / Units' : u}</option>
+              <option key={u} value={u}>{u === 'ALL' ? 'All Squadrons' : u}</option>
             ))}
           </select>
         </div>
@@ -153,136 +196,223 @@ export default function AssetList({ assets, onSelectAsset }) {
       {/* Assets Grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-        gap: '16px'
+        gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+        gap: '18px'
       }}>
         {filteredAssets.map((asset) => {
-          const isGrounded = asset.status === 'Not-Ready';
-          const isAtRisk = asset.status === 'At-Risk';
           const health = asset.health_score || 100;
           const sensors = asset.latest_sensors || {};
           const vibBreach = sensors.vibration_level > 2.8;
           const tempBreach = sensors.engine_temp_c > 710;
           const debrisBreach = sensors.oil_debris_count > 18;
+          const daysToFailure = Math.round(asset.estimated_days_to_failure || 0);
+
+          // Plain-English 1-line status summary
+          let statusSummary = '';
+          if (asset.status === 'Ready') {
+            statusSummary = 'All telemetry within safe operating limits • Cleared for flight';
+          } else if (asset.status === 'At-Risk') {
+            statusSummary = `${daysToFailure} days to failure • Early wear in ${asset.predicted_failing_component || 'subsystem'}`;
+          } else {
+            statusSummary = `Critical: ~${daysToFailure} days to failure • Urgent repair: ${asset.predicted_failing_component || 'subsystem'}`;
+          }
 
           return (
             <div
               key={asset.asset_id}
-              className="glass-panel"
+              className="clean-panel"
               onClick={() => onSelectAsset(asset.asset_id)}
               style={{
                 padding: '20px',
                 cursor: 'pointer',
-                borderColor: isGrounded ? 'rgba(244, 63, 94, 0.4)' : (isAtRisk ? 'rgba(245, 158, 11, 0.3)' : 'var(--border-subtle)'),
-                position: 'relative',
-                overflow: 'hidden'
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                position: 'relative'
               }}
             >
-              {/* Header: ID, Platform, Status */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div>
+                {/* 1. HEADER ROW: Silhouette icon (left) + Status badge (right) */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                   <div style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '48px',
+                    height: '48px',
                     borderRadius: '8px',
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    backgroundColor: 'var(--bg-subtle)',
+                    border: '1px solid var(--border-default)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid var(--border-subtle)'
+                    color: 'var(--text-primary)',
+                    flexShrink: 0
                   }}>
-                    {getPlatformIcon(asset.asset_type)}
+                    <AssetIcon type={asset.asset_type} imageUrl={asset.image_url} size={42} />
                   </div>
+
                   <div>
-                    <span className="mono-text" style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>
-                      {asset.asset_id}
-                    </span>
-                    <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                      {asset.asset_type}
-                    </p>
+                    {getStatusBadge(asset.status)}
                   </div>
                 </div>
-                {getStatusBadge(asset.status)}
-              </div>
 
-              {/* Squadron & Mission Criticality */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--text-muted)', marginBottom: '14px' }}>
-                <span style={{ maxWidth: '190px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {asset.unit}
-                </span>
-                <span className="mono-text" style={{
-                  color: asset.mission_criticality >= 3.0 ? 'var(--status-not-ready)' : (asset.mission_criticality >= 2.0 ? 'var(--status-at-risk)' : 'var(--text-secondary)')
+                {/* 2. IDENTITY BLOCK (directly below header) */}
+                <div style={{ marginBottom: '14px' }}>
+                  {/* Asset ID: bold, largest text */}
+                  <div className="mono-num" style={{ fontSize: '20px', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+                    {asset.asset_id}
+                  </div>
+                  {/* Platform type + specific model name on one line */}
+                  <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', marginTop: '2px' }}>
+                    {asset.asset_type} <span style={{ opacity: 0.4 }}>·</span> <span style={{ color: 'var(--text-primary)' }}>{asset.model_name || 'Standard Mk-1'}</span>
+                  </div>
+                  {/* Squadron/unit name, smaller, muted grey */}
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    {asset.unit}
+                  </div>
+                </div>
+
+                {/* 3. HEALTH BLOCK */}
+                <div style={{
+                  padding: '12px 14px',
+                  backgroundColor: 'var(--bg-subtle)',
+                  borderRadius: '6px',
+                  marginBottom: '14px',
+                  border: '1px solid var(--border-subtle)'
                 }}>
-                  CRIT {asset.mission_criticality}x
-                </span>
-              </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                        Health Index
+                      </span>
+                      <Tooltip text="Composite operational health score based on sensor baseline deviation.">
+                        <InfoIcon />
+                      </Tooltip>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                        Criticality: <strong style={{ color: 'var(--text-secondary)' }}>{getCriticalityLabel(asset.mission_criticality)}</strong>
+                      </span>
+                    </div>
+                    <div className="mono-num" style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      {health}%
+                    </div>
+                  </div>
 
-              {/* Health Score Bar */}
-              <div style={{ marginBottom: '14px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Health Integrity</span>
-                  <span className="mono-text" style={{
-                    fontWeight: 700,
-                    color: health >= 80 ? 'var(--status-ready)' : (health >= 50 ? 'var(--status-at-risk)' : 'var(--status-not-ready)')
-                  }}>
-                    {health}%
-                  </span>
+                  {/* Progress bar in muted status color only (max saturation #4ADE80 dark / #166534 light) */}
+                  <div style={{ width: '100%', height: '5px', backgroundColor: 'var(--border-default)', borderRadius: '3px', overflow: 'hidden' }}>
+                    <div style={{
+                      width: `${health}%`,
+                      height: '100%',
+                      backgroundColor: getHealthBarColor(asset.status),
+                      transition: 'width 0.3s ease'
+                    }} />
+                  </div>
                 </div>
-                <div style={{ width: '100%', height: '5px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '3px', overflow: 'hidden' }}>
+
+                {/* 4. SENSOR ROW — three equal-width mini-cards: Vibration / Exhaust Temp / Oil Debris */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: '8px',
+                  marginBottom: '14px'
+                }}>
+                  {/* Vibration */}
                   <div style={{
-                    width: `${health}%`,
-                    height: '100%',
-                    background: health >= 80 ? 'var(--status-ready)' : (health >= 50 ? 'var(--status-at-risk)' : 'var(--status-not-ready)')
-                  }} />
+                    padding: '8px 10px',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: '6px'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Vibration</span>
+                      {vibBreach && (
+                        <span style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          backgroundColor: 'var(--status-not-ready-dot)'
+                        }} title="Above safe 2.8 mm/s envelope" />
+                      )}
+                    </div>
+                    <div className="mono-num" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginTop: '2px' }}>
+                      {sensors.vibration_level?.toFixed(2)} <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>mm/s</span>
+                    </div>
+                  </div>
+
+                  {/* Exhaust Temp */}
+                  <div style={{
+                    padding: '8px 10px',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: '6px'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Exhaust Temp</span>
+                      {tempBreach && (
+                        <span style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          backgroundColor: 'var(--status-not-ready-dot)'
+                        }} title="Above safe 710°C envelope" />
+                      )}
+                    </div>
+                    <div className="mono-num" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginTop: '2px' }}>
+                      {sensors.engine_temp_c?.toFixed(0)} <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>°C</span>
+                    </div>
+                  </div>
+
+                  {/* Oil Debris */}
+                  <div style={{
+                    padding: '8px 10px',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: '6px'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Oil Debris</span>
+                      {debrisBreach && (
+                        <span style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          backgroundColor: 'var(--status-not-ready-dot)'
+                        }} title="Above safe 18 ppm envelope" />
+                      )}
+                    </div>
+                    <div className="mono-num" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginTop: '2px' }}>
+                      {sensors.oil_debris_count?.toFixed(0)} <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>ppm</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Live Sensor Mini-Grid */}
+              {/* 5. FOOTER ROW: One-line plain summary (left) + "View Telemetry →" link (right) */}
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '8px',
-                padding: '10px',
-                background: 'rgba(0, 0, 0, 0.25)',
-                borderRadius: '8px',
-                marginBottom: '14px'
+                paddingTop: '12px',
+                borderTop: '1px solid var(--border-default)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '12px'
               }}>
-                <div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Vibration</div>
-                  <div className="mono-text" style={{ fontSize: '12px', fontWeight: 600, color: vibBreach ? 'var(--status-not-ready)' : 'var(--text-primary)' }}>
-                    {sensors.vibration_level?.toFixed(2)} mm/s
-                  </div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Temp</div>
-                  <div className="mono-text" style={{ fontSize: '12px', fontWeight: 600, color: tempBreach ? 'var(--status-not-ready)' : 'var(--text-primary)' }}>
-                    {sensors.engine_temp_c?.toFixed(0)} °C
-                  </div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Oil Debris</div>
-                  <div className="mono-text" style={{ fontSize: '12px', fontWeight: 600, color: debrisBreach ? 'var(--status-not-ready)' : 'var(--text-primary)' }}>
-                    {sensors.oil_debris_count?.toFixed(0)} ppm
-                  </div>
-                </div>
-              </div>
-
-              {/* RUL & Action Footer */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '10px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Clock size={14} color="var(--accent-cyan)" />
-                  <div>
-                    <span className="mono-text" style={{ fontSize: '13px', fontWeight: 700, color: 'var(--accent-cyan)' }}>
-                      {Math.round(asset.predicted_rul_cycles)} cyc
-                    </span>
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginLeft: '4px' }}>
-                      (~{Math.round(asset.estimated_days_to_failure)}d)
-                    </span>
-                  </div>
+                <div style={{
+                  fontSize: '12px',
+                  color: asset.status === 'Not-Ready' ? 'var(--status-not-ready-text)' : (asset.status === 'At-Risk' ? 'var(--status-at-risk-text)' : 'var(--text-secondary)'),
+                  fontWeight: asset.status === 'Ready' ? 400 : 500,
+                  lineHeight: '1.4',
+                  flex: 1
+                }}>
+                  {statusSummary}
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--accent-cyan)', fontWeight: 600 }}>
-                  <span>Drilldown</span>
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  color: 'var(--accent-iaf)',
+                  whiteSpace: 'nowrap'
+                }}>
+                  <span>View Telemetry</span>
                   <ChevronRight size={14} />
                 </div>
               </div>
@@ -290,14 +420,6 @@ export default function AssetList({ assets, onSelectAsset }) {
           );
         })}
       </div>
-
-      {filteredAssets.length === 0 && (
-        <div className="glass-panel" style={{ padding: '48px', textAlign: 'center' }}>
-          <AlertCircle size={32} color="var(--text-muted)" style={{ margin: '0 auto 12px' }} />
-          <p style={{ fontSize: '16px', fontWeight: 600 }}>No matching assets found</p>
-          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Try adjusting your search query or status filter.</p>
-        </div>
-      )}
     </div>
   );
 }

@@ -51,6 +51,18 @@ CRITICALITY_MAP = {
     "Armoured Vehicle": 1.6        # Standard tactical criticality
 }
 
+ICON_MAP = {
+    "Fighter Jet Engine": "/icons/fighter-jet.svg",
+    "Transport Helicopter": "/icons/helicopter.svg",
+    "Armoured Vehicle": "/icons/armoured-vehicle.svg"
+}
+
+MODEL_NAMES = {
+    "Fighter Jet Engine": ["Su-30MKI", "Tejas Mk1A", "Mirage 2000", "Rafale DH"],
+    "Transport Helicopter": ["Mi-17V-5", "Chinook CH-47F", "ALH Dhruv", "AH-64E Apache"],
+    "Armoured Vehicle": ["T-90 Bhishma", "BMP-2 Sarath", "K9 Vajra-T", "Arjun Mk-1A"]
+}
+
 
 def generate_synthetic_hums_data(
     num_assets: int = 40,
@@ -113,9 +125,12 @@ def generate_synthetic_hums_data(
         last_service_cycle = max(10, max_simulated_cycles - random.randint(20, 70))
         last_service_date = (base_date - timedelta(days=int((max_simulated_cycles - last_service_cycle) * 1.5))).strftime("%Y-%m-%d")
 
+        model_name = random.choice(MODEL_NAMES.get(asset_type, ["Standard"]))
         assets.append({
             "asset_id": asset_id,
             "asset_type": asset_type,
+            "model_name": model_name,
+            "image_url": ICON_MAP.get(asset_type, "/icons/fighter-jet.svg"),
             "unit": unit,
             "mission_criticality": CRITICALITY_MAP[asset_type],
             "commission_date": commission_date,

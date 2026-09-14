@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" width="100%" height="100%">
+  <!-- Cannon Barrel -->
+  <rect x="2" y="16" width="16" height="2.5" rx="1"/>
+  <!-- Turret -->
+  <path d="M16 13 L28 13 L32 20 L14 20 Z"/>
+  <!-- Main Hull -->
+  <path d="M8 20 L38 20 L44 26 L42 32 L6 32 L8 24 Z"/>
+  <!-- Continuous Track Housing -->
+  <rect x="4" y="32" width="40" height="9" rx="4.5"/>
+  <!-- Wheels in track (punch-out / inverted) -->
+  <circle cx="10" cy="36.5" r="2.5" fill="var(--bg-card, #0A0A0A)"/>
+  <circle cx="17" cy="36.5" r="2.5" fill="var(--bg-card, #0A0A0A)"/>
+  <circle cx="24" cy="36.5" r="2.5" fill="var(--bg-card, #0A0A0A)"/>
+  <circle cx="31" cy="36.5" r="2.5" fill="var(--bg-card, #0A0A0A)"/>
+  <circle cx="38" cy="36.5" r="2.5" fill="var(--bg-card, #0A0A0A)"/>
+</svg>

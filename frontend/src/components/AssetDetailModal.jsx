@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { X, Clock, FileText, Cpu } from './Icons';
+import { X, FileText, Cpu } from './Icons';
+import AssetIcon from './AssetIcon';
 import SensorTelemetryCharts from './SensorTelemetryCharts';
 
 export default function AssetDetailModal({ assetId, onClose }) {
@@ -27,10 +28,45 @@ export default function AssetDetailModal({ assetId, onClose }) {
 
   if (!assetId) return null;
 
+  const getStatusBadge = (status) => {
+    let bg, text, border, label;
+    if (status === 'Ready') {
+      bg = 'var(--status-ready-bg)';
+      text = 'var(--status-ready-text)';
+      border = 'var(--status-ready-border)';
+      label = 'READY';
+    } else if (status === 'At-Risk') {
+      bg = 'var(--status-at-risk-bg)';
+      text = 'var(--status-at-risk-text)';
+      border = 'var(--status-at-risk-border)';
+      label = 'AT-RISK';
+    } else {
+      bg = 'var(--status-not-ready-bg)';
+      text = 'var(--status-not-ready-text)';
+      border = 'var(--status-not-ready-border)';
+      label = 'NOT-READY';
+    }
+
+    return (
+      <span style={{
+        fontSize: '11px',
+        fontWeight: 700,
+        letterSpacing: '0.04em',
+        padding: '3px 10px',
+        borderRadius: '5px',
+        backgroundColor: bg,
+        color: text,
+        border: `1px solid ${border}`
+      }}>
+        {label}
+      </span>
+    );
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className="glass-panel"
+        className="clean-panel"
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',
@@ -38,59 +74,63 @@ export default function AssetDetailModal({ assetId, onClose }) {
           maxHeight: '90vh',
           overflowY: 'auto',
           padding: '28px',
-          background: '#0B1220',
-          border: '1px solid rgba(6, 182, 212, 0.3)',
-          boxShadow: '0 24px 64px rgba(0, 0, 0, 0.8)'
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--border-default)',
+          boxShadow: 'var(--shadow-hover)'
         }}
       >
         {/* Modal Top Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span className="mono-text" style={{ fontSize: '24px', fontWeight: 800, color: 'var(--text-primary)' }}>
-                {assetId}
-              </span>
-              {detailData && (
-                <span className={`mono-text badge-${detailData.asset.status.toLowerCase().replace(' ', '-')}`} style={{
-                  fontSize: '12px',
-                  padding: '3px 12px',
-                  borderRadius: '6px',
-                  fontWeight: 700
-                }}>
-                  {detailData.asset.status.toUpperCase()}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            {detailData && (
+              <div style={{
+                width: '52px',
+                height: '52px',
+                borderRadius: '8px',
+                backgroundColor: 'var(--bg-subtle)',
+                border: '1px solid var(--border-default)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--text-primary)',
+                flexShrink: 0
+              }}>
+                <AssetIcon type={detailData.asset.asset_type} imageUrl={detailData.asset.image_url} size={44} />
+              </div>
+            )}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span className="mono-num" style={{ fontSize: '24px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  {assetId}
                 </span>
+                {detailData && getStatusBadge(detailData.asset.status)}
+              </div>
+              {detailData && (
+                <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                  <strong>{detailData.asset.asset_type}</strong> · <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{detailData.asset.model_name || 'Standard'}</span> · {detailData.asset.unit} · Last Serviced {detailData.asset.last_service_date}
+                </p>
               )}
             </div>
-            {detailData && (
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                {detailData.asset.asset_type} • {detailData.asset.unit} • Last Serviced {detailData.asset.last_service_date}
-              </p>
-            )}
           </div>
 
           <button
             onClick={onClose}
-            style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid var(--border-subtle)',
-              color: 'var(--text-secondary)',
-              borderRadius: '8px',
-              padding: '6px',
-              cursor: 'pointer'
-            }}
+            className="btn-secondary"
+            style={{ padding: '6px', borderRadius: '6px' }}
+            aria-label="Close Modal"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
         {loading && (
           <div style={{ padding: '60px', textAlign: 'center', color: 'var(--text-muted)' }}>
-            <p className="mono-text">Interrogating HUMS telemetry bus for {assetId}...</p>
+            <p className="mono-num">Interrogating HUMS telemetry bus for {assetId}...</p>
           </div>
         )}
 
         {error && (
-          <div style={{ padding: '24px', background: 'rgba(244, 63, 94, 0.1)', color: 'var(--status-not-ready)', borderRadius: '8px' }}>
+          <div style={{ padding: '20px', backgroundColor: 'var(--status-not-ready-bg)', color: 'var(--status-not-ready-text)', border: '1px solid var(--status-not-ready-border)', borderRadius: '8px' }}>
             Failed to load asset telemetry: {error}
           </div>
         )}
@@ -104,16 +144,21 @@ export default function AssetDetailModal({ assetId, onClose }) {
               gap: '12px',
               marginBottom: '24px'
             }}>
-              <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>COMPOSITE HEALTH</div>
-                <div className="mono-text" style={{ fontSize: '22px', fontWeight: 800, color: detailData.asset.health_score >= 80 ? 'var(--status-ready)' : 'var(--status-not-ready)', marginTop: '4px' }}>
+              <div style={{ backgroundColor: 'var(--bg-subtle)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-default)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>COMPOSITE HEALTH</div>
+                <div className="mono-num" style={{
+                  fontSize: '22px',
+                  fontWeight: 800,
+                  color: detailData.asset.status === 'Ready' ? 'var(--status-ready-text)' : (detailData.asset.status === 'At-Risk' ? 'var(--status-at-risk-text)' : 'var(--status-not-ready-text)'),
+                  marginTop: '4px'
+                }}>
                   {detailData.asset.health_score}%
                 </div>
               </div>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>PREDICTED RUL</div>
-                <div className="mono-text" style={{ fontSize: '22px', fontWeight: 800, color: 'var(--accent-cyan)', marginTop: '4px' }}>
+              <div style={{ backgroundColor: 'var(--bg-subtle)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-default)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>PREDICTED RUL</div>
+                <div className="mono-num" style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '4px' }}>
                   {Math.round(detailData.asset.predicted_rul_cycles)} <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>cycles</span>
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
@@ -121,12 +166,12 @@ export default function AssetDetailModal({ assetId, onClose }) {
                 </div>
               </div>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>14-DAY FAILURE RISK</div>
-                <div className="mono-text" style={{
+              <div style={{ backgroundColor: 'var(--bg-subtle)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-default)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>14-DAY FAILURE RISK</div>
+                <div className="mono-num" style={{
                   fontSize: '22px',
                   fontWeight: 800,
-                  color: detailData.asset.failure_probability_14d >= 0.5 ? 'var(--status-not-ready)' : 'var(--status-ready)',
+                  color: detailData.asset.failure_probability_14d >= 0.5 ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)',
                   marginTop: '4px'
                 }}>
                   {Math.round(detailData.asset.failure_probability_14d * 100)}%
@@ -136,8 +181,8 @@ export default function AssetDetailModal({ assetId, onClose }) {
                 </div>
               </div>
 
-              <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>SUSPECTED SUBSYSTEM</div>
+              <div style={{ backgroundColor: 'var(--bg-subtle)', padding: '14px', borderRadius: '8px', border: '1px solid var(--border-default)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>SUSPECTED SUBSYSTEM</div>
                 <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
                   {detailData.asset.predicted_failing_component || 'Nominal Assembly'}
                 </div>
@@ -147,17 +192,18 @@ export default function AssetDetailModal({ assetId, onClose }) {
               </div>
             </div>
 
-            {/* AI Diagnostic Explanation Box (Deliverable 2) */}
+            {/* AI Diagnostic Explanation Layer (Deliverable 2) */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.06), rgba(15, 23, 42, 0.8))',
-              border: '1px solid rgba(6, 182, 212, 0.3)',
-              borderRadius: '10px',
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border-default)',
+              borderLeft: '4px solid var(--accent-iaf)',
+              borderRadius: '8px',
               padding: '20px',
               marginBottom: '24px'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <Cpu size={18} color="var(--accent-cyan)" />
-                <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', color: 'var(--accent-cyan)', textTransform: 'uppercase' }}>
+                <Cpu size={18} color="var(--accent-iaf)" />
+                <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', color: 'var(--accent-iaf)', textTransform: 'uppercase' }}>
                   AI Diagnostic & Explanation Layer (Deliverable 2)
                 </span>
               </div>
@@ -167,14 +213,14 @@ export default function AssetDetailModal({ assetId, onClose }) {
 
               {/* Action Recommendation */}
               <div style={{
-                background: 'rgba(0, 0, 0, 0.3)',
+                backgroundColor: 'var(--bg-surface)',
+                border: '1px solid var(--border-default)',
                 padding: '12px 16px',
-                borderRadius: '8px',
-                borderLeft: '4px solid var(--accent-cyan)',
+                borderRadius: '6px',
                 marginBottom: '14px'
               }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Commander Action Directive</div>
-                <div style={{ fontSize: '13px', fontWeight: 600, color: '#E2E8F0', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Commander Action Directive</div>
+                <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginTop: '3px' }}>
                   {detailData.asset.action_recommendation}
                 </div>
               </div>
@@ -182,13 +228,14 @@ export default function AssetDetailModal({ assetId, onClose }) {
               {/* Contributing Sensor Breaches */}
               {detailData.asset.top_contributing_factors?.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600, marginBottom: '8px' }}>
                     Top Contributing Threshold Breaches
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {detailData.asset.top_contributing_factors.map((f, idx) => (
                       <div key={idx} style={{
-                        background: 'rgba(255, 255, 255, 0.03)',
+                        backgroundColor: 'var(--bg-surface)',
+                        border: '1px solid var(--border-subtle)',
                         padding: '10px 14px',
                         borderRadius: '6px',
                         display: 'flex',
@@ -197,14 +244,14 @@ export default function AssetDetailModal({ assetId, onClose }) {
                       }}>
                         <div>
                           <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{f.label}</span>
-                          <span className="mono-text" style={{ fontSize: '12px', color: 'var(--text-secondary)', marginLeft: '8px' }}>
+                          <span className="mono-num" style={{ fontSize: '12px', color: 'var(--text-secondary)', marginLeft: '8px' }}>
                             {f.current_value} {f.unit} vs safe {f.threshold} {f.unit}
                           </span>
                         </div>
-                        <span className="mono-text" style={{
+                        <span className="mono-num" style={{
                           fontSize: '12px',
                           fontWeight: 700,
-                          color: f.breach_pct > 50 ? 'var(--status-not-ready)' : 'var(--status-at-risk)'
+                          color: f.breach_pct > 50 ? 'var(--status-not-ready-text)' : 'var(--status-at-risk-text)'
                         }}>
                           +{f.breach_pct}% BREACH
                         </span>
@@ -218,10 +265,10 @@ export default function AssetDetailModal({ assetId, onClose }) {
             {/* Run-to-Failure Telemetry Series (Deliverable 3 Visual) */}
             <div style={{ marginBottom: '24px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <h3 style={{ fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <h3 style={{ fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-primary)' }}>
                   Sensor Telemetry Degradation Curves (CMAPSS Run-to-Failure)
                 </h3>
-                <span className="mono-text" style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                <span className="mono-num" style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
                   {detailData.telemetry_history.length} cycles logged
                 </span>
               </div>
@@ -233,23 +280,23 @@ export default function AssetDetailModal({ assetId, onClose }) {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
                   <FileText size={16} color="var(--text-secondary)" />
-                  <h3 style={{ fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  <h3 style={{ fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-primary)' }}>
                     Historical Service Log & Depot Remarks
                   </h3>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {detailData.service_history.map((srv) => (
                     <div key={srv.record_id} style={{
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: '8px',
+                      backgroundColor: 'var(--bg-subtle)',
+                      border: '1px solid var(--border-default)',
+                      borderRadius: '6px',
                       padding: '12px 16px'
                     }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                        <span className="mono-text" style={{ fontSize: '12px', fontWeight: 600, color: 'var(--accent-cyan)' }}>
+                        <span className="mono-num" style={{ fontSize: '12px', fontWeight: 600, color: 'var(--accent-iaf)' }}>
                           {srv.record_id} • {srv.service_type}
                         </span>
-                        <span className="mono-text" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                        <span className="mono-num" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                           {srv.service_date}
                         </span>
                       </div>

@@ -16,9 +16,9 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
 
   if (!plan || plan.length === 0) {
     return (
-      <div className="glass-panel" style={{ padding: '48px', textAlign: 'center' }}>
-        <CheckCircle2 size={36} color="var(--status-ready)" style={{ margin: '0 auto 12px' }} />
-        <p style={{ fontSize: '16px', fontWeight: 600 }}>All Platforms Within Safe Operating Envelopes</p>
+      <div className="clean-panel" style={{ padding: '48px', textAlign: 'center' }}>
+        <CheckCircle2 size={36} color="var(--status-ready-dot)" style={{ margin: '0 auto 12px' }} />
+        <p style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)' }}>All Platforms Within Safe Operating Envelopes</p>
         <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>
           No At-Risk or Not-Ready assets currently requiring unscheduled depot maintenance.
         </p>
@@ -27,18 +27,18 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
   }
 
   return (
-    <div className="glass-panel" style={{ padding: '24px' }}>
+    <div className="clean-panel" style={{ padding: '24px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+          <h2 style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-primary)' }}>
             Deliverable 4: Prioritised Maintenance Action Schedule
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
-            Ranked by Multi-Factor Formula: <code className="mono-text" style={{ color: 'var(--accent-cyan)' }}>Priority Score = Risk Level × Mission Criticality × (1 / TTF)</code>
+            Ranked by Multi-Factor Formula: <code className="mono-num" style={{ color: 'var(--accent-iaf)', backgroundColor: 'var(--bg-subtle)', padding: '2px 6px', borderRadius: '4px' }}>Priority Score = Risk Level × Mission Criticality × (1 / TTF)</code>
           </p>
         </div>
 
-        <div className="mono-text" style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+        <div className="mono-num" style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
           {plan.length} Interventions Queued
         </div>
       </div>
@@ -47,7 +47,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.1)', color: 'var(--text-muted)' }}>
+            <tr style={{ borderBottom: '1px solid var(--border-default)', color: 'var(--text-muted)' }}>
               <th style={{ padding: '12px 14px' }}>PRIORITY</th>
               <th style={{ padding: '12px 14px' }}>PLATFORM / UNIT</th>
               <th style={{ padding: '12px 14px' }}>FAILING COMPONENT</th>
@@ -67,25 +67,26 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
                 <tr
                   key={item.asset_id}
                   style={{
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-                    background: isImmediate ? 'rgba(244, 63, 94, 0.05)' : 'transparent',
-                    transition: 'background 0.15s ease'
+                    borderBottom: '1px solid var(--border-subtle)',
+                    backgroundColor: isImmediate ? 'var(--status-not-ready-bg)' : 'transparent',
+                    transition: 'background-color 0.15s ease'
                   }}
                 >
                   {/* Rank & Score */}
                   <td style={{ padding: '16px 14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span className="mono-text" style={{
+                      <span className="mono-num" style={{
                         fontSize: '13px',
                         fontWeight: 800,
                         padding: '4px 8px',
                         borderRadius: '6px',
-                        background: isImmediate ? 'rgba(244, 63, 94, 0.2)' : (isHigh ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.08)'),
-                        color: isImmediate ? 'var(--status-not-ready)' : (isHigh ? 'var(--status-at-risk)' : 'var(--text-primary)')
+                        backgroundColor: isImmediate ? 'var(--status-not-ready-bg)' : (isHigh ? 'var(--status-at-risk-bg)' : 'var(--bg-subtle)'),
+                        color: isImmediate ? 'var(--status-not-ready-text)' : (isHigh ? 'var(--status-at-risk-text)' : 'var(--text-primary)'),
+                        border: isImmediate ? '1px solid var(--status-not-ready-border)' : (isHigh ? '1px solid var(--status-at-risk-border)' : '1px solid var(--border-default)')
                       }}>
                         #{item.priority_rank}
                       </span>
-                      <span className="mono-text" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                      <span className="mono-num" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                         {item.priority_score.toFixed(2)} pts
                       </span>
                     </div>
@@ -97,13 +98,13 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
                       onClick={() => onSelectAsset(item.asset_id)}
                       style={{ cursor: 'pointer', display: 'inline-block' }}
                     >
-                      <span className="mono-text" style={{ fontWeight: 700, color: 'var(--accent-cyan)' }}>
+                      <span className="mono-num" style={{ fontWeight: 700, color: 'var(--accent-iaf)' }}>
                         {item.asset_id}
                       </span>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                      <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
                         {item.asset_type}
                       </div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                         {item.unit}
                       </div>
                     </div>
@@ -118,10 +119,11 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
                       {item.parts_required?.map((part, pidx) => (
                         <span key={pidx} style={{
                           fontSize: '10px',
-                          padding: '1px 6px',
+                          padding: '2px 6px',
                           borderRadius: '4px',
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          color: 'var(--text-secondary)'
+                          backgroundColor: 'var(--bg-subtle)',
+                          color: 'var(--text-secondary)',
+                          border: '1px solid var(--border-subtle)'
                         }}>
                           {part}
                         </span>
@@ -131,24 +133,27 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
 
                   {/* Time to Failure */}
                   <td style={{ padding: '16px 14px' }}>
-                    <div className="mono-text" style={{ fontWeight: 700, color: isImmediate ? 'var(--status-not-ready)' : 'var(--accent-cyan)' }}>
+                    <div className="mono-num" style={{ fontWeight: 700, color: isImmediate ? 'var(--status-not-ready-text)' : 'var(--text-primary)' }}>
                       {Math.round(item.predicted_rul_cycles)} cycles
                     </div>
                     <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                       ~{Math.round(item.estimated_days_to_failure)} calendar days
                     </div>
-                    <div style={{ fontSize: '11px', color: item.failure_probability_14d >= 0.5 ? 'var(--status-not-ready)' : 'var(--status-at-risk)', marginTop: '2px' }}>
+                    <div style={{ fontSize: '11px', color: item.failure_probability_14d >= 0.5 ? 'var(--status-not-ready-text)' : 'var(--status-at-risk-text)', marginTop: '2px' }}>
                       {Math.round(item.failure_probability_14d * 100)}% 14d fail risk
                     </div>
                   </td>
 
                   {/* Urgency */}
                   <td style={{ padding: '16px 14px' }}>
-                    <span className={`mono-text ${isImmediate ? 'badge-not-ready' : (isHigh ? 'badge-at-risk' : 'badge-ready')}`} style={{
+                    <span className="mono-num" style={{
                       fontSize: '11px',
                       padding: '3px 8px',
-                      borderRadius: '4px',
-                      fontWeight: 700
+                      borderRadius: '5px',
+                      fontWeight: 700,
+                      backgroundColor: isImmediate ? 'var(--status-not-ready-bg)' : (isHigh ? 'var(--status-at-risk-bg)' : 'var(--status-ready-bg)'),
+                      color: isImmediate ? 'var(--status-not-ready-text)' : (isHigh ? 'var(--status-at-risk-text)' : 'var(--status-ready-text)'),
+                      border: isImmediate ? '1px solid var(--status-not-ready-border)' : (isHigh ? '1px solid var(--status-at-risk-border)' : '1px solid var(--status-ready-border)')
                     }}>
                       {item.urgency}
                     </span>
@@ -159,7 +164,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
 
                   {/* Action */}
                   <td style={{ padding: '16px 14px' }}>
-                    <div style={{ fontWeight: 600, color: '#E2E8F0' }}>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                       {item.action_recommendation}
                     </div>
                     <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
@@ -170,18 +175,17 @@ export default function MaintenancePlanTable({ plan, onSelectAsset }) {
                   {/* Action Button */}
                   <td style={{ padding: '16px 14px', textAlign: 'right' }}>
                     {isDispatched ? (
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--status-ready)', fontSize: '12px', fontWeight: 600 }}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--status-ready-text)', fontSize: '12px', fontWeight: 600 }}>
                         <CheckCheck size={16} />
                         <span>Dispatched {dispatchedOrders[item.asset_id].time}</span>
                       </div>
                     ) : (
                       <button
                         onClick={() => handleDispatch(item.asset_id)}
-                        className={isImmediate ? 'btn-action' : 'btn-secondary'}
+                        className={isImmediate ? 'btn-primary' : 'btn-secondary'}
                         style={{
                           fontSize: '12px',
-                          padding: '6px 12px',
-                          background: isImmediate ? 'linear-gradient(135deg, #E11D48, #F43F5E)' : undefined
+                          padding: '6px 12px'
                         }}
                       >
                         <PackageCheck size={14} />

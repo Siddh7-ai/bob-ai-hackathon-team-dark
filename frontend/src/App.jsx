@@ -8,6 +8,9 @@ import AssetDetailModal from './components/AssetDetailModal';
 import ModelEvaluationModal from './components/ModelEvaluationModal';
 
 export default function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('apex_hums_theme') || 'dark';
+  });
   const [activeTab, setActiveTab] = useState('fleet');
   const [kpis, setKpis] = useState(null);
   const [assets, setAssets] = useState([]);
@@ -16,6 +19,16 @@ export default function App() {
   const [isEvalOpen, setIsEvalOpen] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Sync theme to document element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('apex_hums_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -65,7 +78,7 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Top HUD Header */}
+      {/* Top Header */}
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -73,6 +86,8 @@ export default function App() {
         onRegenerate={handleRegenerate}
         isRegenerating={isRegenerating}
         kpis={kpis}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Main Command Workspace */}

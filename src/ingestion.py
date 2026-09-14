@@ -147,10 +147,15 @@ class HUMSDataIngestion:
         latest_idx = full_df.groupby("asset_id")["cycle"].idxmax()
         latest_df = full_df.loc[latest_idx].copy()
         
-        # Merge asset metadata (criticality, type, unit)
+        # Merge asset metadata (criticality, type, unit, image_url, model_name)
         if self.assets_df is not None:
+            cols = ["asset_id", "asset_type", "unit", "mission_criticality", "commission_date", "last_service_date"]
+            if "image_url" in self.assets_df.columns:
+                cols.append("image_url")
+            if "model_name" in self.assets_df.columns:
+                cols.append("model_name")
             latest_df = latest_df.merge(
-                self.assets_df[["asset_id", "asset_type", "unit", "mission_criticality", "commission_date", "last_service_date"]],
+                self.assets_df[cols],
                 on="asset_id",
                 how="left"
             )

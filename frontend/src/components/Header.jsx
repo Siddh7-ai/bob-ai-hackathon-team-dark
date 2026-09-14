@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Activity, RefreshCw, BarChart2 } from './Icons';
+import { Shield, RefreshCw, BarChart2, Sun, Moon } from './Icons';
 
 export default function Header({ 
   activeTab, 
@@ -7,17 +7,18 @@ export default function Header({
   onOpenEvaluation, 
   onRegenerate, 
   isRegenerating,
-  kpis 
+  kpis,
+  theme,
+  onToggleTheme
 }) {
   return (
     <header style={{
-      borderBottom: '1px solid var(--border-subtle)',
-      background: 'rgba(10, 16, 29, 0.92)',
-      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid var(--border-default)',
+      backgroundColor: 'var(--bg-surface)',
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      padding: '16px 32px'
+      padding: '12px 32px'
     }}>
       <div style={{
         display: 'flex',
@@ -27,56 +28,54 @@ export default function Header({
         gap: '16px'
       }}>
         {/* Left: Branding & Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '10px',
-            background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2))',
-            border: '1px solid var(--accent-cyan)',
+            width: '38px',
+            height: '38px',
+            borderRadius: '6px',
+            backgroundColor: 'var(--accent-iaf)',
+            color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 0 16px rgba(6, 182, 212, 0.25)'
+            justifyContent: 'center'
           }}>
-            <Shield size={24} color="#06B6D4" />
+            <Shield size={20} color="#FFFFFF" />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <h1 style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                APEX <span style={{ color: 'var(--accent-cyan)' }}>HUMS</span>
-              </h1>
-              <span className="mono-text" style={{
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>
+                APEX HUMS
+              </span>
+              <span style={{
                 fontSize: '11px',
-                padding: '2px 8px',
+                fontWeight: 600,
+                padding: '1px 6px',
                 borderRadius: '4px',
-                background: 'rgba(6, 182, 212, 0.1)',
-                color: 'var(--accent-cyan)',
-                border: '1px solid rgba(6, 182, 212, 0.25)'
+                backgroundColor: 'var(--bg-subtle)',
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border-default)'
               }}>
-                v1.0 MIL-SPEC
+                IAF Operational Spec
               </span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
-              <div className="radar-pulse" style={{ background: 'var(--status-ready)' }} />
-              <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                NASA CMAPSS Run-to-Failure Telemetry Pipeline • 40 Active Platforms
-              </p>
-            </div>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+              Health & Usage Monitoring System • NASA CMAPSS Analog
+            </p>
           </div>
         </div>
 
         {/* Center: View Navigation */}
         <nav style={{
           display: 'flex',
-          background: 'rgba(255, 255, 255, 0.04)',
-          borderRadius: '10px',
-          padding: '4px',
+          gap: '4px',
+          backgroundColor: 'var(--bg-subtle)',
+          padding: '3px',
+          borderRadius: '7px',
           border: '1px solid var(--border-subtle)'
         }}>
           {[
-            { id: 'fleet', label: 'Fleet Telemetry Grid', count: kpis?.total_assets },
-            { id: 'maintenance', label: 'Prioritised Maintenance Queue', count: kpis?.critical_maintenance_actions, alert: true },
+            { id: 'fleet', label: 'Fleet Telemetry', count: kpis?.total_assets },
+            { id: 'maintenance', label: 'Prioritised Maintenance', count: kpis?.critical_maintenance_actions, alert: true },
             { id: 'matrix', label: 'Squadron Readiness' }
           ].map((tab) => {
             const isActive = activeTab === tab.id;
@@ -85,28 +84,30 @@ export default function Header({
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 style={{
-                  background: isActive ? 'rgba(6, 182, 212, 0.15)' : 'transparent',
-                  color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
-                  border: isActive ? '1px solid rgba(6, 182, 212, 0.4)' : '1px solid transparent',
-                  padding: '8px 18px',
-                  borderRadius: '8px',
+                  backgroundColor: isActive ? 'var(--bg-surface)' : 'transparent',
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: isActive ? '1px solid var(--border-default)' : '1px solid transparent',
+                  padding: '6px 14px',
+                  borderRadius: '5px',
                   fontSize: '13px',
-                  fontWeight: 600,
+                  fontWeight: isActive ? 600 : 500,
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'all 0.2s ease'
+                  boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
+                  transition: 'all 0.15s ease'
                 }}
               >
-                {tab.label}
+                <span>{tab.label}</span>
                 {tab.count !== undefined && (
-                  <span className="mono-text" style={{
+                  <span className="mono-num" style={{
                     fontSize: '11px',
                     padding: '1px 6px',
                     borderRadius: '10px',
-                    background: tab.alert ? 'rgba(244, 63, 94, 0.2)' : 'rgba(255, 255, 255, 0.1)',
-                    color: tab.alert ? 'var(--status-not-ready)' : 'var(--text-primary)'
+                    backgroundColor: tab.alert ? 'var(--status-not-ready-bg)' : 'var(--bg-subtle)',
+                    color: tab.alert ? 'var(--status-not-ready-text)' : 'var(--text-muted)',
+                    fontWeight: 600
                   }}>
                     {tab.count}
                   </span>
@@ -116,24 +117,35 @@ export default function Header({
           })}
         </nav>
 
-        {/* Right: Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Right: Theme Toggle & Actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {/* Theme Toggle Button */}
+          <button
+            onClick={onToggleTheme}
+            className="btn-secondary"
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+            style={{ padding: '7px 10px', borderRadius: '6px' }}
+            aria-label="Toggle Theme"
+          >
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+
           <button
             className="btn-secondary"
             onClick={onOpenEvaluation}
-            title="Inspect Model Validation Report & Metrics"
+            title="Inspect Model Validation Report & Held-Out Test Metrics"
           >
-            <BarChart2 size={16} color="var(--accent-cyan)" />
+            <BarChart2 size={15} />
             <span>Model Validation</span>
           </button>
 
           <button
-            className="btn-action"
+            className="btn-primary"
             onClick={onRegenerate}
             disabled={isRegenerating}
             title="Simulate New Run-to-Failure Fleet Cycles"
           >
-            <RefreshCw size={16} className={isRegenerating ? 'animate-spin' : ''} />
+            <RefreshCw size={15} className={isRegenerating ? 'animate-spin' : ''} />
             <span>{isRegenerating ? 'Simulating...' : 'Simulate Telemetry'}</span>
           </button>
         </div>

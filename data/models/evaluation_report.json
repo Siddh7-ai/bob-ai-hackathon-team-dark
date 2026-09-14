@@ -1,5 +1,5 @@
 {
-  "evaluation_timestamp": "2026-09-14T11:05:23.641038",
+  "evaluation_timestamp": "2026-09-14T14:36:24.387174",
   "train_assets_count": 30,
   "test_assets_count": 10,
   "test_asset_ids": [
@@ -15,95 +15,95 @@
     "AC-1007"
   ],
   "readiness_classifier": {
-    "accuracy": 0.986,
-    "f1_weighted": 0.9883,
+    "accuracy": 0.9779,
+    "f1_weighted": 0.9767,
     "top_features": [
       [
-        "fuel_flow_rate_roll_mean_20",
-        0.09669799407350231
-      ],
-      [
         "engine_temp_c_roll_mean_20",
-        0.08956672626295299
-      ],
-      [
-        "fuel_flow_rate_roll_mean_10",
-        0.0867543619714753
-      ],
-      [
-        "fuel_flow_rate_roll_mean_5",
-        0.07881895973913548
-      ],
-      [
-        "fuel_flow_rate",
-        0.06464005985301756
-      ],
-      [
-        "engine_temp_c_roll_mean_10",
-        0.055202000478987726
-      ],
-      [
-        "rotational_speed_rpm_roll_mean_20",
-        0.04873977690628009
+        0.1058175532421299
       ],
       [
         "oil_debris_count_roll_mean_20",
-        0.04528275614775093
+        0.09864383098669273
       ],
       [
-        "rotational_speed_rpm_roll_mean_5",
-        0.044418811096316596
+        "oil_debris_count_roll_mean_10",
+        0.07715300135410587
       ],
       [
-        "rotational_speed_rpm_roll_mean_10",
-        0.04017023644394358
+        "engine_temp_c_roll_mean_5",
+        0.06901511057172396
+      ],
+      [
+        "engine_temp_c_roll_mean_10",
+        0.06298865942082357
+      ],
+      [
+        "fuel_flow_rate_roll_mean_20",
+        0.05736096276874715
+      ],
+      [
+        "fuel_flow_rate_roll_mean_5",
+        0.050122970139360026
+      ],
+      [
+        "fuel_flow_rate_roll_mean_10",
+        0.043462241934115214
+      ],
+      [
+        "fuel_flow_rate",
+        0.04287918795231319
+      ],
+      [
+        "vibration_level_roll_mean_10",
+        0.03980567923626544
       ]
     ]
   },
   "failure_prediction_rul": {
-    "mae_cycles": 4.89,
-    "rmse_cycles": 9.13,
-    "r2_score": 0.735,
+    "mae_cycles": 5.27,
+    "rmse_cycles": 9.52,
+    "r2_score": 0.8,
     "top_features": [
       [
         "engine_temp_c_roll_mean_20",
-        0.5644960123627549
-      ],
-      [
-        "fuel_flow_rate_roll_mean_10",
-        0.10790459470614482
-      ],
-      [
-        "vibration_level_roll_mean_10",
-        0.05811456037212388
-      ],
-      [
-        "fuel_flow_rate_roll_mean_20",
-        0.05608539371074672
-      ],
-      [
-        "vibration_level_roll_mean_20",
-        0.04204540836104264
+        0.5650768123021481
       ],
       [
         "oil_debris_count_roll_mean_10",
-        0.023138380332470315
-      ],
-      [
-        "vibration_level_roll_mean_5",
-        0.019407808615859022
+        0.12447581989857863
       ],
       [
         "engine_temp_c_roll_mean_10",
-        0.017208257886647132
+        0.04191018998445486
       ],
       [
-        "fuel_flow_rate_roll_mean_5",
-        0.014911318564931183
+        "fuel_flow_rate_roll_mean_20",
+        0.04031486568813508
+      ],
+      [
+        "fuel_flow_rate_roll_mean_10",
+        0.03988771110817808
+      ],
+      [
+        "oil_debris_count_roll_mean_5",
+        0.0327697544923598
       ],
       [
         "oil_debris_count_roll_mean_20",
-        0.01257054254584119
+        0.030573198960885457
+      ],
+      [
+        "oil_debris_count_roll_std_20",
+        0.012811011465222406
+      ],
+      [
+        "vibration_level_roll_mean_5",
+        0.012644840499777304
+      ],
+      [
+        "fuel_flow_rate_roll_mean_5",
+        0.012497642737835997
       ]
     ]
   }

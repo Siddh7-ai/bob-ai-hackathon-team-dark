@@ -110,7 +110,7 @@ def get_assets(
         s = search.lower()
         filtered = [
             a for a in filtered 
-            if s in a["asset_id"].lower() or s in a["asset_type"].lower() or s in a["unit"].lower()
+            if s in a["asset_id"].lower() or s in a["asset_type"].lower() or s in a.get("model_name", "").lower() or s in a["unit"].lower()
         ]
 
     return {

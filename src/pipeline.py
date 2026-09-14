@@ -136,6 +136,8 @@ class HUMSPipeline:
             asset_summary = {
                 "asset_id": asset_id,
                 "asset_type": row.get("asset_type", "Platform"),
+                "model_name": str(row.get("model_name", "Standard Mk-1")),
+                "image_url": str(row.get("image_url", "/icons/fighter-jet.svg")),
                 "unit": row.get("unit", "Default Squadron"),
                 "mission_criticality": float(row.get("mission_criticality", 2.0)),
                 "total_operating_cycles": int(row.get("total_operating_cycles", row["cycle"])),

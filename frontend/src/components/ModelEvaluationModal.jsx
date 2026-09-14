@@ -22,7 +22,7 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className="glass-panel"
+        className="clean-panel"
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',
@@ -30,17 +30,29 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
           maxHeight: '88vh',
           overflowY: 'auto',
           padding: '28px',
-          background: '#0A111E',
-          border: '1px solid rgba(6, 182, 212, 0.4)',
-          boxShadow: '0 24px 64px rgba(0, 0, 0, 0.85)'
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--border-default)',
+          boxShadow: 'var(--shadow-hover)'
         }}
       >
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Award size={24} color="var(--accent-cyan)" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '8px',
+              backgroundColor: 'var(--accent-iaf-subtle)',
+              border: '1px solid var(--border-default)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'var(--accent-iaf)'
+            }}>
+              <Award size={22} />
+            </div>
             <div>
-              <h2 style={{ fontSize: '18px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-primary)' }}>
                 Model Validation & Credibility Metrics
               </h2>
               <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
@@ -51,16 +63,11 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
 
           <button
             onClick={onClose}
-            style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid var(--border-subtle)',
-              color: 'var(--text-secondary)',
-              borderRadius: '8px',
-              padding: '6px',
-              cursor: 'pointer'
-            }}
+            className="btn-secondary"
+            style={{ padding: '6px', borderRadius: '6px' }}
+            aria-label="Close Modal"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
@@ -76,11 +83,11 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
               marginBottom: '24px'
             }}>
               {/* Deliverable 1 Classifier */}
-              <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '10px', padding: '16px' }}>
-                <div style={{ fontSize: '11px', color: 'var(--status-ready)', fontWeight: 700, textTransform: 'uppercase' }}>
+              <div style={{ backgroundColor: 'var(--status-ready-bg)', border: '1px solid var(--status-ready-border)', borderRadius: '8px', padding: '16px' }}>
+                <div style={{ fontSize: '11px', color: 'var(--status-ready-text)', fontWeight: 700, textTransform: 'uppercase' }}>
                   Deliverable 1: Classifier Accuracy
                 </div>
-                <div className="mono-text" style={{ fontSize: '32px', fontWeight: 800, color: 'var(--status-ready)', marginTop: '4px' }}>
+                <div className="mono-num" style={{ fontSize: '32px', fontWeight: 800, color: 'var(--status-ready-text)', marginTop: '4px' }}>
                   {(evalData.readiness_classifier.accuracy * 100).toFixed(1)}%
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
@@ -89,12 +96,12 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
               </div>
 
               {/* Deliverable 3 RUL Regressor */}
-              <div style={{ background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.3)', borderRadius: '10px', padding: '16px' }}>
-                <div style={{ fontSize: '11px', color: 'var(--accent-cyan)', fontWeight: 700, textTransform: 'uppercase' }}>
+              <div style={{ backgroundColor: 'var(--bg-subtle)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '16px' }}>
+                <div style={{ fontSize: '11px', color: 'var(--accent-iaf)', fontWeight: 700, textTransform: 'uppercase' }}>
                   Deliverable 3: RUL Regressor MAE
                 </div>
-                <div className="mono-text" style={{ fontSize: '32px', fontWeight: 800, color: 'var(--accent-cyan)', marginTop: '4px' }}>
-                  {evalData.failure_prediction_rul.mae_cycles} <span style={{ fontSize: '14px' }}>cycles</span>
+                <div className="mono-num" style={{ fontSize: '32px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '4px' }}>
+                  {evalData.failure_prediction_rul.mae_cycles} <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>cycles</span>
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
                   RMSE: <strong>{evalData.failure_prediction_rul.rmse_cycles} cycles</strong> (R² = {evalData.failure_prediction_rul.r2_score})
@@ -102,11 +109,11 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
               </div>
 
               {/* Asset Hold-out Count */}
-              <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-subtle)', borderRadius: '10px', padding: '16px' }}>
+              <div style={{ backgroundColor: 'var(--bg-subtle)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '16px' }}>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>
                   Hold-Out Test Assets
                 </div>
-                <div className="mono-text" style={{ fontSize: '32px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '4px' }}>
+                <div className="mono-num" style={{ fontSize: '32px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '4px' }}>
                   {evalData.test_assets_count} <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>/ {evalData.train_assets_count + evalData.test_assets_count}</span>
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
@@ -117,14 +124,14 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
 
             {/* Holdout Integrity Explainer */}
             <div style={{
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid var(--border-subtle)',
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border-default)',
               borderRadius: '8px',
               padding: '16px',
               marginBottom: '20px'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                <ShieldCheck size={18} color="var(--status-ready)" />
+                <ShieldCheck size={18} color="var(--status-ready-dot)" />
                 <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>
                   Data Leakage Prevention Verification
                 </span>
@@ -136,13 +143,14 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
 
             {/* Top Features */}
             <div style={{ marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '10px' }}>
+              <h3 style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-primary)', marginBottom: '10px' }}>
                 Top Predictive Features (Gradients & Rolling Telemetry)
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '8px' }}>
                 {evalData.readiness_classifier.top_features?.slice(0, 6).map(([feat, imp], i) => (
                   <div key={i} style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    backgroundColor: 'var(--bg-subtle)',
+                    border: '1px solid var(--border-default)',
                     padding: '8px 12px',
                     borderRadius: '6px',
                     display: 'flex',
@@ -150,8 +158,8 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
                     alignItems: 'center',
                     fontSize: '12px'
                   }}>
-                    <span className="mono-text" style={{ color: 'var(--text-primary)', fontSize: '11px' }}>{feat}</span>
-                    <span className="mono-text" style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}>{(imp * 100).toFixed(1)}%</span>
+                    <span className="mono-num" style={{ color: 'var(--text-primary)', fontSize: '11px' }}>{feat}</span>
+                    <span className="mono-num" style={{ color: 'var(--accent-iaf)', fontWeight: 700 }}>{(imp * 100).toFixed(1)}%</span>
                   </div>
                 ))}
               </div>
@@ -159,12 +167,12 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
 
             {/* CMAPSS Methodology */}
             <div style={{
-              background: 'rgba(6, 182, 212, 0.04)',
-              border: '1px solid rgba(6, 182, 212, 0.2)',
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border-default)',
               borderRadius: '8px',
               padding: '14px'
             }}>
-              <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-cyan)', marginBottom: '4px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-iaf)', marginBottom: '4px' }}>
                 CMAPSS Turbofan Analog & False Positive Control
               </div>
               <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>

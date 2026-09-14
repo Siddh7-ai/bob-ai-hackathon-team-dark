@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { Shield, Plane } from './Icons';
 
 export default function SquadronMatrix({ assets, onSelectAsset }) {
   const squadronGroups = useMemo(() => {
@@ -26,7 +25,7 @@ export default function SquadronMatrix({ assets, onSelectAsset }) {
   return (
     <div>
       <div style={{ marginBottom: '20px' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        <h2 style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-primary)' }}>
           Squadron Tactical Operational Availability Matrix
         </h2>
         <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
@@ -40,7 +39,7 @@ export default function SquadronMatrix({ assets, onSelectAsset }) {
           const readyPct = Math.round((sq.ready / total) * 100);
 
           return (
-            <div key={sq.name} className="glass-panel" style={{ padding: '20px' }}>
+            <div key={sq.name} className="clean-panel" style={{ padding: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                 <div>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)' }}>
@@ -50,23 +49,32 @@ export default function SquadronMatrix({ assets, onSelectAsset }) {
                     {total} Assigned Platforms
                   </p>
                 </div>
-                <div className="mono-text" style={{
-                  fontSize: '16px',
+                <div className="mono-num" style={{
+                  fontSize: '14px',
                   fontWeight: 800,
                   padding: '4px 10px',
                   borderRadius: '6px',
-                  background: readyPct >= 70 ? 'var(--status-ready-bg)' : 'var(--status-at-risk-bg)',
-                  color: readyPct >= 70 ? 'var(--status-ready)' : 'var(--status-at-risk)'
+                  backgroundColor: readyPct >= 70 ? 'var(--status-ready-bg)' : 'var(--status-at-risk-bg)',
+                  color: readyPct >= 70 ? 'var(--status-ready-text)' : 'var(--status-at-risk-text)',
+                  border: readyPct >= 70 ? '1px solid var(--status-ready-border)' : '1px solid var(--status-at-risk-border)'
                 }}>
                   {readyPct}% READY
                 </div>
               </div>
 
-              {/* Mini Status Breakdown Bar */}
-              <div style={{ width: '100%', height: '8px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden', display: 'flex', marginBottom: '16px' }}>
-                <div style={{ width: `${(sq.ready / total) * 100}%`, background: 'var(--status-ready)' }} />
-                <div style={{ width: `${(sq.atRisk / total) * 100}%`, background: 'var(--status-at-risk)' }} />
-                <div style={{ width: `${(sq.notReady / total) * 100}%`, background: 'var(--status-not-ready)' }} />
+              {/* Status Breakdown Bar */}
+              <div style={{
+                width: '100%',
+                height: '6px',
+                backgroundColor: 'var(--bg-subtle)',
+                borderRadius: '3px',
+                overflow: 'hidden',
+                display: 'flex',
+                marginBottom: '16px'
+              }}>
+                <div style={{ width: `${(sq.ready / total) * 100}%`, backgroundColor: 'var(--status-ready-dot)' }} />
+                <div style={{ width: `${(sq.atRisk / total) * 100}%`, backgroundColor: 'var(--status-at-risk-dot)' }} />
+                <div style={{ width: `${(sq.notReady / total) * 100}%`, backgroundColor: 'var(--status-not-ready-dot)' }} />
               </div>
 
               {/* Assets list pills */}
@@ -78,16 +86,23 @@ export default function SquadronMatrix({ assets, onSelectAsset }) {
                     <button
                       key={asset.asset_id}
                       onClick={() => onSelectAsset(asset.asset_id)}
-                      className="mono-text"
+                      className="mono-num"
                       style={{
                         padding: '4px 10px',
                         borderRadius: '6px',
                         fontSize: '11px',
                         fontWeight: 600,
-                        border: isGrounded ? '1px solid rgba(244, 63, 94, 0.5)' : (isAtRisk ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid rgba(16, 185, 129, 0.3)'),
-                        background: isGrounded ? 'var(--status-not-ready-bg)' : (isAtRisk ? 'var(--status-at-risk-bg)' : 'var(--status-ready-bg)'),
-                        color: isGrounded ? 'var(--status-not-ready)' : (isAtRisk ? 'var(--status-at-risk)' : 'var(--status-ready)'),
-                        cursor: 'pointer'
+                        border: isGrounded 
+                          ? '1px solid var(--status-not-ready-border)' 
+                          : (isAtRisk ? '1px solid var(--status-at-risk-border)' : '1px solid var(--status-ready-border)'),
+                        backgroundColor: isGrounded 
+                          ? 'var(--status-not-ready-bg)' 
+                          : (isAtRisk ? 'var(--status-at-risk-bg)' : 'var(--status-ready-bg)'),
+                        color: isGrounded 
+                          ? 'var(--status-not-ready-text)' 
+                          : (isAtRisk ? 'var(--status-at-risk-text)' : 'var(--status-ready-text)'),
+                        cursor: 'pointer',
+                        transition: 'transform 0.1s ease'
                       }}
                     >
                       {asset.asset_id}
