@@ -1,0 +1,2402 @@
+[
+  {
+    "asset_id": "AC-1001",
+    "asset_type": "Transport Helicopter",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 215,
+    "current_cycle": 215,
+    "last_service_date": "2024-11-20",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 125.0,
+    "estimated_days_to_failure": 78.1,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.082,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1001 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 125 cycles (~78 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.961,
+      "oil_debris_count": 9.7,
+      "engine_temp_c": 651.9,
+      "pressure_ratio": 13.67,
+      "fuel_flow_rate": 1.982,
+      "rotational_speed_rpm": 12867.0
+    }
+  },
+  {
+    "asset_id": "AC-1002",
+    "asset_type": "Transport Helicopter",
+    "unit": "10th Mountain Aviation Support",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 249,
+    "current_cycle": 249,
+    "last_service_date": "2024-10-21",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 124.9,
+    "estimated_days_to_failure": 78.1,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.082,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1002 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 124 cycles (~78 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.64,
+      "oil_debris_count": 8.3,
+      "engine_temp_c": 650.6,
+      "pressure_ratio": 13.93,
+      "fuel_flow_rate": 1.946,
+      "rotational_speed_rpm": 12668.9
+    }
+  },
+  {
+    "asset_id": "AC-1003",
+    "asset_type": "Armoured Vehicle",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 224,
+    "current_cycle": 224,
+    "last_service_date": "2024-11-29",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 125.2,
+    "estimated_days_to_failure": 78.2,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.082,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1003 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 125 cycles (~78 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.13,
+      "oil_debris_count": 11.0,
+      "engine_temp_c": 633.2,
+      "pressure_ratio": 13.42,
+      "fuel_flow_rate": 1.892,
+      "rotational_speed_rpm": 12759.6
+    }
+  },
+  {
+    "asset_id": "AC-1004",
+    "asset_type": "Transport Helicopter",
+    "unit": "4th Strike Fighter Wing",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 217,
+    "current_cycle": 217,
+    "last_service_date": "2024-11-23",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 125.2,
+    "estimated_days_to_failure": 78.2,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.082,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1004 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 125 cycles (~78 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.118,
+      "oil_debris_count": 10.6,
+      "engine_temp_c": 654.5,
+      "pressure_ratio": 12.82,
+      "fuel_flow_rate": 1.976,
+      "rotational_speed_rpm": 12733.2
+    }
+  },
+  {
+    "asset_id": "AC-1005",
+    "asset_type": "Transport Helicopter",
+    "unit": "10th Mountain Aviation Support",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 189,
+    "current_cycle": 189,
+    "last_service_date": "2024-10-12",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 124.7,
+    "estimated_days_to_failure": 77.9,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.082,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1005 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 124 cycles (~77 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.933,
+      "oil_debris_count": 13.5,
+      "engine_temp_c": 631.0,
+      "pressure_ratio": 13.5,
+      "fuel_flow_rate": 2.02,
+      "rotational_speed_rpm": 12751.8
+    }
+  },
+  {
+    "asset_id": "AC-1006",
+    "asset_type": "Armoured Vehicle",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 207,
+    "current_cycle": 207,
+    "last_service_date": "2024-11-13",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 125.1,
+    "estimated_days_to_failure": 78.2,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.082,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1006 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 125 cycles (~78 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.962,
+      "oil_debris_count": 10.9,
+      "engine_temp_c": 632.0,
+      "pressure_ratio": 13.2,
+      "fuel_flow_rate": 1.988,
+      "rotational_speed_rpm": 12760.1
+    }
+  },
+  {
+    "asset_id": "AC-1007",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "4th Strike Fighter Wing",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 243,
+    "current_cycle": 243,
+    "last_service_date": "2024-11-22",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 124.3,
+    "estimated_days_to_failure": 77.7,
+    "failure_probability_14d": 0.016,
+    "failure_probability_30d": 0.083,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Fighter Jet Engine AC-1007 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 124 cycles (~77 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.832,
+      "oil_debris_count": 12.1,
+      "engine_temp_c": 641.0,
+      "pressure_ratio": 13.46,
+      "fuel_flow_rate": 1.904,
+      "rotational_speed_rpm": 12770.2
+    }
+  },
+  {
+    "asset_id": "AC-1008",
+    "asset_type": "Armoured Vehicle",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 209,
+    "current_cycle": 209,
+    "last_service_date": "2024-10-11",
+    "status": "At-Risk",
+    "health_score": 96.1,
+    "composite_risk_score": 0.039,
+    "status_probabilities": {
+      "At-Risk": 0.6855,
+      "Not-Ready": 0.0,
+      "Ready": 0.3145
+    },
+    "breached_sensors": [
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.454,
+        "threshold": 2.35,
+        "breach_pct": 4.4,
+        "unit": "kg/s"
+      },
+      {
+        "sensor": "rotational_speed_rpm",
+        "value": 12576.4,
+        "threshold": 12620.0,
+        "breach_pct": 24.2,
+        "unit": "RPM"
+      }
+    ],
+    "predicted_rul_cycles": 62.1,
+    "estimated_days_to_failure": 38.8,
+    "failure_probability_14d": 0.072,
+    "failure_probability_30d": 0.328,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Armoured Vehicle AC-1008 has been flagged as AT-RISK with health index at 96.1%. Early stage degradation detected in Hydraulic Pump / Fuel Delivery: Turbine Shaft Speed registered 12576.4 RPM, exceeding safe threshold of 12620.0 RPM (+24.2%); Fuel Consumption Rate registered 2.454 kg/s, exceeding safe threshold of 2.35 kg/s (+4.4%). Remaining useful life is estimated at 62 cycles (~38 days), with a 7% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Hydraulic Pump / Fuel Delivery before cycle 37.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "rotational_speed_rpm",
+        "label": "Turbine Shaft Speed",
+        "current_value": 12576.4,
+        "threshold": 12620.0,
+        "unit": "RPM",
+        "breach_pct": 24.2,
+        "summary": "Turbine Shaft Speed registered 12576.4 RPM, exceeding safe threshold of 12620.0 RPM (+24.2%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.454,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 4.4,
+        "summary": "Fuel Consumption Rate registered 2.454 kg/s, exceeding safe threshold of 2.35 kg/s (+4.4%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.229,
+      "oil_debris_count": 17.9,
+      "engine_temp_c": 679.5,
+      "pressure_ratio": 14.02,
+      "fuel_flow_rate": 2.454,
+      "rotational_speed_rpm": 12576.4
+    }
+  },
+  {
+    "asset_id": "AC-1009",
+    "asset_type": "Transport Helicopter",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 165,
+    "current_cycle": 165,
+    "last_service_date": "2024-12-02",
+    "status": "At-Risk",
+    "health_score": 84.9,
+    "composite_risk_score": 0.151,
+    "status_probabilities": {
+      "At-Risk": 0.6691,
+      "Not-Ready": 0.0,
+      "Ready": 0.3309
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.243,
+        "threshold": 2.8,
+        "breach_pct": 15.8,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 28.3,
+        "threshold": 18.0,
+        "breach_pct": 57.2,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 59.2,
+    "estimated_days_to_failure": 37.0,
+    "failure_probability_14d": 0.079,
+    "failure_probability_30d": 0.357,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1009 has been flagged as AT-RISK with health index at 84.9%. Early stage degradation detected in Main Bearing / Gearbox: Metallic Oil Debris registered 28.3 ppm, exceeding safe threshold of 18.0 ppm (+57.2%); Vibration Amplitude registered 3.243 mm/s, exceeding safe threshold of 2.8 mm/s (+15.8%). Remaining useful life is estimated at 59 cycles (~37 days), with a 8% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Main Bearing / Gearbox before cycle 35.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 28.3,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 57.2,
+        "summary": "Metallic Oil Debris registered 28.3 ppm, exceeding safe threshold of 18.0 ppm (+57.2%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.243,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 15.8,
+        "summary": "Vibration Amplitude registered 3.243 mm/s, exceeding safe threshold of 2.8 mm/s (+15.8%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.243,
+      "oil_debris_count": 28.3,
+      "engine_temp_c": 671.8,
+      "pressure_ratio": 13.66,
+      "fuel_flow_rate": 2.093,
+      "rotational_speed_rpm": 12768.5
+    }
+  },
+  {
+    "asset_id": "AC-1010",
+    "asset_type": "Armoured Vehicle",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 224,
+    "current_cycle": 224,
+    "last_service_date": "2024-11-04",
+    "status": "At-Risk",
+    "health_score": 62.5,
+    "composite_risk_score": 0.375,
+    "status_probabilities": {
+      "At-Risk": 0.9564,
+      "Not-Ready": 0.0,
+      "Ready": 0.0436
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 2.867,
+        "threshold": 2.8,
+        "breach_pct": 2.4,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "engine_temp_c",
+        "value": 762.4,
+        "threshold": 710.0,
+        "breach_pct": 7.4,
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 10.51,
+        "threshold": 12.0,
+        "breach_pct": 12.4,
+        "unit": "ratio"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.644,
+        "threshold": 2.35,
+        "breach_pct": 12.5,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 20.7,
+    "estimated_days_to_failure": 12.9,
+    "failure_probability_14d": 0.567,
+    "failure_probability_30d": 0.989,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Armoured Vehicle AC-1010 has been flagged as AT-RISK with health index at 62.5%. Early stage degradation detected in Turbine Blade Assembly: Fuel Consumption Rate registered 2.644 kg/s, exceeding safe threshold of 2.35 kg/s (+12.5%); Compressor Pressure Ratio registered 10.51 ratio, exceeding safe threshold of 12.0 ratio (+12.4%). Remaining useful life is estimated at 20 cycles (~12 days), with a 57% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 12.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.644,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 12.5,
+        "summary": "Fuel Consumption Rate registered 2.644 kg/s, exceeding safe threshold of 2.35 kg/s (+12.5%)"
+      },
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 10.51,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 12.4,
+        "summary": "Compressor Pressure Ratio registered 10.51 ratio, exceeding safe threshold of 12.0 ratio (+12.4%)"
+      },
+      {
+        "sensor_key": "engine_temp_c",
+        "label": "Exhaust Gas Temperature",
+        "current_value": 762.4,
+        "threshold": 710.0,
+        "unit": "\u00b0C",
+        "breach_pct": 7.4,
+        "summary": "Exhaust Gas Temperature registered 762.4 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+7.4%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.867,
+      "oil_debris_count": 9.5,
+      "engine_temp_c": 762.4,
+      "pressure_ratio": 10.51,
+      "fuel_flow_rate": 2.644,
+      "rotational_speed_rpm": 12793.3
+    }
+  },
+  {
+    "asset_id": "AC-1011",
+    "asset_type": "Transport Helicopter",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 251,
+    "current_cycle": 251,
+    "last_service_date": "2024-11-20",
+    "status": "At-Risk",
+    "health_score": 90.3,
+    "composite_risk_score": 0.097,
+    "status_probabilities": {
+      "At-Risk": 0.9567,
+      "Not-Ready": 0.01,
+      "Ready": 0.0333
+    },
+    "breached_sensors": [
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.575,
+        "threshold": 2.35,
+        "breach_pct": 9.6,
+        "unit": "kg/s"
+      },
+      {
+        "sensor": "rotational_speed_rpm",
+        "value": 12491.8,
+        "threshold": 12620.0,
+        "breach_pct": 71.2,
+        "unit": "RPM"
+      }
+    ],
+    "predicted_rul_cycles": 37.1,
+    "estimated_days_to_failure": 23.2,
+    "failure_probability_14d": 0.206,
+    "failure_probability_30d": 0.708,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Transport Helicopter AC-1011 has been flagged as AT-RISK with health index at 90.3%. Early stage degradation detected in Hydraulic Pump / Fuel Delivery: Turbine Shaft Speed registered 12491.8 RPM, exceeding safe threshold of 12620.0 RPM (+71.2%); Fuel Consumption Rate registered 2.575 kg/s, exceeding safe threshold of 2.35 kg/s (+9.6%). Remaining useful life is estimated at 37 cycles (~23 days), with a 21% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Hydraulic Pump / Fuel Delivery before cycle 22.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "rotational_speed_rpm",
+        "label": "Turbine Shaft Speed",
+        "current_value": 12491.8,
+        "threshold": 12620.0,
+        "unit": "RPM",
+        "breach_pct": 71.2,
+        "summary": "Turbine Shaft Speed registered 12491.8 RPM, exceeding safe threshold of 12620.0 RPM (+71.2%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.575,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 9.6,
+        "summary": "Fuel Consumption Rate registered 2.575 kg/s, exceeding safe threshold of 2.35 kg/s (+9.6%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 1.941,
+      "oil_debris_count": 15.5,
+      "engine_temp_c": 694.8,
+      "pressure_ratio": 13.74,
+      "fuel_flow_rate": 2.575,
+      "rotational_speed_rpm": 12491.8
+    }
+  },
+  {
+    "asset_id": "AC-1012",
+    "asset_type": "Armoured Vehicle",
+    "unit": "10th Mountain Aviation Support",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 180,
+    "current_cycle": 180,
+    "last_service_date": "2024-11-22",
+    "status": "Ready",
+    "health_score": 88.6,
+    "composite_risk_score": 0.114,
+    "status_probabilities": {
+      "At-Risk": 0.3379,
+      "Not-Ready": 0.0,
+      "Ready": 0.6621
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.244,
+        "threshold": 2.8,
+        "breach_pct": 15.9,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 23.8,
+        "threshold": 18.0,
+        "breach_pct": 32.2,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 62.1,
+    "estimated_days_to_failure": 38.8,
+    "failure_probability_14d": 0.072,
+    "failure_probability_30d": 0.328,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1012 is operating within nominal HUMS telemetry thresholds with a composite health index of 88.6%. No critical degradation trends detected. Projected remaining useful life exceeds 62 cycles (~38 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 23.8,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 32.2,
+        "summary": "Metallic Oil Debris registered 23.8 ppm, exceeding safe threshold of 18.0 ppm (+32.2%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.244,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 15.9,
+        "summary": "Vibration Amplitude registered 3.244 mm/s, exceeding safe threshold of 2.8 mm/s (+15.9%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.244,
+      "oil_debris_count": 23.8,
+      "engine_temp_c": 688.5,
+      "pressure_ratio": 12.99,
+      "fuel_flow_rate": 2.033,
+      "rotational_speed_rpm": 12829.9
+    }
+  },
+  {
+    "asset_id": "AC-1013",
+    "asset_type": "Transport Helicopter",
+    "unit": "82nd Airborne Combat Aviation",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 193,
+    "current_cycle": 193,
+    "last_service_date": "2024-11-26",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0235,
+      "Not-Ready": 0.0,
+      "Ready": 0.9765
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 78.4,
+    "estimated_days_to_failure": 49.0,
+    "failure_probability_14d": 0.044,
+    "failure_probability_30d": 0.212,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Transport Helicopter AC-1013 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 78 cycles (~49 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.127,
+      "oil_debris_count": 8.6,
+      "engine_temp_c": 681.3,
+      "pressure_ratio": 12.58,
+      "fuel_flow_rate": 2.175,
+      "rotational_speed_rpm": 12779.3
+    }
+  },
+  {
+    "asset_id": "AC-1014",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 116,
+    "current_cycle": 116,
+    "last_service_date": "2024-09-30",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0015,
+      "Not-Ready": 0.0,
+      "Ready": 0.9985
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 85.0,
+    "estimated_days_to_failure": 53.1,
+    "failure_probability_14d": 0.037,
+    "failure_probability_30d": 0.181,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Fighter Jet Engine AC-1014 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 85 cycles (~53 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.831,
+      "oil_debris_count": 7.1,
+      "engine_temp_c": 669.1,
+      "pressure_ratio": 13.63,
+      "fuel_flow_rate": 2.142,
+      "rotational_speed_rpm": 12747.0
+    }
+  },
+  {
+    "asset_id": "AC-1015",
+    "asset_type": "Armoured Vehicle",
+    "unit": "10th Mountain Aviation Support",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 116,
+    "current_cycle": 116,
+    "last_service_date": "2024-10-12",
+    "status": "Ready",
+    "health_score": 98.6,
+    "composite_risk_score": 0.014,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [
+      {
+        "sensor": "oil_debris_count",
+        "value": 19.7,
+        "threshold": 18.0,
+        "breach_pct": 9.4,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 60.9,
+    "estimated_days_to_failure": 38.1,
+    "failure_probability_14d": 0.074,
+    "failure_probability_30d": 0.339,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1015 is operating within nominal HUMS telemetry thresholds with a composite health index of 98.6%. No critical degradation trends detected. Projected remaining useful life exceeds 60 cycles (~38 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 19.7,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 9.4,
+        "summary": "Metallic Oil Debris registered 19.7 ppm, exceeding safe threshold of 18.0 ppm (+9.4%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.484,
+      "oil_debris_count": 19.7,
+      "engine_temp_c": 656.8,
+      "pressure_ratio": 13.47,
+      "fuel_flow_rate": 1.896,
+      "rotational_speed_rpm": 12787.8
+    }
+  },
+  {
+    "asset_id": "AC-1016",
+    "asset_type": "Transport Helicopter",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 261,
+    "current_cycle": 261,
+    "last_service_date": "2024-11-25",
+    "status": "At-Risk",
+    "health_score": 69.8,
+    "composite_risk_score": 0.302,
+    "status_probabilities": {
+      "At-Risk": 0.9361,
+      "Not-Ready": 0.0,
+      "Ready": 0.0639
+    },
+    "breached_sensors": [
+      {
+        "sensor": "engine_temp_c",
+        "value": 764.0,
+        "threshold": 710.0,
+        "breach_pct": 7.6,
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 10.8,
+        "threshold": 12.0,
+        "breach_pct": 10.0,
+        "unit": "ratio"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.438,
+        "threshold": 2.35,
+        "breach_pct": 3.7,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 30.3,
+    "estimated_days_to_failure": 18.9,
+    "failure_probability_14d": 0.304,
+    "failure_probability_30d": 0.855,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Transport Helicopter AC-1016 has been flagged as AT-RISK with health index at 69.8%. Early stage degradation detected in Turbine Blade Assembly: Compressor Pressure Ratio registered 10.8 ratio, exceeding safe threshold of 12.0 ratio (+10.0%); Exhaust Gas Temperature registered 764.0 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+7.6%). Remaining useful life is estimated at 30 cycles (~18 days), with a 30% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 18.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 10.8,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 10.0,
+        "summary": "Compressor Pressure Ratio registered 10.8 ratio, exceeding safe threshold of 12.0 ratio (+10.0%)"
+      },
+      {
+        "sensor_key": "engine_temp_c",
+        "label": "Exhaust Gas Temperature",
+        "current_value": 764.0,
+        "threshold": 710.0,
+        "unit": "\u00b0C",
+        "breach_pct": 7.6,
+        "summary": "Exhaust Gas Temperature registered 764.0 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+7.6%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.438,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 3.7,
+        "summary": "Fuel Consumption Rate registered 2.438 kg/s, exceeding safe threshold of 2.35 kg/s (+3.7%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.421,
+      "oil_debris_count": 12.0,
+      "engine_temp_c": 764.0,
+      "pressure_ratio": 10.8,
+      "fuel_flow_rate": 2.438,
+      "rotational_speed_rpm": 12825.6
+    }
+  },
+  {
+    "asset_id": "AC-1017",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 136,
+    "current_cycle": 136,
+    "last_service_date": "2024-10-27",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.1041,
+      "Not-Ready": 0.0,
+      "Ready": 0.8959
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 82.8,
+    "estimated_days_to_failure": 51.7,
+    "failure_probability_14d": 0.039,
+    "failure_probability_30d": 0.191,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Fighter Jet Engine AC-1017 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 82 cycles (~51 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.707,
+      "oil_debris_count": 15.5,
+      "engine_temp_c": 650.9,
+      "pressure_ratio": 14.09,
+      "fuel_flow_rate": 2.281,
+      "rotational_speed_rpm": 12678.0
+    }
+  },
+  {
+    "asset_id": "AC-1018",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 131,
+    "current_cycle": 131,
+    "last_service_date": "2024-09-23",
+    "status": "At-Risk",
+    "health_score": 75.2,
+    "composite_risk_score": 0.248,
+    "status_probabilities": {
+      "At-Risk": 0.8782,
+      "Not-Ready": 0.0,
+      "Ready": 0.1218
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.696,
+        "threshold": 2.8,
+        "breach_pct": 32.0,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 31.9,
+        "threshold": 18.0,
+        "breach_pct": 77.2,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 34.1,
+    "estimated_days_to_failure": 21.3,
+    "failure_probability_14d": 0.243,
+    "failure_probability_30d": 0.774,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Fighter Jet Engine AC-1018 has been flagged as AT-RISK with health index at 75.2%. Early stage degradation detected in Main Bearing / Gearbox: Metallic Oil Debris registered 31.9 ppm, exceeding safe threshold of 18.0 ppm (+77.2%); Vibration Amplitude registered 3.696 mm/s, exceeding safe threshold of 2.8 mm/s (+32.0%). Remaining useful life is estimated at 34 cycles (~21 days), with a 24% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Main Bearing / Gearbox before cycle 20.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 31.9,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 77.2,
+        "summary": "Metallic Oil Debris registered 31.9 ppm, exceeding safe threshold of 18.0 ppm (+77.2%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.696,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 32.0,
+        "summary": "Vibration Amplitude registered 3.696 mm/s, exceeding safe threshold of 2.8 mm/s (+32.0%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.696,
+      "oil_debris_count": 31.9,
+      "engine_temp_c": 660.8,
+      "pressure_ratio": 14.02,
+      "fuel_flow_rate": 2.055,
+      "rotational_speed_rpm": 12824.2
+    }
+  },
+  {
+    "asset_id": "AC-1019",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "82nd Airborne Combat Aviation",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 151,
+    "current_cycle": 151,
+    "last_service_date": "2024-10-09",
+    "status": "Ready",
+    "health_score": 90.5,
+    "composite_risk_score": 0.095,
+    "status_probabilities": {
+      "At-Risk": 0.4251,
+      "Not-Ready": 0.0,
+      "Ready": 0.5749
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.026,
+        "threshold": 2.8,
+        "breach_pct": 8.1,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 11.42,
+        "threshold": 12.0,
+        "breach_pct": 4.8,
+        "unit": "ratio"
+      }
+    ],
+    "predicted_rul_cycles": 57.1,
+    "estimated_days_to_failure": 35.7,
+    "failure_probability_14d": 0.085,
+    "failure_probability_30d": 0.38,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Fighter Jet Engine AC-1019 is operating within nominal HUMS telemetry thresholds with a composite health index of 90.5%. No critical degradation trends detected. Projected remaining useful life exceeds 57 cycles (~35 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "Vibration amplitude has accelerated +40.9% over the last 5 operating cycles.",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.026,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 8.1,
+        "summary": "Vibration Amplitude registered 3.026 mm/s, exceeding safe threshold of 2.8 mm/s (+8.1%)"
+      },
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 11.42,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 4.8,
+        "summary": "Compressor Pressure Ratio registered 11.42 ratio, exceeding safe threshold of 12.0 ratio (+4.8%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.026,
+      "oil_debris_count": 10.4,
+      "engine_temp_c": 684.6,
+      "pressure_ratio": 11.42,
+      "fuel_flow_rate": 2.319,
+      "rotational_speed_rpm": 12911.8
+    }
+  },
+  {
+    "asset_id": "AC-1020",
+    "asset_type": "Armoured Vehicle",
+    "unit": "10th Mountain Aviation Support",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 227,
+    "current_cycle": 227,
+    "last_service_date": "2024-11-08",
+    "status": "At-Risk",
+    "health_score": 90.5,
+    "composite_risk_score": 0.095,
+    "status_probabilities": {
+      "At-Risk": 0.7584,
+      "Not-Ready": 0.0,
+      "Ready": 0.2416
+    },
+    "breached_sensors": [
+      {
+        "sensor": "oil_debris_count",
+        "value": 18.4,
+        "threshold": 18.0,
+        "breach_pct": 2.2,
+        "unit": "ppm"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.569,
+        "threshold": 2.35,
+        "breach_pct": 9.3,
+        "unit": "kg/s"
+      },
+      {
+        "sensor": "rotational_speed_rpm",
+        "value": 12504.9,
+        "threshold": 12620.0,
+        "breach_pct": 63.9,
+        "unit": "RPM"
+      }
+    ],
+    "predicted_rul_cycles": 50.9,
+    "estimated_days_to_failure": 31.8,
+    "failure_probability_14d": 0.109,
+    "failure_probability_30d": 0.46,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Armoured Vehicle AC-1020 has been flagged as AT-RISK with health index at 90.5%. Early stage degradation detected in Hydraulic Pump / Fuel Delivery: Turbine Shaft Speed registered 12504.9 RPM, exceeding safe threshold of 12620.0 RPM (+63.9%); Fuel Consumption Rate registered 2.569 kg/s, exceeding safe threshold of 2.35 kg/s (+9.3%). Remaining useful life is estimated at 50 cycles (~31 days), with a 11% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Hydraulic Pump / Fuel Delivery before cycle 30.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "rotational_speed_rpm",
+        "label": "Turbine Shaft Speed",
+        "current_value": 12504.9,
+        "threshold": 12620.0,
+        "unit": "RPM",
+        "breach_pct": 63.9,
+        "summary": "Turbine Shaft Speed registered 12504.9 RPM, exceeding safe threshold of 12620.0 RPM (+63.9%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.569,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 9.3,
+        "summary": "Fuel Consumption Rate registered 2.569 kg/s, exceeding safe threshold of 2.35 kg/s (+9.3%)"
+      },
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 18.4,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 2.2,
+        "summary": "Metallic Oil Debris registered 18.4 ppm, exceeding safe threshold of 18.0 ppm (+2.2%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 1.924,
+      "oil_debris_count": 18.4,
+      "engine_temp_c": 687.5,
+      "pressure_ratio": 13.34,
+      "fuel_flow_rate": 2.569,
+      "rotational_speed_rpm": 12504.9
+    }
+  },
+  {
+    "asset_id": "AC-1021",
+    "asset_type": "Armoured Vehicle",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 168,
+    "current_cycle": 168,
+    "last_service_date": "2024-12-02",
+    "status": "At-Risk",
+    "health_score": 84.2,
+    "composite_risk_score": 0.158,
+    "status_probabilities": {
+      "At-Risk": 0.6741,
+      "Not-Ready": 0.0,
+      "Ready": 0.3259
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.387,
+        "threshold": 2.8,
+        "breach_pct": 21.0,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 26.6,
+        "threshold": 18.0,
+        "breach_pct": 47.8,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 57.4,
+    "estimated_days_to_failure": 35.9,
+    "failure_probability_14d": 0.084,
+    "failure_probability_30d": 0.376,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1021 has been flagged as AT-RISK with health index at 84.2%. Early stage degradation detected in Main Bearing / Gearbox: Metallic Oil Debris registered 26.6 ppm, exceeding safe threshold of 18.0 ppm (+47.8%); Vibration Amplitude registered 3.387 mm/s, exceeding safe threshold of 2.8 mm/s (+21.0%). Remaining useful life is estimated at 57 cycles (~35 days), with a 8% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Main Bearing / Gearbox before cycle 34.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 26.6,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 47.8,
+        "summary": "Metallic Oil Debris registered 26.6 ppm, exceeding safe threshold of 18.0 ppm (+47.8%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.387,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 21.0,
+        "summary": "Vibration Amplitude registered 3.387 mm/s, exceeding safe threshold of 2.8 mm/s (+21.0%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.387,
+      "oil_debris_count": 26.6,
+      "engine_temp_c": 666.6,
+      "pressure_ratio": 13.65,
+      "fuel_flow_rate": 2.016,
+      "rotational_speed_rpm": 12808.1
+    }
+  },
+  {
+    "asset_id": "AC-1022",
+    "asset_type": "Armoured Vehicle",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 238,
+    "current_cycle": 238,
+    "last_service_date": "2024-09-26",
+    "status": "At-Risk",
+    "health_score": 60.3,
+    "composite_risk_score": 0.397,
+    "status_probabilities": {
+      "At-Risk": 0.9661,
+      "Not-Ready": 0.0,
+      "Ready": 0.0339
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 2.909,
+        "threshold": 2.8,
+        "breach_pct": 3.9,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "engine_temp_c",
+        "value": 777.9,
+        "threshold": 710.0,
+        "breach_pct": 9.6,
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 10.7,
+        "threshold": 12.0,
+        "breach_pct": 10.8,
+        "unit": "ratio"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.566,
+        "threshold": 2.35,
+        "breach_pct": 9.2,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 25.4,
+    "estimated_days_to_failure": 15.9,
+    "failure_probability_14d": 0.411,
+    "failure_probability_30d": 0.941,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Armoured Vehicle AC-1022 has been flagged as AT-RISK with health index at 60.3%. Early stage degradation detected in Turbine Blade Assembly: Compressor Pressure Ratio registered 10.7 ratio, exceeding safe threshold of 12.0 ratio (+10.8%); Exhaust Gas Temperature registered 777.9 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+9.6%). Remaining useful life is estimated at 25 cycles (~15 days), with a 41% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 15.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 10.7,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 10.8,
+        "summary": "Compressor Pressure Ratio registered 10.7 ratio, exceeding safe threshold of 12.0 ratio (+10.8%)"
+      },
+      {
+        "sensor_key": "engine_temp_c",
+        "label": "Exhaust Gas Temperature",
+        "current_value": 777.9,
+        "threshold": 710.0,
+        "unit": "\u00b0C",
+        "breach_pct": 9.6,
+        "summary": "Exhaust Gas Temperature registered 777.9 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+9.6%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.566,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 9.2,
+        "summary": "Fuel Consumption Rate registered 2.566 kg/s, exceeding safe threshold of 2.35 kg/s (+9.2%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.909,
+      "oil_debris_count": 9.0,
+      "engine_temp_c": 777.9,
+      "pressure_ratio": 10.7,
+      "fuel_flow_rate": 2.566,
+      "rotational_speed_rpm": 12843.1
+    }
+  },
+  {
+    "asset_id": "AC-1023",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 179,
+    "current_cycle": 179,
+    "last_service_date": "2024-11-05",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0,
+      "Not-Ready": 0.0,
+      "Ready": 1.0
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 112.3,
+    "estimated_days_to_failure": 70.2,
+    "failure_probability_14d": 0.02,
+    "failure_probability_30d": 0.102,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Fighter Jet Engine AC-1023 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 112 cycles (~70 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "Vibration amplitude has accelerated +15.3% over the last 5 operating cycles.",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.373,
+      "oil_debris_count": 13.8,
+      "engine_temp_c": 661.3,
+      "pressure_ratio": 13.42,
+      "fuel_flow_rate": 2.128,
+      "rotational_speed_rpm": 12665.4
+    }
+  },
+  {
+    "asset_id": "AC-1024",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 150,
+    "current_cycle": 150,
+    "last_service_date": "2024-11-17",
+    "status": "At-Risk",
+    "health_score": 71.9,
+    "composite_risk_score": 0.281,
+    "status_probabilities": {
+      "At-Risk": 0.8353,
+      "Not-Ready": 0.0,
+      "Ready": 0.1647
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.909,
+        "threshold": 2.8,
+        "breach_pct": 39.6,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 32.1,
+        "threshold": 18.0,
+        "breach_pct": 78.3,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 35.5,
+    "estimated_days_to_failure": 22.2,
+    "failure_probability_14d": 0.224,
+    "failure_probability_30d": 0.743,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Fighter Jet Engine AC-1024 has been flagged as AT-RISK with health index at 71.9%. Early stage degradation detected in Main Bearing / Gearbox: Metallic Oil Debris registered 32.1 ppm, exceeding safe threshold of 18.0 ppm (+78.3%); Vibration Amplitude registered 3.909 mm/s, exceeding safe threshold of 2.8 mm/s (+39.6%). Remaining useful life is estimated at 35 cycles (~22 days), with a 22% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Main Bearing / Gearbox before cycle 21.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 32.1,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 78.3,
+        "summary": "Metallic Oil Debris registered 32.1 ppm, exceeding safe threshold of 18.0 ppm (+78.3%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.909,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 39.6,
+        "summary": "Vibration Amplitude registered 3.909 mm/s, exceeding safe threshold of 2.8 mm/s (+39.6%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.909,
+      "oil_debris_count": 32.1,
+      "engine_temp_c": 663.9,
+      "pressure_ratio": 14.01,
+      "fuel_flow_rate": 1.953,
+      "rotational_speed_rpm": 12701.7
+    }
+  },
+  {
+    "asset_id": "AC-1025",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 227,
+    "current_cycle": 227,
+    "last_service_date": "2024-09-18",
+    "status": "At-Risk",
+    "health_score": 62.5,
+    "composite_risk_score": 0.375,
+    "status_probabilities": {
+      "At-Risk": 0.9765,
+      "Not-Ready": 0.0,
+      "Ready": 0.0235
+    },
+    "breached_sensors": [
+      {
+        "sensor": "engine_temp_c",
+        "value": 799.3,
+        "threshold": 710.0,
+        "breach_pct": 12.6,
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 10.94,
+        "threshold": 12.0,
+        "breach_pct": 8.8,
+        "unit": "ratio"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.626,
+        "threshold": 2.35,
+        "breach_pct": 11.7,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 18.3,
+    "estimated_days_to_failure": 11.4,
+    "failure_probability_14d": 0.667,
+    "failure_probability_30d": 0.99,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Fighter Jet Engine AC-1025 has been flagged as AT-RISK with health index at 62.5%. Early stage degradation detected in Turbine Blade Assembly: Exhaust Gas Temperature registered 799.3 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+12.6%); Fuel Consumption Rate registered 2.626 kg/s, exceeding safe threshold of 2.35 kg/s (+11.7%). Remaining useful life is estimated at 18 cycles (~11 days), with a 67% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 10.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "engine_temp_c",
+        "label": "Exhaust Gas Temperature",
+        "current_value": 799.3,
+        "threshold": 710.0,
+        "unit": "\u00b0C",
+        "breach_pct": 12.6,
+        "summary": "Exhaust Gas Temperature registered 799.3 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+12.6%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.626,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 11.7,
+        "summary": "Fuel Consumption Rate registered 2.626 kg/s, exceeding safe threshold of 2.35 kg/s (+11.7%)"
+      },
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 10.94,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 8.8,
+        "summary": "Compressor Pressure Ratio registered 10.94 ratio, exceeding safe threshold of 12.0 ratio (+8.8%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.723,
+      "oil_debris_count": 8.1,
+      "engine_temp_c": 799.3,
+      "pressure_ratio": 10.94,
+      "fuel_flow_rate": 2.626,
+      "rotational_speed_rpm": 12789.2
+    }
+  },
+  {
+    "asset_id": "AC-1026",
+    "asset_type": "Armoured Vehicle",
+    "unit": "82nd Airborne Combat Aviation",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 179,
+    "current_cycle": 179,
+    "last_service_date": "2024-11-10",
+    "status": "Not-Ready",
+    "health_score": 80.2,
+    "composite_risk_score": 0.198,
+    "status_probabilities": {
+      "At-Risk": 0.1193,
+      "Not-Ready": 0.85,
+      "Ready": 0.0307
+    },
+    "breached_sensors": [
+      {
+        "sensor": "oil_debris_count",
+        "value": 20.1,
+        "threshold": 18.0,
+        "breach_pct": 11.7,
+        "unit": "ppm"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.735,
+        "threshold": 2.35,
+        "breach_pct": 16.4,
+        "unit": "kg/s"
+      },
+      {
+        "sensor": "rotational_speed_rpm",
+        "value": 12363.8,
+        "threshold": 12620.0,
+        "breach_pct": 142.3,
+        "unit": "RPM"
+      }
+    ],
+    "predicted_rul_cycles": 12.9,
+    "estimated_days_to_failure": 8.1,
+    "failure_probability_14d": 0.903,
+    "failure_probability_30d": 0.99,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "CRITICAL ALERT: Armoured Vehicle AC-1026 is deemed NOT-READY for deployment. Imminent failure signature observed on Hydraulic Pump / Fuel Delivery. Root cause: Turbine Shaft Speed registered 12363.8 RPM, exceeding safe threshold of 12620.0 RPM (+142.3%); Fuel Consumption Rate registered 2.735 kg/s, exceeding safe threshold of 2.35 kg/s (+16.4%); Metallic Oil Debris registered 20.1 ppm, exceeding safe threshold of 18.0 ppm (+11.7%). Remaining useful life is critically depleted to ~12 cycles (8 operational days). 14-day mission failure probability is 90%.",
+    "action_recommendation": "IMMEDIATE ACTION REQUIRED: Ground platform AC-1026. Dispatch depot maintenance crew for overhaul/replacement of Hydraulic Pump / Fuel Delivery. Mechanic note: Elevated fuel flow consumption and unstable shaft RPM governing.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "rotational_speed_rpm",
+        "label": "Turbine Shaft Speed",
+        "current_value": 12363.8,
+        "threshold": 12620.0,
+        "unit": "RPM",
+        "breach_pct": 142.3,
+        "summary": "Turbine Shaft Speed registered 12363.8 RPM, exceeding safe threshold of 12620.0 RPM (+142.3%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.735,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 16.4,
+        "summary": "Fuel Consumption Rate registered 2.735 kg/s, exceeding safe threshold of 2.35 kg/s (+16.4%)"
+      },
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 20.1,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 11.7,
+        "summary": "Metallic Oil Debris registered 20.1 ppm, exceeding safe threshold of 18.0 ppm (+11.7%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.192,
+      "oil_debris_count": 20.1,
+      "engine_temp_c": 688.2,
+      "pressure_ratio": 14.45,
+      "fuel_flow_rate": 2.735,
+      "rotational_speed_rpm": 12363.8
+    }
+  },
+  {
+    "asset_id": "AC-1027",
+    "asset_type": "Transport Helicopter",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 141,
+    "current_cycle": 141,
+    "last_service_date": "2024-10-27",
+    "status": "Ready",
+    "health_score": 97.3,
+    "composite_risk_score": 0.027,
+    "status_probabilities": {
+      "At-Risk": 0.01,
+      "Not-Ready": 0.0,
+      "Ready": 0.99
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 2.822,
+        "threshold": 2.8,
+        "breach_pct": 0.8,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 20.9,
+        "threshold": 18.0,
+        "breach_pct": 16.1,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 59.9,
+    "estimated_days_to_failure": 37.4,
+    "failure_probability_14d": 0.077,
+    "failure_probability_30d": 0.35,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1027 is operating within nominal HUMS telemetry thresholds with a composite health index of 97.3%. No critical degradation trends detected. Projected remaining useful life exceeds 59 cycles (~37 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 20.9,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 16.1,
+        "summary": "Metallic Oil Debris registered 20.9 ppm, exceeding safe threshold of 18.0 ppm (+16.1%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 2.822,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 0.8,
+        "summary": "Vibration Amplitude registered 2.822 mm/s, exceeding safe threshold of 2.8 mm/s (+0.8%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.822,
+      "oil_debris_count": 20.9,
+      "engine_temp_c": 657.9,
+      "pressure_ratio": 13.88,
+      "fuel_flow_rate": 2.065,
+      "rotational_speed_rpm": 12804.1
+    }
+  },
+  {
+    "asset_id": "AC-1028",
+    "asset_type": "Armoured Vehicle",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 115,
+    "current_cycle": 115,
+    "last_service_date": "2024-11-14",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0083,
+      "Not-Ready": 0.0,
+      "Ready": 0.9917
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 95.5,
+    "estimated_days_to_failure": 59.7,
+    "failure_probability_14d": 0.028,
+    "failure_probability_30d": 0.143,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Armoured Vehicle AC-1028 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 95 cycles (~59 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.246,
+      "oil_debris_count": 9.1,
+      "engine_temp_c": 681.5,
+      "pressure_ratio": 13.08,
+      "fuel_flow_rate": 2.083,
+      "rotational_speed_rpm": 12722.6
+    }
+  },
+  {
+    "asset_id": "AC-1029",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 155,
+    "current_cycle": 155,
+    "last_service_date": "2024-11-08",
+    "status": "At-Risk",
+    "health_score": 96.8,
+    "composite_risk_score": 0.032,
+    "status_probabilities": {
+      "At-Risk": 0.8837,
+      "Not-Ready": 0.0,
+      "Ready": 0.1163
+    },
+    "breached_sensors": [
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.4,
+        "threshold": 2.35,
+        "breach_pct": 2.1,
+        "unit": "kg/s"
+      },
+      {
+        "sensor": "rotational_speed_rpm",
+        "value": 12562.8,
+        "threshold": 12620.0,
+        "breach_pct": 31.8,
+        "unit": "RPM"
+      }
+    ],
+    "predicted_rul_cycles": 42.2,
+    "estimated_days_to_failure": 26.4,
+    "failure_probability_14d": 0.159,
+    "failure_probability_30d": 0.604,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Fighter Jet Engine AC-1029 has been flagged as AT-RISK with health index at 96.8%. Early stage degradation detected in Hydraulic Pump / Fuel Delivery: Turbine Shaft Speed registered 12562.8 RPM, exceeding safe threshold of 12620.0 RPM (+31.8%); Fuel Consumption Rate registered 2.4 kg/s, exceeding safe threshold of 2.35 kg/s (+2.1%). Remaining useful life is estimated at 42 cycles (~26 days), with a 16% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Hydraulic Pump / Fuel Delivery before cycle 25.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "rotational_speed_rpm",
+        "label": "Turbine Shaft Speed",
+        "current_value": 12562.8,
+        "threshold": 12620.0,
+        "unit": "RPM",
+        "breach_pct": 31.8,
+        "summary": "Turbine Shaft Speed registered 12562.8 RPM, exceeding safe threshold of 12620.0 RPM (+31.8%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.4,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 2.1,
+        "summary": "Fuel Consumption Rate registered 2.4 kg/s, exceeding safe threshold of 2.35 kg/s (+2.1%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 1.86,
+      "oil_debris_count": 11.2,
+      "engine_temp_c": 683.6,
+      "pressure_ratio": 12.96,
+      "fuel_flow_rate": 2.4,
+      "rotational_speed_rpm": 12562.8
+    }
+  },
+  {
+    "asset_id": "AC-1030",
+    "asset_type": "Transport Helicopter",
+    "unit": "3rd Armoured Brigade",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 167,
+    "current_cycle": 167,
+    "last_service_date": "2024-11-08",
+    "status": "Ready",
+    "health_score": 96.6,
+    "composite_risk_score": 0.034,
+    "status_probabilities": {
+      "At-Risk": 0.0098,
+      "Not-Ready": 0.0,
+      "Ready": 0.9902
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.032,
+        "threshold": 2.8,
+        "breach_pct": 8.3,
+        "unit": "mm/s"
+      }
+    ],
+    "predicted_rul_cycles": 106.8,
+    "estimated_days_to_failure": 66.8,
+    "failure_probability_14d": 0.022,
+    "failure_probability_30d": 0.113,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1030 is operating within nominal HUMS telemetry thresholds with a composite health index of 96.6%. No critical degradation trends detected. Projected remaining useful life exceeds 106 cycles (~66 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.032,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 8.3,
+        "summary": "Vibration Amplitude registered 3.032 mm/s, exceeding safe threshold of 2.8 mm/s (+8.3%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.032,
+      "oil_debris_count": 17.7,
+      "engine_temp_c": 656.9,
+      "pressure_ratio": 13.61,
+      "fuel_flow_rate": 2.051,
+      "rotational_speed_rpm": 12741.7
+    }
+  },
+  {
+    "asset_id": "AC-1031",
+    "asset_type": "Armoured Vehicle",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 191,
+    "current_cycle": 191,
+    "last_service_date": "2024-09-30",
+    "status": "At-Risk",
+    "health_score": 85.0,
+    "composite_risk_score": 0.15,
+    "status_probabilities": {
+      "At-Risk": 0.952,
+      "Not-Ready": 0.0,
+      "Ready": 0.048
+    },
+    "breached_sensors": [
+      {
+        "sensor": "engine_temp_c",
+        "value": 733.0,
+        "threshold": 710.0,
+        "breach_pct": 3.2,
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 11.3,
+        "threshold": 12.0,
+        "breach_pct": 5.8,
+        "unit": "ratio"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.39,
+        "threshold": 2.35,
+        "breach_pct": 1.7,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 43.8,
+    "estimated_days_to_failure": 27.4,
+    "failure_probability_14d": 0.148,
+    "failure_probability_30d": 0.575,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Armoured Vehicle AC-1031 has been flagged as AT-RISK with health index at 85.0%. Early stage degradation detected in Turbine Blade Assembly: Compressor Pressure Ratio registered 11.3 ratio, exceeding safe threshold of 12.0 ratio (+5.8%); Exhaust Gas Temperature registered 733.0 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+3.2%). Remaining useful life is estimated at 43 cycles (~27 days), with a 15% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 26.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 11.3,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 5.8,
+        "summary": "Compressor Pressure Ratio registered 11.3 ratio, exceeding safe threshold of 12.0 ratio (+5.8%)"
+      },
+      {
+        "sensor_key": "engine_temp_c",
+        "label": "Exhaust Gas Temperature",
+        "current_value": 733.0,
+        "threshold": 710.0,
+        "unit": "\u00b0C",
+        "breach_pct": 3.2,
+        "summary": "Exhaust Gas Temperature registered 733.0 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+3.2%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.39,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 1.7,
+        "summary": "Fuel Consumption Rate registered 2.39 kg/s, exceeding safe threshold of 2.35 kg/s (+1.7%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.236,
+      "oil_debris_count": 7.1,
+      "engine_temp_c": 733.0,
+      "pressure_ratio": 11.3,
+      "fuel_flow_rate": 2.39,
+      "rotational_speed_rpm": 12823.5
+    }
+  },
+  {
+    "asset_id": "AC-1032",
+    "asset_type": "Armoured Vehicle",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 177,
+    "current_cycle": 177,
+    "last_service_date": "2024-11-14",
+    "status": "At-Risk",
+    "health_score": 98.5,
+    "composite_risk_score": 0.015,
+    "status_probabilities": {
+      "At-Risk": 0.855,
+      "Not-Ready": 0.0,
+      "Ready": 0.145
+    },
+    "breached_sensors": [
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.416,
+        "threshold": 2.35,
+        "breach_pct": 2.8,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 46.2,
+    "estimated_days_to_failure": 28.9,
+    "failure_probability_14d": 0.132,
+    "failure_probability_30d": 0.532,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Armoured Vehicle AC-1032 has been flagged as AT-RISK with health index at 98.5%. Early stage degradation detected in Hydraulic Pump / Fuel Delivery: Fuel Consumption Rate registered 2.416 kg/s, exceeding safe threshold of 2.35 kg/s (+2.8%). Remaining useful life is estimated at 46 cycles (~28 days), with a 13% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Hydraulic Pump / Fuel Delivery before cycle 27.",
+    "trend_note": "Vibration amplitude has accelerated +26.8% over the last 5 operating cycles.",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.416,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 2.8,
+        "summary": "Fuel Consumption Rate registered 2.416 kg/s, exceeding safe threshold of 2.35 kg/s (+2.8%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.188,
+      "oil_debris_count": 10.3,
+      "engine_temp_c": 685.9,
+      "pressure_ratio": 13.96,
+      "fuel_flow_rate": 2.416,
+      "rotational_speed_rpm": 12635.7
+    }
+  },
+  {
+    "asset_id": "AC-1033",
+    "asset_type": "Armoured Vehicle",
+    "unit": "4th Strike Fighter Wing",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 241,
+    "current_cycle": 241,
+    "last_service_date": "2024-10-20",
+    "status": "Ready",
+    "health_score": 80.1,
+    "composite_risk_score": 0.199,
+    "status_probabilities": {
+      "At-Risk": 0.3028,
+      "Not-Ready": 0.0,
+      "Ready": 0.6972
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.473,
+        "threshold": 2.8,
+        "breach_pct": 24.0,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 30.0,
+        "threshold": 18.0,
+        "breach_pct": 66.7,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 58.4,
+    "estimated_days_to_failure": 36.5,
+    "failure_probability_14d": 0.082,
+    "failure_probability_30d": 0.365,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1033 is operating within nominal HUMS telemetry thresholds with a composite health index of 80.1%. No critical degradation trends detected. Projected remaining useful life exceeds 58 cycles (~36 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 30.0,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 66.7,
+        "summary": "Metallic Oil Debris registered 30.0 ppm, exceeding safe threshold of 18.0 ppm (+66.7%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.473,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 24.0,
+        "summary": "Vibration Amplitude registered 3.473 mm/s, exceeding safe threshold of 2.8 mm/s (+24.0%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.473,
+      "oil_debris_count": 30.0,
+      "engine_temp_c": 692.5,
+      "pressure_ratio": 13.52,
+      "fuel_flow_rate": 2.146,
+      "rotational_speed_rpm": 12826.5
+    }
+  },
+  {
+    "asset_id": "AC-1034",
+    "asset_type": "Armoured Vehicle",
+    "unit": "82nd Airborne Combat Aviation",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 138,
+    "current_cycle": 138,
+    "last_service_date": "2024-09-21",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0198,
+      "Not-Ready": 0.0,
+      "Ready": 0.9802
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 93.7,
+    "estimated_days_to_failure": 58.6,
+    "failure_probability_14d": 0.03,
+    "failure_probability_30d": 0.148,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1034 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 93 cycles (~58 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 1.848,
+      "oil_debris_count": 10.7,
+      "engine_temp_c": 679.6,
+      "pressure_ratio": 12.21,
+      "fuel_flow_rate": 2.23,
+      "rotational_speed_rpm": 12781.0
+    }
+  },
+  {
+    "asset_id": "AC-1035",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 206,
+    "current_cycle": 206,
+    "last_service_date": "2024-10-05",
+    "status": "Not-Ready",
+    "health_score": 79.8,
+    "composite_risk_score": 0.202,
+    "status_probabilities": {
+      "At-Risk": 0.0697,
+      "Not-Ready": 0.93,
+      "Ready": 0.0003
+    },
+    "breached_sensors": [
+      {
+        "sensor": "oil_debris_count",
+        "value": 22.0,
+        "threshold": 18.0,
+        "breach_pct": 22.2,
+        "unit": "ppm"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.879,
+        "threshold": 2.35,
+        "breach_pct": 22.5,
+        "unit": "kg/s"
+      },
+      {
+        "sensor": "rotational_speed_rpm",
+        "value": 12435.5,
+        "threshold": 12620.0,
+        "breach_pct": 102.5,
+        "unit": "RPM"
+      }
+    ],
+    "predicted_rul_cycles": 8.3,
+    "estimated_days_to_failure": 5.2,
+    "failure_probability_14d": 0.99,
+    "failure_probability_30d": 0.99,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "CRITICAL ALERT: Fighter Jet Engine AC-1035 is deemed NOT-READY for deployment. Imminent failure signature observed on Hydraulic Pump / Fuel Delivery. Root cause: Turbine Shaft Speed registered 12435.5 RPM, exceeding safe threshold of 12620.0 RPM (+102.5%); Fuel Consumption Rate registered 2.879 kg/s, exceeding safe threshold of 2.35 kg/s (+22.5%); Metallic Oil Debris registered 22.0 ppm, exceeding safe threshold of 18.0 ppm (+22.2%). Remaining useful life is critically depleted to ~8 cycles (5 operational days). 14-day mission failure probability is 99%.",
+    "action_recommendation": "IMMEDIATE ACTION REQUIRED: Ground platform AC-1035. Dispatch depot maintenance crew for overhaul/replacement of Hydraulic Pump / Fuel Delivery. Mechanic note: Elevated fuel flow consumption and unstable shaft RPM governing.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "rotational_speed_rpm",
+        "label": "Turbine Shaft Speed",
+        "current_value": 12435.5,
+        "threshold": 12620.0,
+        "unit": "RPM",
+        "breach_pct": 102.5,
+        "summary": "Turbine Shaft Speed registered 12435.5 RPM, exceeding safe threshold of 12620.0 RPM (+102.5%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.879,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 22.5,
+        "summary": "Fuel Consumption Rate registered 2.879 kg/s, exceeding safe threshold of 2.35 kg/s (+22.5%)"
+      },
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 22.0,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 22.2,
+        "summary": "Metallic Oil Debris registered 22.0 ppm, exceeding safe threshold of 18.0 ppm (+22.2%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 1.655,
+      "oil_debris_count": 22.0,
+      "engine_temp_c": 688.1,
+      "pressure_ratio": 14.04,
+      "fuel_flow_rate": 2.879,
+      "rotational_speed_rpm": 12435.5
+    }
+  },
+  {
+    "asset_id": "AC-1036",
+    "asset_type": "Armoured Vehicle",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 1.6,
+    "total_operating_cycles": 155,
+    "current_cycle": 155,
+    "last_service_date": "2024-09-21",
+    "status": "At-Risk",
+    "health_score": 67.6,
+    "composite_risk_score": 0.324,
+    "status_probabilities": {
+      "At-Risk": 0.9149,
+      "Not-Ready": 0.0,
+      "Ready": 0.0851
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 4.037,
+        "threshold": 2.8,
+        "breach_pct": 44.2,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 35.1,
+        "threshold": 18.0,
+        "breach_pct": 95.0,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 34.4,
+    "estimated_days_to_failure": 21.5,
+    "failure_probability_14d": 0.238,
+    "failure_probability_30d": 0.767,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Armoured Vehicle AC-1036 has been flagged as AT-RISK with health index at 67.6%. Early stage degradation detected in Main Bearing / Gearbox: Metallic Oil Debris registered 35.1 ppm, exceeding safe threshold of 18.0 ppm (+95.0%); Vibration Amplitude registered 4.037 mm/s, exceeding safe threshold of 2.8 mm/s (+44.2%). Remaining useful life is estimated at 34 cycles (~21 days), with a 24% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Main Bearing / Gearbox before cycle 20.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 35.1,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 95.0,
+        "summary": "Metallic Oil Debris registered 35.1 ppm, exceeding safe threshold of 18.0 ppm (+95.0%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 4.037,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 44.2,
+        "summary": "Vibration Amplitude registered 4.037 mm/s, exceeding safe threshold of 2.8 mm/s (+44.2%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 4.037,
+      "oil_debris_count": 35.1,
+      "engine_temp_c": 672.1,
+      "pressure_ratio": 13.54,
+      "fuel_flow_rate": 2.119,
+      "rotational_speed_rpm": 12819.7
+    }
+  },
+  {
+    "asset_id": "AC-1037",
+    "asset_type": "Transport Helicopter",
+    "unit": "82nd Airborne Combat Aviation",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 127,
+    "current_cycle": 127,
+    "last_service_date": "2024-11-22",
+    "status": "At-Risk",
+    "health_score": 92.3,
+    "composite_risk_score": 0.077,
+    "status_probabilities": {
+      "At-Risk": 0.8834,
+      "Not-Ready": 0.0,
+      "Ready": 0.1166
+    },
+    "breached_sensors": [
+      {
+        "sensor": "engine_temp_c",
+        "value": 711.6,
+        "threshold": 710.0,
+        "breach_pct": 0.2,
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor": "pressure_ratio",
+        "value": 11.35,
+        "threshold": 12.0,
+        "breach_pct": 5.4,
+        "unit": "ratio"
+      },
+      {
+        "sensor": "fuel_flow_rate",
+        "value": 2.363,
+        "threshold": 2.35,
+        "breach_pct": 0.6,
+        "unit": "kg/s"
+      }
+    ],
+    "predicted_rul_cycles": 39.3,
+    "estimated_days_to_failure": 24.6,
+    "failure_probability_14d": 0.183,
+    "failure_probability_30d": 0.661,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Transport Helicopter AC-1037 has been flagged as AT-RISK with health index at 92.3%. Early stage degradation detected in Turbine Blade Assembly: Compressor Pressure Ratio registered 11.35 ratio, exceeding safe threshold of 12.0 ratio (+5.4%); Fuel Consumption Rate registered 2.363 kg/s, exceeding safe threshold of 2.35 kg/s (+0.6%). Remaining useful life is estimated at 39 cycles (~24 days), with a 18% probability of mission abort within the next 14 days.",
+    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 23.",
+    "trend_note": "",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "pressure_ratio",
+        "label": "Compressor Pressure Ratio",
+        "current_value": 11.35,
+        "threshold": 12.0,
+        "unit": "ratio",
+        "breach_pct": 5.4,
+        "summary": "Compressor Pressure Ratio registered 11.35 ratio, exceeding safe threshold of 12.0 ratio (+5.4%)"
+      },
+      {
+        "sensor_key": "fuel_flow_rate",
+        "label": "Fuel Consumption Rate",
+        "current_value": 2.363,
+        "threshold": 2.35,
+        "unit": "kg/s",
+        "breach_pct": 0.6,
+        "summary": "Fuel Consumption Rate registered 2.363 kg/s, exceeding safe threshold of 2.35 kg/s (+0.6%)"
+      },
+      {
+        "sensor_key": "engine_temp_c",
+        "label": "Exhaust Gas Temperature",
+        "current_value": 711.6,
+        "threshold": 710.0,
+        "unit": "\u00b0C",
+        "breach_pct": 0.2,
+        "summary": "Exhaust Gas Temperature registered 711.6 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+0.2%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 2.428,
+      "oil_debris_count": 9.5,
+      "engine_temp_c": 711.6,
+      "pressure_ratio": 11.35,
+      "fuel_flow_rate": 2.363,
+      "rotational_speed_rpm": 12831.5
+    }
+  },
+  {
+    "asset_id": "AC-1038",
+    "asset_type": "Fighter Jet Engine",
+    "unit": "10th Mountain Aviation Support",
+    "mission_criticality": 3.0,
+    "total_operating_cycles": 175,
+    "current_cycle": 175,
+    "last_service_date": "2024-11-10",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.018,
+      "Not-Ready": 0.0,
+      "Ready": 0.982
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 80.8,
+    "estimated_days_to_failure": 50.5,
+    "failure_probability_14d": 0.041,
+    "failure_probability_30d": 0.2,
+    "predicted_failing_component": "Hydraulic Pump / Fuel Delivery",
+    "component_diagnosis_reason": "Elevated fuel flow consumption and unstable shaft RPM governing",
+    "executive_summary": "Fighter Jet Engine AC-1038 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 80 cycles (~50 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.133,
+      "oil_debris_count": 14.2,
+      "engine_temp_c": 670.4,
+      "pressure_ratio": 13.88,
+      "fuel_flow_rate": 2.239,
+      "rotational_speed_rpm": 12622.9
+    }
+  },
+  {
+    "asset_id": "AC-1039",
+    "asset_type": "Transport Helicopter",
+    "unit": "101st Tactical Fighter Squadron",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 122,
+    "current_cycle": 122,
+    "last_service_date": "2024-09-26",
+    "status": "Ready",
+    "health_score": 89.8,
+    "composite_risk_score": 0.102,
+    "status_probabilities": {
+      "At-Risk": 0.0299,
+      "Not-Ready": 0.0,
+      "Ready": 0.9701
+    },
+    "breached_sensors": [
+      {
+        "sensor": "vibration_level",
+        "value": 3.224,
+        "threshold": 2.8,
+        "breach_pct": 15.1,
+        "unit": "mm/s"
+      },
+      {
+        "sensor": "oil_debris_count",
+        "value": 22.7,
+        "threshold": 18.0,
+        "breach_pct": 26.1,
+        "unit": "ppm"
+      }
+    ],
+    "predicted_rul_cycles": 64.7,
+    "estimated_days_to_failure": 40.4,
+    "failure_probability_14d": 0.066,
+    "failure_probability_30d": 0.305,
+    "predicted_failing_component": "Main Bearing / Gearbox",
+    "component_diagnosis_reason": "Elevated mechanical harmonic vibration coupled with ferrous oil debris accumulation",
+    "executive_summary": "Transport Helicopter AC-1039 is operating within nominal HUMS telemetry thresholds with a composite health index of 89.8%. No critical degradation trends detected. Projected remaining useful life exceeds 64 cycles (~40 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "Vibration amplitude has accelerated +23.6% over the last 5 operating cycles.",
+    "top_contributing_factors": [
+      {
+        "sensor_key": "oil_debris_count",
+        "label": "Metallic Oil Debris",
+        "current_value": 22.7,
+        "threshold": 18.0,
+        "unit": "ppm",
+        "breach_pct": 26.1,
+        "summary": "Metallic Oil Debris registered 22.7 ppm, exceeding safe threshold of 18.0 ppm (+26.1%)"
+      },
+      {
+        "sensor_key": "vibration_level",
+        "label": "Vibration Amplitude",
+        "current_value": 3.224,
+        "threshold": 2.8,
+        "unit": "mm/s",
+        "breach_pct": 15.1,
+        "summary": "Vibration Amplitude registered 3.224 mm/s, exceeding safe threshold of 2.8 mm/s (+15.1%)"
+      }
+    ],
+    "latest_sensors": {
+      "vibration_level": 3.224,
+      "oil_debris_count": 22.7,
+      "engine_temp_c": 659.7,
+      "pressure_ratio": 12.93,
+      "fuel_flow_rate": 1.811,
+      "rotational_speed_rpm": 12832.4
+    }
+  },
+  {
+    "asset_id": "AC-1040",
+    "asset_type": "Transport Helicopter",
+    "unit": "7th Mechanized Recon Cavalry",
+    "mission_criticality": 2.2,
+    "total_operating_cycles": 105,
+    "current_cycle": 105,
+    "last_service_date": "2024-10-24",
+    "status": "Ready",
+    "health_score": 100.0,
+    "composite_risk_score": 0.0,
+    "status_probabilities": {
+      "At-Risk": 0.0015,
+      "Not-Ready": 0.0,
+      "Ready": 0.9985
+    },
+    "breached_sensors": [],
+    "predicted_rul_cycles": 83.5,
+    "estimated_days_to_failure": 52.2,
+    "failure_probability_14d": 0.038,
+    "failure_probability_30d": 0.187,
+    "predicted_failing_component": "Turbine Blade Assembly",
+    "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
+    "executive_summary": "Transport Helicopter AC-1040 is operating within nominal HUMS telemetry thresholds with a composite health index of 100.0%. No critical degradation trends detected. Projected remaining useful life exceeds 83 cycles (~52 mission days).",
+    "action_recommendation": "Asset cleared for standard flight/operational sortie assignments.",
+    "trend_note": "",
+    "top_contributing_factors": [],
+    "latest_sensors": {
+      "vibration_level": 2.181,
+      "oil_debris_count": 8.1,
+      "engine_temp_c": 702.6,
+      "pressure_ratio": 12.61,
+      "fuel_flow_rate": 2.178,
+      "rotational_speed_rpm": 12826.8
+    }
+  }
+]

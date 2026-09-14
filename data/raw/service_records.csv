@@ -1,0 +1,75 @@
+record_id,asset_id,service_date,service_type,component_serviced,technician_notes
+SR-AC-1001-1,AC-1001,2024-01-13,Unscheduled,Main Bearing,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1001-2,AC-1001,2023-12-06,Scheduled,Main Bearing,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1001-3,AC-1001,2024-03-22,Unscheduled,Main Bearing,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1002-1,AC-1002,2024-02-05,Scheduled,Turbine Blade,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1002-2,AC-1002,2024-03-09,Scheduled,Turbine Blade,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1002-3,AC-1002,2024-10-22,Scheduled,Main Bearing,Routine 215-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1003-1,AC-1003,2024-07-03,Unscheduled,Main Bearing,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1003-2,AC-1003,2023-12-12,Unscheduled,Hydraulic Pump,Seal clearance inspection performed on hydraulic pump. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1003-3,AC-1003,2024-09-04,Scheduled,Main Bearing,Routine 167-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1004-1,AC-1004,2024-04-12,Scheduled,Hydraulic Pump,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1004-2,AC-1004,2024-05-30,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1005-1,AC-1005,2024-05-22,Scheduled,Gearbox Drive,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1005-2,AC-1005,2024-06-05,Unscheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1005-3,AC-1005,2024-02-11,Scheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1006-1,AC-1006,2024-08-28,Scheduled,Gearbox Drive,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1006-2,AC-1006,2024-04-24,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1006-3,AC-1006,2024-10-14,Scheduled,Gearbox Drive,Seal clearance inspection performed on gearbox drive. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1007-1,AC-1007,2024-08-22,Scheduled,Gearbox Drive,Routine 180-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1008-1,AC-1008,2024-12-01,Unscheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1009-1,AC-1009,2024-07-22,Unscheduled,Turbine Blade,Routine 87-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1009-2,AC-1009,2024-08-10,Unscheduled,Turbine Blade,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1009-3,AC-1009,2024-09-18,Scheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1010-1,AC-1010,2023-11-29,Scheduled,Main Bearing,Routine 34-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1011-1,AC-1011,2024-05-15,Unscheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1011-2,AC-1011,2024-06-14,Unscheduled,Gearbox Drive,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1011-3,AC-1011,2024-06-20,Unscheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1012-1,AC-1012,2024-05-30,Scheduled,Hydraulic Pump,Routine 77-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1013-1,AC-1013,2024-02-05,Scheduled,Main Bearing,Routine 35-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1013-2,AC-1013,2024-06-29,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1013-3,AC-1013,2024-09-21,Scheduled,Turbine Blade,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1014-1,AC-1014,2024-09-16,Scheduled,Gearbox Drive,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1014-2,AC-1014,2024-06-26,Unscheduled,Main Bearing,Routine 26-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1015-1,AC-1015,2024-07-20,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1015-2,AC-1015,2024-10-16,Scheduled,Main Bearing,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1016-1,AC-1016,2023-11-11,Scheduled,Gearbox Drive,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1017-1,AC-1017,2024-11-29,Scheduled,Hydraulic Pump,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1017-2,AC-1017,2024-11-06,Unscheduled,Gearbox Drive,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1018-1,AC-1018,2024-05-28,Scheduled,Gearbox Drive,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1018-2,AC-1018,2024-05-28,Unscheduled,Main Bearing,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1019-1,AC-1019,2024-09-04,Unscheduled,Main Bearing,Routine 94-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1020-1,AC-1020,2024-10-18,Unscheduled,Hydraulic Pump,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1021-1,AC-1021,2024-04-18,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1021-2,AC-1021,2024-05-05,Scheduled,Main Bearing,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1022-1,AC-1022,2024-08-24,Unscheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1022-2,AC-1022,2024-09-21,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1023-1,AC-1023,2024-05-24,Unscheduled,Hydraulic Pump,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1023-2,AC-1023,2024-06-22,Unscheduled,Gearbox Drive,Seal clearance inspection performed on gearbox drive. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1023-3,AC-1023,2024-03-01,Scheduled,Gearbox Drive,Seal clearance inspection performed on gearbox drive. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1024-1,AC-1024,2024-07-30,Unscheduled,Gearbox Drive,Routine 76-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1024-2,AC-1024,2024-05-03,Scheduled,Turbine Blade,Routine 34-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1024-3,AC-1024,2024-11-12,Scheduled,Turbine Blade,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1025-1,AC-1025,2024-05-03,Scheduled,Turbine Blade,Routine 111-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1026-1,AC-1026,2024-05-07,Scheduled,Main Bearing,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1027-1,AC-1027,2024-08-26,Scheduled,Turbine Blade,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1028-1,AC-1028,2024-09-12,Scheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1028-2,AC-1028,2024-09-16,Unscheduled,Gearbox Drive,Seal clearance inspection performed on gearbox drive. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1029-1,AC-1029,2024-04-20,Unscheduled,Gearbox Drive,Seal clearance inspection performed on gearbox drive. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1030-1,AC-1030,2024-10-18,Scheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1031-1,AC-1031,2024-06-16,Unscheduled,Hydraulic Pump,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1032-1,AC-1032,2024-08-28,Unscheduled,Turbine Blade,Seal clearance inspection performed on turbine blade. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1032-2,AC-1032,2024-09-10,Unscheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1033-1,AC-1033,2024-05-20,Unscheduled,Turbine Blade,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1033-2,AC-1033,2024-11-25,Unscheduled,Turbine Blade,Routine 223-cycle inspection. No structural cracks observed. Cleared for flight.
+SR-AC-1034-1,AC-1034,2024-10-26,Scheduled,Turbine Blade,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1035-1,AC-1035,2024-08-07,Scheduled,Turbine Blade,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1036-1,AC-1036,2024-10-18,Scheduled,Turbine Blade,Minor wear debris detected in filter mesh during scheduled servicing. Flushed oil reservoir.
+SR-AC-1037-1,AC-1037,2024-06-26,Scheduled,Hydraulic Pump,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1037-2,AC-1037,2024-11-02,Unscheduled,Gearbox Drive,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1038-1,AC-1038,2024-07-07,Unscheduled,Gearbox Drive,Minor wear debris detected in filter mesh during unscheduled servicing. Flushed oil reservoir.
+SR-AC-1038-2,AC-1038,2024-07-07,Scheduled,Main Bearing,Seal clearance inspection performed on main bearing. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1038-3,AC-1038,2024-06-16,Scheduled,Hydraulic Pump,Seal clearance inspection performed on hydraulic pump. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1039-1,AC-1039,2024-06-18,Scheduled,Gearbox Drive,Seal clearance inspection performed on gearbox drive. Tolerances calibrated to MIL-STD-1530.
+SR-AC-1040-1,AC-1040,2024-07-11,Unscheduled,Gearbox Drive,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
+SR-AC-1040-2,AC-1040,2024-07-07,Scheduled,Hydraulic Pump,Preventive checkup. Rotor balance adjusted. Sensor diagnostic log nominal.
