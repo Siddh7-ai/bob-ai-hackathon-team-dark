@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 
 /**
  * FighterJetLoader - IAF Tricolor Volumetric Smoke Loading System
@@ -8,9 +8,10 @@ import React, { useEffect, useRef } from 'react';
  *   swirl, organic noise displacement, intermixed micro-dust particles, and prominent Saffron, White, Green streams.
  * - Main Loader Theme = Default clean white (#FFFFFF), automatically inherits active dashboard theme.
  * - Ongoing Loader = Transparent backdrop, small aircraft scale, zero card/text/line.
+ * - Rapid Multilingual India Title Transition = Cycles through 16 Indian language translations of India/Bharat.
  * 
  * Props:
- * - variant: 'fullscreen' (Full theme-aware overlay with thin progress line) | 'inline' (Transparent ongoing loader, jet + smoke only)
+ * - variant: 'fullscreen' (Full theme-aware overlay) | 'inline' (Transparent ongoing loader, jet + smoke only)
  * - progress: number (0 to 100, connected to real system state)
  * - size: 'sm' | 'md' | 'lg' (default: 'md')
  * - statusText: string (default: 'LOADING...')
@@ -22,6 +23,34 @@ export default function FighterJetLoader({
   statusText = 'LOADING...'
 }) {
   const canvasRef = useRef(null);
+  const [wordIndex, setWordIndex] = useState(0);
+
+  const indiaWords = useMemo(() => [
+    'India',
+    'भारत',
+    'ভাৰত',
+    'ਭਾਰਤ',
+    'ભારત',
+    'ଓଡ଼ିଆ: ଭାରତ',
+    'ಭಾರತ',
+    'بھارت',
+    'भारत',
+    'भारतम्',
+    'भारतदेशम्',
+    'ഇന്ത്യ',
+    'இந்தியா',
+    'భారతదేశం',
+    'ᱵᱷᱟᱨᱚᱛ',
+    'ہندوستان'
+  ], []);
+
+  useEffect(() => {
+    if (variant !== 'fullscreen') return;
+    const timer = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % indiaWords.length);
+    }, 110);
+    return () => clearInterval(timer);
+  }, [variant, indiaWords.length]);
 
   const isSmall = size === 'sm';
   const isLarge = size === 'lg';
@@ -316,80 +345,49 @@ export default function FighterJetLoader({
         />
       </div>
 
-      {/* Fullscreen Variant: Thin Progress Line & Real Counter */}
+      {/* Fullscreen Variant: Rapid Multilingual India Name Transition */}
       {variant === 'fullscreen' && (
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
-            gap: '14px',
-            marginTop: '10px',
-            width: '280px'
+            justifyContent: 'center',
+            marginTop: '18px',
+            height: '40px',
+            minWidth: '280px'
           }}
         >
-          {/* Thin Progress Line Track */}
-          <div
+          <span
+            key={wordIndex}
             style={{
-              width: '100%',
-              height: '3px',
-              backgroundColor: 'var(--border-default, rgba(148, 163, 184, 0.3))',
-              borderRadius: '2px',
-              position: 'relative',
-              overflow: 'visible'
+              fontSize: '24px',
+              fontWeight: 800,
+              color: 'var(--text-primary, #0F172A)',
+              letterSpacing: '0.08em',
+              fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
+              animation: 'rapidWordFade 0.11s ease-in-out forwards',
+              textAlign: 'center',
+              userSelect: 'none'
             }}
           >
-            {/* Dynamic System Progress Fill */}
-            <div
-              style={{
-                width: `${displayProgress}%`,
-                height: '100%',
-                backgroundColor: 'var(--text-primary, #0EA5E9)',
-                borderRadius: '2px',
-                boxShadow: '0 0 8px var(--text-primary, #0EA5E9)',
-                transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                position: 'relative'
-              }}
-            >
-              {/* Glowing Head Tip Dot */}
-              <div
-                style={{
-                  position: 'absolute',
-                  right: '-4px',
-                  top: '-3.5px',
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--text-primary, #0EA5E9)',
-                  boxShadow: '0 0 10px var(--text-primary, #0EA5E9)',
-                  opacity: displayProgress > 0 ? 1 : 0
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Monospaced Typography */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '100%',
-              color: 'var(--text-muted, #64748B)',
-              fontSize: '11px',
-              fontFamily: "'JetBrains Mono', monospace",
-              letterSpacing: '0.22em',
-              fontWeight: 600
-            }}
-          >
-            <span>{statusText}</span>
-            <span style={{ color: 'var(--text-primary, #0F172A)', letterSpacing: '0.05em' }}>{displayProgress}%</span>
-          </div>
+            {indiaWords[wordIndex]}
+          </span>
         </div>
       )}
 
-      {/* Upward Flying Pitch Motion Keyframes */}
+      {/* Animation Keyframes */}
       <style>{`
+        @keyframes rapidWordFade {
+          0% {
+            opacity: 0.3;
+            transform: translateY(2px) scale(0.96);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0px) scale(1);
+          }
+        }
+
         @keyframes jetSubtleClimb {
           0% {
             transform: translate(-50%, -50%) translateY(0px) rotate(0deg);
