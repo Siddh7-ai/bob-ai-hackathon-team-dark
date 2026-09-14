@@ -88,6 +88,7 @@ def get_fleet_summary():
 @app.get("/api/assets")
 def get_assets(
     status: Optional[str] = Query(None, description="Filter by status: Ready, At-Risk, Not-Ready"),
+    category: Optional[str] = Query(None, description="Filter by category: Aircraft, Helicopters, Vehicles"),
     asset_type: Optional[str] = Query(None, description="Filter by asset type"),
     unit: Optional[str] = Query(None, description="Filter by military squadron"),
     search: Optional[str] = Query(None, description="Search asset ID or keyword")
@@ -102,6 +103,8 @@ def get_assets(
     filtered = fleet
     if status and status.lower() != "all":
         filtered = [a for a in filtered if a["status"].lower() == status.lower()]
+    if category and category.lower() != "all":
+        filtered = [a for a in filtered if a.get("category", "").lower() == category.lower()]
     if asset_type and asset_type.lower() != "all":
         filtered = [a for a in filtered if a["asset_type"].lower() == asset_type.lower()]
     if unit and unit.lower() != "all":
@@ -110,7 +113,11 @@ def get_assets(
         s = search.lower()
         filtered = [
             a for a in filtered 
-            if s in a["asset_id"].lower() or s in a["asset_type"].lower() or s in a.get("model_name", "").lower() or s in a["unit"].lower()
+            if s in a["asset_id"].lower() 
+            or s in a["asset_type"].lower() 
+            or s in a.get("category", "").lower()
+            or s in a.get("model_name", "").lower() 
+            or s in a["unit"].lower()
         ]
 
     return {

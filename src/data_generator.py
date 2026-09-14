@@ -12,13 +12,98 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 
-# Constants & Envelopes based on D1 Data Design
-ASSET_TYPES = [
-    "Fighter Jet Engine",
-    "Armoured Vehicle",
-    "Transport Helicopter"
-]
+# Expanded Platform Taxonomy based on Military Aerospace & Ground Fleet Standards:
+# Aircraft: Airplanes such as fighter jets, transport planes, surveillance planes, or cargo planes.
+# Helicopters: Rotary-wing aircraft such as transport, rescue, medical, or attack helicopters.
+# Vehicles: Ground equipment such as military trucks, tanks, armored vehicles, fuel vehicles, and transport vehicles.
 
+PLATFORM_TAXONOMY = {
+    "Aircraft": {
+        "Fighter Jet": {
+            "models": ["Su-30MKI Flanker-H", "Tejas Mk1A", "Rafale DH", "Mirage 2000"],
+            "image": "/images/assets/fighter_jet.jpg",
+            "criticality": 3.0
+        },
+        "Transport Plane": {
+            "models": ["C-130J Super Hercules", "An-32 Tactical Transport", "C-295MW"],
+            "image": "/images/assets/cargo_plane.jpg",
+            "criticality": 2.5
+        },
+        "Surveillance Plane": {
+            "models": ["Netra AEW&C", "Phalcon AWACS", "Dornier 228 Maritime"],
+            "image": "/images/assets/surveillance_plane.jpg",
+            "criticality": 2.8
+        },
+        "Cargo Plane": {
+            "models": ["C-17 Globemaster III", "IL-76 Gajraj Heavy Lifter"],
+            "image": "/images/assets/cargo_plane.jpg",
+            "criticality": 2.6
+        }
+    },
+    "Helicopters": {
+        "Transport Helicopter": {
+            "models": ["Mi-17V-5 Tactical Transport", "Chinook CH-47F Heavy Lift", "ALH Dhruv Mk-III"],
+            "image": "/images/assets/transport_helicopter.jpg",
+            "criticality": 2.2
+        },
+        "Attack Helicopter": {
+            "models": ["AH-64E Apache Guardian", "LCH Prachand Combat Heli", "Rudra Armed Helicopter"],
+            "image": "/images/assets/attack_helicopter.jpg",
+            "criticality": 2.8
+        },
+        "Rescue Helicopter": {
+            "models": ["Chetak Search & Rescue", "ALH Dhruv SAR Lifesaver"],
+            "image": "/images/assets/rescue_medical_helicopter.jpg",
+            "criticality": 2.0
+        },
+        "Medical Helicopter": {
+            "models": ["ALH Dhruv Air Ambulance", "Mi-17 MEDEVAC Unit"],
+            "image": "/images/assets/rescue_medical_helicopter.jpg",
+            "criticality": 2.2
+        }
+    },
+    "Vehicles": {
+        "Tank": {
+            "models": ["T-90 Bhishma Main Battle Tank", "Arjun Mk-1A Heavy Tank", "T-72 Ajeya Combat Tank"],
+            "image": "/images/assets/tank_t90.jpg",
+            "criticality": 2.0
+        },
+        "Armored Vehicle": {
+            "models": ["BMP-2 Sarath Infantry Vehicle", "K9 Vajra-T Self-Propelled Howitzer", "WhAP 8x8 Armoured Carrier"],
+            "image": "/images/assets/armored_vehicle.jpg",
+            "criticality": 1.8
+        },
+        "Military Truck": {
+            "models": ["Ashok Leyland Stallion 4x4", "Tatra 8x8 Heavy Tactical Truck", "Swaraj Mazda Gun Towing Truck"],
+            "image": "/images/assets/military_truck.jpg",
+            "criticality": 1.4
+        },
+        "Fuel Vehicle": {
+            "models": ["Tactical Airfield Fuel Bowser 6x6", "Heavy Refueler Tanker Bowser", "Jet-A1 Mobile Dispenser"],
+            "image": "/images/assets/fuel_vehicle.jpg",
+            "criticality": 1.6
+        },
+        "Transport Vehicle": {
+            "models": ["Light Specialist Vehicle (LSV) 4x4", "Troop Carrier Heavy Transport", "Airfield Equipment Tug"],
+            "image": "/images/assets/military_truck.jpg",
+            "criticality": 1.3
+        }
+    }
+}
+
+# Flattened list for quick selection
+FLATTENED_TYPES = []
+for cat, subdict in PLATFORM_TAXONOMY.items():
+    for sub, data in subdict.items():
+        FLATTENED_TYPES.append({
+            "category": cat,
+            "asset_type": sub,
+            "models": data["models"],
+            "image": data["image"],
+            "criticality": data["criticality"]
+        })
+
+# Units and Squadrons
 UNITS = [
     "101st Tactical Fighter Squadron",
     "4th Strike Fighter Wing",
@@ -43,24 +128,6 @@ BASELINE_PARAMS = {
     "pressure_ratio": {"mean": 13.5, "std": 0.35, "safe_min": 12.0, "critical_min": 10.5},   # ratio
     "fuel_flow_rate": {"mean": 2.0, "std": 0.08, "safe_max": 2.35, "critical_max": 2.85},     # kg/s
     "rotational_speed_rpm": {"mean": 12800.0, "std": 45.0, "safe_range": (12650.0, 12950.0), "critical_range": (12300.0, 13300.0)} # rpm
-}
-
-CRITICALITY_MAP = {
-    "Fighter Jet Engine": 3.0,     # Maximum mission criticality
-    "Transport Helicopter": 2.2,   # High mission criticality
-    "Armoured Vehicle": 1.6        # Standard tactical criticality
-}
-
-ICON_MAP = {
-    "Fighter Jet Engine": "/icons/fighter-jet.svg",
-    "Transport Helicopter": "/icons/helicopter.svg",
-    "Armoured Vehicle": "/icons/armoured-vehicle.svg"
-}
-
-MODEL_NAMES = {
-    "Fighter Jet Engine": ["Su-30MKI", "Tejas Mk1A", "Mirage 2000", "Rafale DH"],
-    "Transport Helicopter": ["Mi-17V-5", "Chinook CH-47F", "ALH Dhruv", "AH-64E Apache"],
-    "Armoured Vehicle": ["T-90 Bhishma", "BMP-2 Sarath", "K9 Vajra-T", "Arjun Mk-1A"]
 }
 
 
@@ -90,8 +157,13 @@ def generate_synthetic_hums_data(
 
     for i in range(1, num_assets + 1):
         asset_id = f"AC-{1000 + i}"
-        asset_type = random.choice(ASSET_TYPES)
-        unit = random.choice(UNITS)
+        type_info = FLATTENED_TYPES[(i - 1) % len(FLATTENED_TYPES)]
+        category = type_info["category"]
+        asset_type = type_info["asset_type"]
+        model_name = type_info["models"][(i - 1) % len(type_info["models"])]
+        image_url = type_info["image"]
+        criticality = type_info["criticality"]
+        unit = UNITS[(i - 1) % len(UNITS)]
         commission_days_ago = random.randint(400, 1200)
         commission_date = (base_date - timedelta(days=commission_days_ago)).strftime("%Y-%m-%d")
         
@@ -125,14 +197,14 @@ def generate_synthetic_hums_data(
         last_service_cycle = max(10, max_simulated_cycles - random.randint(20, 70))
         last_service_date = (base_date - timedelta(days=int((max_simulated_cycles - last_service_cycle) * 1.5))).strftime("%Y-%m-%d")
 
-        model_name = random.choice(MODEL_NAMES.get(asset_type, ["Standard"]))
         assets.append({
             "asset_id": asset_id,
+            "category": category,
             "asset_type": asset_type,
             "model_name": model_name,
-            "image_url": ICON_MAP.get(asset_type, "/icons/fighter-jet.svg"),
+            "image_url": image_url,
             "unit": unit,
-            "mission_criticality": CRITICALITY_MAP[asset_type],
+            "mission_criticality": criticality,
             "commission_date": commission_date,
             "total_operating_cycles": max_simulated_cycles,
             "last_service_date": last_service_date,

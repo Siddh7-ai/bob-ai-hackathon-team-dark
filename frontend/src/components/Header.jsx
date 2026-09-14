@@ -29,18 +29,16 @@ export default function Header({
       }}>
         {/* Left: Branding & Status */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: '6px',
-            backgroundColor: 'var(--accent-iaf)',
-            color: '#FFFFFF',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <Shield size={20} color="#FFFFFF" />
-          </div>
+          <img 
+            src="/IAF_logo.png" 
+            alt="Indian Air Force Logo" 
+            style={{
+              height: '44px',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2))'
+            }}
+          />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>

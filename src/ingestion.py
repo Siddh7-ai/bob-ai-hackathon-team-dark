@@ -150,6 +150,8 @@ class HUMSDataIngestion:
         # Merge asset metadata (criticality, type, unit, image_url, model_name)
         if self.assets_df is not None:
             cols = ["asset_id", "asset_type", "unit", "mission_criticality", "commission_date", "last_service_date"]
+            if "category" in self.assets_df.columns:
+                cols.append("category")
             if "image_url" in self.assets_df.columns:
                 cols.append("image_url")
             if "model_name" in self.assets_df.columns:

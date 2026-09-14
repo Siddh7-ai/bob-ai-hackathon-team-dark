@@ -1,41 +1,41 @@
-asset_id,asset_type,model_name,image_url,unit,mission_criticality,commission_date,total_operating_cycles,last_service_date,simulated_signature,is_clean_control
-AC-1001,Transport Helicopter,Mi-17V-5,/icons/helicopter.svg,101st Tactical Fighter Squadron,2.2,2023-11-03,215,2024-11-20,clean,True
-AC-1002,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,10th Mountain Aviation Support,2.2,2021-12-10,249,2024-10-21,clean,True
-AC-1003,Armoured Vehicle,T-90 Bhishma,/icons/armoured-vehicle.svg,4th Strike Fighter Wing,1.6,2023-04-22,223,2024-10-27,clean,True
-AC-1004,Fighter Jet Engine,Tejas Mk1A,/icons/fighter-jet.svg,82nd Airborne Combat Aviation,3.0,2023-02-01,260,2024-10-09,clean,True
-AC-1005,Armoured Vehicle,BMP-2 Sarath,/icons/armoured-vehicle.svg,3rd Armoured Brigade,1.6,2023-04-28,214,2024-10-12,clean,True
-AC-1006,Transport Helicopter,AH-64E Apache,/icons/helicopter.svg,3rd Armoured Brigade,2.2,2021-10-03,187,2024-11-02,clean,True
-AC-1007,Armoured Vehicle,Arjun Mk-1A,/icons/armoured-vehicle.svg,4th Strike Fighter Wing,1.6,2023-03-21,251,2024-09-23,clean,True
-AC-1008,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,101st Tactical Fighter Squadron,2.2,2022-10-30,199,2024-10-20,hydraulic_fuel,False
-AC-1009,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,10th Mountain Aviation Support,2.2,2023-03-04,243,2024-10-03,bearing_gearbox,False
-AC-1010,Armoured Vehicle,T-90 Bhishma,/icons/armoured-vehicle.svg,4th Strike Fighter Wing,1.6,2023-09-30,195,2024-11-25,turbine_thermal,False
-AC-1011,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,10th Mountain Aviation Support,2.2,2021-12-22,172,2024-10-26,hydraulic_fuel,False
-AC-1012,Transport Helicopter,Mi-17V-5,/icons/helicopter.svg,82nd Airborne Combat Aviation,2.2,2023-04-07,193,2024-09-26,bearing_gearbox,False
-AC-1013,Transport Helicopter,AH-64E Apache,/icons/helicopter.svg,4th Strike Fighter Wing,2.2,2023-02-16,175,2024-11-20,turbine_thermal,False
-AC-1014,Fighter Jet Engine,Su-30MKI,/icons/fighter-jet.svg,10th Mountain Aviation Support,3.0,2022-09-13,175,2024-10-20,hydraulic_fuel,False
-AC-1015,Fighter Jet Engine,Su-30MKI,/icons/fighter-jet.svg,3rd Armoured Brigade,3.0,2022-08-12,197,2024-10-21,bearing_gearbox,False
-AC-1016,Fighter Jet Engine,Su-30MKI,/icons/fighter-jet.svg,7th Mechanized Recon Cavalry,3.0,2022-07-19,175,2024-10-26,turbine_thermal,False
-AC-1017,Armoured Vehicle,BMP-2 Sarath,/icons/armoured-vehicle.svg,3rd Armoured Brigade,1.6,2022-09-21,243,2024-10-17,hydraulic_fuel,False
-AC-1018,Transport Helicopter,Mi-17V-5,/icons/helicopter.svg,3rd Armoured Brigade,2.2,2023-10-01,129,2024-11-28,bearing_gearbox,False
-AC-1019,Armoured Vehicle,T-90 Bhishma,/icons/armoured-vehicle.svg,101st Tactical Fighter Squadron,1.6,2022-04-24,170,2024-11-29,turbine_thermal,False
-AC-1020,Fighter Jet Engine,Su-30MKI,/icons/fighter-jet.svg,10th Mountain Aviation Support,3.0,2022-02-06,168,2024-09-21,hydraulic_fuel,False
-AC-1021,Transport Helicopter,Chinook CH-47F,/icons/helicopter.svg,4th Strike Fighter Wing,2.2,2022-06-28,131,2024-11-26,bearing_gearbox,False
-AC-1022,Transport Helicopter,Chinook CH-47F,/icons/helicopter.svg,101st Tactical Fighter Squadron,2.2,2023-07-14,130,2024-11-23,turbine_thermal,False
-AC-1023,Armoured Vehicle,T-90 Bhishma,/icons/armoured-vehicle.svg,101st Tactical Fighter Squadron,1.6,2023-08-26,233,2024-11-29,hydraulic_fuel,False
-AC-1024,Fighter Jet Engine,Tejas Mk1A,/icons/fighter-jet.svg,101st Tactical Fighter Squadron,3.0,2021-12-21,147,2024-10-08,bearing_gearbox,False
-AC-1025,Transport Helicopter,AH-64E Apache,/icons/helicopter.svg,4th Strike Fighter Wing,2.2,2022-01-15,123,2024-10-11,turbine_thermal,False
-AC-1026,Fighter Jet Engine,Tejas Mk1A,/icons/fighter-jet.svg,10th Mountain Aviation Support,3.0,2023-08-10,228,2024-10-18,hydraulic_fuel,False
-AC-1027,Fighter Jet Engine,Mirage 2000,/icons/fighter-jet.svg,101st Tactical Fighter Squadron,3.0,2022-01-22,143,2024-11-26,bearing_gearbox,False
-AC-1028,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,3rd Armoured Brigade,2.2,2023-10-20,142,2024-10-30,turbine_thermal,False
-AC-1029,Transport Helicopter,Chinook CH-47F,/icons/helicopter.svg,7th Mechanized Recon Cavalry,2.2,2023-11-27,268,2024-10-12,hydraulic_fuel,False
-AC-1030,Transport Helicopter,AH-64E Apache,/icons/helicopter.svg,7th Mechanized Recon Cavalry,2.2,2022-12-29,214,2024-11-14,bearing_gearbox,False
-AC-1031,Armoured Vehicle,BMP-2 Sarath,/icons/armoured-vehicle.svg,7th Mechanized Recon Cavalry,1.6,2022-09-02,157,2024-09-18,turbine_thermal,False
-AC-1032,Fighter Jet Engine,Tejas Mk1A,/icons/fighter-jet.svg,4th Strike Fighter Wing,3.0,2022-07-30,125,2024-10-03,hydraulic_fuel,False
-AC-1033,Fighter Jet Engine,Mirage 2000,/icons/fighter-jet.svg,82nd Airborne Combat Aviation,3.0,2023-03-18,135,2024-09-30,bearing_gearbox,False
-AC-1034,Armoured Vehicle,Arjun Mk-1A,/icons/armoured-vehicle.svg,4th Strike Fighter Wing,1.6,2022-02-14,193,2024-10-14,turbine_thermal,False
-AC-1035,Fighter Jet Engine,Rafale DH,/icons/fighter-jet.svg,4th Strike Fighter Wing,3.0,2022-11-01,161,2024-11-26,hydraulic_fuel,False
-AC-1036,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,10th Mountain Aviation Support,2.2,2023-11-08,211,2024-10-30,bearing_gearbox,False
-AC-1037,Fighter Jet Engine,Tejas Mk1A,/icons/fighter-jet.svg,7th Mechanized Recon Cavalry,3.0,2022-12-19,217,2024-10-20,turbine_thermal,False
-AC-1038,Armoured Vehicle,Arjun Mk-1A,/icons/armoured-vehicle.svg,3rd Armoured Brigade,1.6,2023-04-26,183,2024-09-21,hydraulic_fuel,False
-AC-1039,Fighter Jet Engine,Su-30MKI,/icons/fighter-jet.svg,10th Mountain Aviation Support,3.0,2023-09-19,139,2024-11-14,bearing_gearbox,False
-AC-1040,Transport Helicopter,ALH Dhruv,/icons/helicopter.svg,82nd Airborne Combat Aviation,2.2,2021-10-24,158,2024-11-17,turbine_thermal,False
+asset_id,asset_type,unit,mission_criticality,commission_date,total_operating_cycles,last_service_date,simulated_signature,is_clean_control
+AC-1001,Transport Helicopter,101st Tactical Fighter Squadron,2.2,2023-05-19,213,2024-10-08,clean,True
+AC-1002,Armoured Vehicle,10th Mountain Aviation Support,1.6,2022-04-06,231,2024-09-29,clean,True
+AC-1003,Armoured Vehicle,7th Mechanized Recon Cavalry,1.6,2022-12-23,254,2024-11-20,clean,True
+AC-1004,Transport Helicopter,101st Tactical Fighter Squadron,2.2,2022-03-30,231,2024-11-19,clean,True
+AC-1005,Armoured Vehicle,3rd Armoured Brigade,1.6,2023-10-20,186,2024-10-08,clean,True
+AC-1006,Fighter Jet Engine,82nd Airborne Combat Aviation,3.0,2023-04-23,194,2024-09-20,clean,True
+AC-1007,Fighter Jet Engine,101st Tactical Fighter Squadron,3.0,2023-09-08,246,2024-09-27,clean,True
+AC-1008,Transport Helicopter,4th Strike Fighter Wing,2.2,2022-01-08,142,2024-10-23,hydraulic_fuel,False
+AC-1009,Armoured Vehicle,82nd Airborne Combat Aviation,1.6,2022-04-17,112,2024-11-01,bearing_gearbox,False
+AC-1010,Fighter Jet Engine,4th Strike Fighter Wing,3.0,2022-03-06,175,2024-11-20,turbine_thermal,False
+AC-1011,Fighter Jet Engine,3rd Armoured Brigade,3.0,2023-05-31,165,2024-11-13,hydraulic_fuel,False
+AC-1012,Fighter Jet Engine,3rd Armoured Brigade,3.0,2022-02-21,155,2024-09-30,bearing_gearbox,False
+AC-1013,Fighter Jet Engine,10th Mountain Aviation Support,3.0,2022-03-30,127,2024-10-03,turbine_thermal,False
+AC-1014,Armoured Vehicle,101st Tactical Fighter Squadron,1.6,2022-11-07,133,2024-11-01,hydraulic_fuel,False
+AC-1015,Transport Helicopter,10th Mountain Aviation Support,2.2,2023-04-27,155,2024-10-14,bearing_gearbox,False
+AC-1016,Armoured Vehicle,7th Mechanized Recon Cavalry,1.6,2023-11-20,209,2024-11-11,turbine_thermal,False
+AC-1017,Armoured Vehicle,7th Mechanized Recon Cavalry,1.6,2023-06-09,223,2024-10-05,hydraulic_fuel,False
+AC-1018,Armoured Vehicle,101st Tactical Fighter Squadron,1.6,2021-11-09,206,2024-10-18,bearing_gearbox,False
+AC-1019,Armoured Vehicle,3rd Armoured Brigade,1.6,2022-03-23,197,2024-09-29,turbine_thermal,False
+AC-1020,Armoured Vehicle,101st Tactical Fighter Squadron,1.6,2022-11-12,166,2024-09-26,hydraulic_fuel,False
+AC-1021,Fighter Jet Engine,10th Mountain Aviation Support,3.0,2022-05-25,122,2024-11-14,bearing_gearbox,False
+AC-1022,Fighter Jet Engine,101st Tactical Fighter Squadron,3.0,2021-09-25,86,2024-10-23,turbine_thermal,False
+AC-1023,Fighter Jet Engine,82nd Airborne Combat Aviation,3.0,2022-09-16,222,2024-10-12,hydraulic_fuel,False
+AC-1024,Transport Helicopter,10th Mountain Aviation Support,2.2,2022-05-23,184,2024-11-25,bearing_gearbox,False
+AC-1025,Transport Helicopter,3rd Armoured Brigade,2.2,2023-01-24,145,2024-11-13,turbine_thermal,False
+AC-1026,Fighter Jet Engine,101st Tactical Fighter Squadron,3.0,2022-08-29,196,2024-09-18,hydraulic_fuel,False
+AC-1027,Armoured Vehicle,3rd Armoured Brigade,1.6,2023-02-24,115,2024-11-13,bearing_gearbox,False
+AC-1028,Fighter Jet Engine,4th Strike Fighter Wing,3.0,2022-07-29,215,2024-11-11,turbine_thermal,False
+AC-1029,Armoured Vehicle,10th Mountain Aviation Support,1.6,2023-07-18,136,2024-09-18,hydraulic_fuel,False
+AC-1030,Armoured Vehicle,7th Mechanized Recon Cavalry,1.6,2021-10-29,146,2024-09-29,bearing_gearbox,False
+AC-1031,Transport Helicopter,82nd Airborne Combat Aviation,2.2,2022-10-20,117,2024-11-16,turbine_thermal,False
+AC-1032,Fighter Jet Engine,101st Tactical Fighter Squadron,3.0,2021-11-05,237,2024-11-26,hydraulic_fuel,False
+AC-1033,Armoured Vehicle,4th Strike Fighter Wing,1.6,2023-01-16,231,2024-11-26,bearing_gearbox,False
+AC-1034,Transport Helicopter,4th Strike Fighter Wing,2.2,2023-07-27,180,2024-09-20,turbine_thermal,False
+AC-1035,Fighter Jet Engine,82nd Airborne Combat Aviation,3.0,2023-05-01,114,2024-10-18,hydraulic_fuel,False
+AC-1036,Fighter Jet Engine,4th Strike Fighter Wing,3.0,2022-12-12,155,2024-11-01,bearing_gearbox,False
+AC-1037,Armoured Vehicle,10th Mountain Aviation Support,1.6,2023-07-15,150,2024-11-29,turbine_thermal,False
+AC-1038,Fighter Jet Engine,82nd Airborne Combat Aviation,3.0,2022-10-13,200,2024-11-05,hydraulic_fuel,False
+AC-1039,Armoured Vehicle,7th Mechanized Recon Cavalry,1.6,2021-11-03,198,2024-10-11,bearing_gearbox,False
+AC-1040,Transport Helicopter,4th Strike Fighter Wing,2.2,2023-10-02,194,2024-10-21,turbine_thermal,False

@@ -1,12 +1,12 @@
 {
   "num_assets": 40,
   "clean_assets_count": 7,
-  "total_sensor_cycles": 7471,
-  "total_service_records": 83,
+  "total_sensor_cycles": 7063,
+  "total_service_records": 82,
   "asset_types": {
-    "Transport Helicopter": 17,
-    "Fighter Jet Engine": 13,
-    "Armoured Vehicle": 10
+    "Armoured Vehicle": 16,
+    "Fighter Jet Engine": 15,
+    "Transport Helicopter": 9
   },
   "signatures": {
     "hydraulic_fuel": 11,
@@ -14,5 +14,5 @@
     "turbine_thermal": 11,
     "clean": 7
   },
-  "generated_timestamp": "2026-09-14T09:05:33.226467+00:00"
+  "generated_timestamp": "2026-09-14T10:23:56.857397+00:00"
 }

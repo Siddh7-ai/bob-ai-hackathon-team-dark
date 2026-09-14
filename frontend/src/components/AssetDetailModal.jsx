@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, FileText, Cpu } from './Icons';
 import AssetIcon from './AssetIcon';
 import SensorTelemetryCharts from './SensorTelemetryCharts';
+import { getAssetRealImage } from '../utils/assetImages';
 
 export default function AssetDetailModal({ assetId, onClose }) {
   const [detailData, setDetailData] = useState(null);
@@ -9,21 +10,29 @@ export default function AssetDetailModal({ assetId, onClose }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!assetId) return;
-    setLoading(true);
-    fetch(`/api/assets/${assetId}`)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        setDetailData(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
+    if (assetId) {
+      document.body.style.overflow = 'hidden';
+      setLoading(true);
+      fetch(`/api/assets/${assetId}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          setDetailData(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err.message);
+          setLoading(false);
+        });
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [assetId]);
 
   if (!assetId) return null;
@@ -73,6 +82,7 @@ export default function AssetDetailModal({ assetId, onClose }) {
           maxWidth: '1080px',
           maxHeight: '90vh',
           overflowY: 'auto',
+          overscrollBehavior: 'contain',
           padding: '28px',
           backgroundColor: 'var(--bg-surface)',
           border: '1px solid var(--border-default)',
@@ -82,33 +92,43 @@ export default function AssetDetailModal({ assetId, onClose }) {
         {/* Modal Top Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            {detailData && (
+            {detailData && detailData.asset && (
               <div style={{
-                width: '52px',
-                height: '52px',
+                width: '120px',
+                height: '75px',
                 borderRadius: '8px',
+                overflow: 'hidden',
                 backgroundColor: 'var(--bg-subtle)',
                 border: '1px solid var(--border-default)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--text-primary)',
                 flexShrink: 0
               }}>
-                <AssetIcon type={detailData.asset.asset_type} imageUrl={detailData.asset.image_url} size={44} />
+                <img
+                  src={getAssetRealImage(detailData.asset)}
+                  alt={detailData.asset.model_name || detailData.asset.asset_type}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/images/assets/fighter_jet.jpg';
+                  }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
             )}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span className="mono-num" style={{ fontSize: '24px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                <span className="mono-num" style={{ fontSize: '20px', fontWeight: 800, color: 'var(--accent-iaf)' }}>
                   {assetId}
                 </span>
                 {detailData && getStatusBadge(detailData.asset.status)}
               </div>
               {detailData && (
-                <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                  <strong>{detailData.asset.asset_type}</strong> · <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{detailData.asset.model_name || 'Standard'}</span> · {detailData.asset.unit} · Last Serviced {detailData.asset.last_service_date}
-                </p>
+                <div style={{ marginTop: '3px' }}>
+                  <div style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    {detailData.asset.model_name}
+                  </div>
+                  <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    {detailData.asset.category} · {detailData.asset.asset_type} · {detailData.asset.unit} · Serviced {detailData.asset.last_service_date}
+                  </p>
+                </div>
               )}
             </div>
           </div>

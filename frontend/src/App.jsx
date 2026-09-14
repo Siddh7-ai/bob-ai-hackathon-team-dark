@@ -32,10 +32,11 @@ export default function App() {
 
   const fetchDashboardData = async () => {
     try {
+      const t = Date.now();
       const [kpiRes, assetsRes, planRes] = await Promise.all([
-        fetch('/api/fleet/summary'),
-        fetch('/api/assets'),
-        fetch('/api/maintenance/plan')
+        fetch(`/api/fleet/summary?_t=${t}`),
+        fetch(`/api/assets?_t=${t}`),
+        fetch(`/api/maintenance/plan?_t=${t}`)
       ]);
 
       if (kpiRes.ok && assetsRes.ok && planRes.ok) {
@@ -56,6 +57,20 @@ export default function App() {
 
   useEffect(() => {
     fetchDashboardData();
+
+    // Auto-refresh when tab gains focus or visibility changes to prevent desync
+    const onSync = () => {
+      if (document.visibilityState === 'visible') {
+        fetchDashboardData();
+      }
+    };
+    window.addEventListener('focus', onSync);
+    document.addEventListener('visibilitychange', onSync);
+
+    return () => {
+      window.removeEventListener('focus', onSync);
+      document.removeEventListener('visibilitychange', onSync);
+    };
   }, []);
 
   const handleRegenerate = async () => {

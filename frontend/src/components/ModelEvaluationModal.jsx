@@ -6,15 +6,23 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isOpen) return;
-    setLoading(true);
-    fetch('/api/evaluation')
-      .then(res => res.json())
-      .then(data => {
-        setEvalData(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      setLoading(true);
+      fetch('/api/evaluation')
+        .then(res => res.json())
+        .then(data => {
+          setEvalData(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -29,6 +37,7 @@ export default function ModelEvaluationModal({ isOpen, onClose }) {
           maxWidth: '900px',
           maxHeight: '88vh',
           overflowY: 'auto',
+          overscrollBehavior: 'contain',
           padding: '28px',
           backgroundColor: 'var(--bg-surface)',
           border: '1px solid var(--border-default)',
