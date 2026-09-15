@@ -1,15 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { CheckCheck, CheckCircle2, PackageCheck, X, ShieldCheck, FileText, Shield, Printer, Copy, Lock, Check, Plane, Truck, Wrench, Clock, Award, AlertTriangle } from './Icons';
+import ConfirmationModal from './ConfirmationModal';
+import FighterJetLoader from './FighterJetLoader';
 
-export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispatched }) {
+export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispatched, onDataChange }) {
   const [dispatchedOrders, setDispatchedOrders] = useState({});
+  const [isOrdersLoading, setIsOrdersLoading] = useState(true);
   const [pendingConfirmItem, setPendingConfirmItem] = useState(null);
   const [activeReceipt, setActiveReceipt] = useState(null);
   const [copiedId, setCopiedId] = useState(false);
+  const [completingAssetId, setCompletingAssetId] = useState(null);
+
+  const handleCompleteRepairFromPlan = async (assetId) => {
+    const savedScroll = window.scrollY;
+    setCompletingAssetId(assetId);
+    try {
+      const res = await fetch('/api/work-orders/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          asset_id: assetId,
+          notes: 'Depot maintenance complete. Subsystem recalibrated to nominal baseline.'
+        })
+      });
+
+      if (res.ok) {
+        setDispatchedOrders(prev => {
+          const next = { ...prev };
+          delete next[assetId];
+          return next;
+        });
+        if (onDataChange) onDataChange();
+      }
+    } catch (err) {
+      console.error('Failed to complete repair from plan table:', err);
+    } finally {
+      setCompletingAssetId(null);
+      if (savedScroll > 0) {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: savedScroll, behavior: 'instant' });
+        });
+      }
+    }
+  };
 
   // Load existing dispatched work orders from backend on mount
   useEffect(() => {
-    fetch('/api/work-orders')
+    setIsOrdersLoading(true);
+    fetch(`/api/work-orders?_t=${Date.now()}`)
       .then(res => res.json())
       .then(orders => {
         if (Array.isArray(orders)) {
@@ -23,7 +62,10 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
           setDispatchedOrders(map);
         }
       })
-      .catch(err => console.error('Failed to load dispatched work orders:', err));
+      .catch(err => console.error('Failed to load dispatched work orders:', err))
+      .finally(() => {
+        setIsOrdersLoading(false);
+      });
   }, []);
 
   // Copy Work Order ID to clipboard helper
@@ -116,10 +158,21 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
     }
   };
 
-  if (!plan || plan.length === 0) {
+  // Filter out any assets that have completed repair and are marked Ready
+  const activePlan = (plan || []).filter(item => item.status !== 'Ready' && item.flight_roster_status !== 'FLIGHT_READY');
+
+  if (isOrdersLoading) {
+    return (
+      <div className="clean-panel" style={{ padding: '60px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px' }}>
+        <FighterJetLoader variant="inline" size="lg" statusText="LOADING PRIORITISED ACTION QUEUE & WORK ORDERS..." />
+      </div>
+    );
+  }
+
+  if (!activePlan || activePlan.length === 0) {
     return (
       <div className="clean-panel" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <p>No maintenance recommendations generated.</p>
+        <p>No active maintenance recommendations pending. All operational assets cleared for sortie.</p>
       </div>
     );
   }
@@ -137,7 +190,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
             </p>
           </div>
           <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-            Showing <strong>{plan.length}</strong> flagged assets
+            Showing <strong>{activePlan.length}</strong> flagged assets
           </div>
         </div>
 
@@ -158,7 +211,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
               </tr>
             </thead>
             <tbody>
-              {plan.map((item) => {
+              {activePlan.map((item, idx) => {
                 const isDispatched = !!dispatchedOrders[item.asset_id];
                 const dispatchInfo = dispatchedOrders[item.asset_id];
 
@@ -173,7 +226,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
                     className="table-row-hover"
                   >
                     <td style={{ padding: '12px', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      #{item.rank}
+                      #{item.priority_rank || item.rank || (idx + 1)}
                     </td>
 
                     <td style={{ padding: '12px' }}>
@@ -268,7 +321,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
 
                     <td style={{ padding: '12px', textAlign: 'right' }}>
                       {isDispatched ? (
-                        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
                           <span style={{
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -284,9 +337,22 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
                             <CheckCircle2 size={13} color="var(--status-ready-dot)" />
                             <span>DISPATCHED</span>
                           </span>
-                          <span style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>
-                            {dispatchInfo.time}
-                          </span>
+                          <button
+                            onClick={() => handleCompleteRepairFromPlan(item.asset_id)}
+                            disabled={completingAssetId === item.asset_id}
+                            style={{
+                              padding: '3px 8px',
+                              borderRadius: '4px',
+                              border: '1px solid var(--status-ready-border)',
+                              backgroundColor: 'var(--status-ready-bg)',
+                              color: 'var(--status-ready-text)',
+                              fontSize: '10px',
+                              fontWeight: 700,
+                              cursor: 'pointer'
+                            }}
+                          >
+                            {completingAssetId === item.asset_id ? 'Completing...' : '✓ Complete Repair'}
+                          </button>
                         </div>
                       ) : (
                         <button
@@ -315,133 +381,38 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
 
       {/* Safety Confirmation Modal Prompt */}
       {pendingConfirmItem && (
-        <div className="modal-overlay" onClick={() => setPendingConfirmItem(null)}>
-          <div
-            className="clean-panel"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: '100%',
-              maxWidth: '520px',
-              padding: '0',
-              overflow: 'hidden',
-              backgroundColor: 'var(--bg-surface)',
-              border: '1px solid rgba(27, 63, 139, 0.3)',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
-              borderRadius: '12px'
-            }}
-          >
-            {/* Tactical Military Header */}
-            <div style={{
-              background: 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
-              padding: '18px 24px',
-              color: '#FFFFFF',
-              borderBottom: '2px solid #EAB308',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <img src="/IAF_logo.png" alt="IAF Crest" style={{ height: '36px', width: 'auto', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))' }} />
-                <div>
-                  <div style={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#EAB308' }}>
-                    INDIAN AIR FORCE • DISPATCH PROTOCOL
-                  </div>
-                  <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
-                    Confirm Work Order Dispatch?
-                  </h3>
-                </div>
-              </div>
-              <button onClick={() => setPendingConfirmItem(null)} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer' }}>
-                <X size={18} />
-              </button>
-            </div>
-
-            <div style={{ padding: '24px' }}>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '16px', lineHeight: '1.5' }}>
-                You are about to issue an official military maintenance work order for platform{' '}
-                <strong style={{ color: 'var(--text-primary)' }}>{pendingConfirmItem.asset_id}</strong> ({pendingConfirmItem.model_name || pendingConfirmItem.asset_type}).
-              </p>
-
-              <div style={{
-                backgroundColor: 'var(--bg-subtle)',
-                border: '1px solid var(--border-default)',
-                borderRadius: '8px',
-                padding: '16px',
-                marginBottom: '20px'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                  <span className="mono-num" style={{ fontSize: '14px', fontWeight: 800, color: 'var(--accent-iaf)' }}>
-                    {pendingConfirmItem.asset_id} • {pendingConfirmItem.model_name || pendingConfirmItem.asset_type}
-                  </span>
-                  <span className="mono-num" style={{
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    backgroundColor: pendingConfirmItem.urgency === 'IMMEDIATE' ? 'var(--status-not-ready-bg)' : 'var(--status-at-risk-bg)',
-                    color: pendingConfirmItem.urgency === 'IMMEDIATE' ? 'var(--status-not-ready-text)' : 'var(--status-at-risk-text)',
-                    border: `1px solid ${pendingConfirmItem.urgency === 'IMMEDIATE' ? 'var(--status-not-ready-border)' : 'var(--status-at-risk-border)'}`
-                  }}>
-                    {pendingConfirmItem.urgency} URGENCY
-                  </span>
-                </div>
-
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  <strong>Failing Subsystem:</strong> {pendingConfirmItem.predicted_failing_component}
-                </div>
-
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  <strong>Recommended Procedure:</strong> {pendingConfirmItem.action_recommendation} ({pendingConfirmItem.estimated_labor_hours} hrs labor)
-                </div>
-
-                <div style={{
-                  fontSize: '11px',
-                  color: 'var(--status-at-risk-text)',
-                  backgroundColor: 'var(--status-at-risk-bg)',
-                  padding: '8px 12px',
-                  borderRadius: '6px',
-                  marginTop: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  border: '1px solid var(--status-at-risk-border)'
-                }}>
-                  <AlertTriangle size={16} />
-                  <span>Inventory parts will be reserved & flight status will be set to <strong>GROUNDED FOR MAINTENANCE</strong>.</span>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
-                <button
-                  onClick={() => setPendingConfirmItem(null)}
-                  className="btn-secondary"
-                  style={{ padding: '8px 16px', fontSize: '13px' }}
-                >
-                  Cancel / Abort
-                </button>
-
-                <button
-                  onClick={() => executeConfirmedDispatch(pendingConfirmItem)}
-                  className="btn-primary"
-                  style={{
-                    padding: '8px 20px',
-                    fontSize: '13px',
-                    background: 'linear-gradient(135deg, #1B3F8B 0%, #1E3A8A 100%)',
-                    boxShadow: '0 4px 12px rgba(27, 63, 139, 0.3)'
-                  }}
-                >
-                  <ShieldCheck size={16} />
-                  <span>Confirm & Issue Work Order</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ConfirmationModal
+          isOpen={!!pendingConfirmItem}
+          onClose={() => setPendingConfirmItem(null)}
+          onConfirm={() => executeConfirmedDispatch(pendingConfirmItem)}
+          title="Confirm Work Order Dispatch"
+          subtitle="Official Military Maintenance Work Order Protocol"
+          iconType="wrench"
+          badgeText={`${pendingConfirmItem.urgency || 'HIGH'} URGENCY`}
+          badgeType={pendingConfirmItem.urgency === 'IMMEDIATE' ? 'danger' : 'warning'}
+          summaryItems={[
+            { label: 'Platform ID', value: pendingConfirmItem.asset_id, highlight: true },
+            { label: 'Model', value: pendingConfirmItem.model_name || pendingConfirmItem.asset_type || 'Military Platform' },
+            { label: 'Failing Subsystem', value: pendingConfirmItem.predicted_failing_component || 'Subsystem', color: 'var(--status-not-ready-text)' },
+            { label: 'Est. Labor', value: `${pendingConfirmItem.estimated_labor_hours || 8} hours` }
+          ]}
+          impactItems={[
+            `You are about to issue an official military work order for platform ${pendingConfirmItem.asset_id} (${pendingConfirmItem.model_name || pendingConfirmItem.asset_type}).`,
+            `Reserves required logistics inventory parts (${(pendingConfirmItem.parts_required || ['Hydraulic Pump Seals', 'Fuel Injection Kit']).join(', ')}).`,
+            `Assigns specialized repair crew: ${pendingConfirmItem.urgency === 'IMMEDIATE' ? 'Alpha Maintenance Squad - Bay 3' : 'Bravo Depot Repair Team - Hangar 2'}.`
+          ]}
+          reflectionItems={[
+            `Flight roster status locks to "GROUNDED FOR MAINTENANCE".`,
+            `Work order status updates to "DISPATCHED" with full timestamp audit receipt.`,
+            `Maintenance Queue KPIs and fleet readiness dynamically update.`
+          ]}
+          confirmText="Confirm & Issue Work Order"
+          confirmColor="var(--accent-iaf)"
+        />
       )}
 
       {/* Official Work Order Dispatch Receipt Certificate Modal */}
-      {activeReceipt && (
+      {activeReceipt && createPortal(
         <div className="modal-overlay" onClick={() => setActiveReceipt(null)}>
           <div
             className="clean-panel printable-receipt"
@@ -839,7 +810,8 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
 
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

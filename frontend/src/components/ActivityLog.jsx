@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { Search, ShieldCheck, CheckCircle2, Clock, FileText, Activity, ChevronRight, Printer, X } from './Icons';
 import FighterJetLoader from './FighterJetLoader';
+import ConfirmationModal from './ConfirmationModal';
 
-export default function ActivityLog({ onSelectAsset }) {
+export default function ActivityLog({ onSelectAsset, onDataChange, showActionOverlay, hideActionOverlay, showToast, newLogIds, onMarkAllRead }) {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,6 +12,86 @@ export default function ActivityLog({ onSelectAsset }) {
   const [urgencyFilter, setUrgencyFilter] = useState('ALL');
   const [viewMode, setViewMode] = useState('cards'); // 'cards' or 'table'
   const [selectedLogForPrint, setSelectedLogForPrint] = useState(null);
+  const [completingId, setCompletingId] = useState(null);
+  const [confirmModalConfig, setConfirmModalConfig] = useState(null);
+
+  const executeCompleteRepair = async (log) => {
+    const savedScroll = window.scrollY;
+    setCompletingId(log.id);
+    if (showActionOverlay) {
+      showActionOverlay(
+        `COMPLETING SERVICING FOR ${log.asset_id}`,
+        `Recalibrating sensor envelopes, clearing roster grounding lock, and updating fleet KPIs...`,
+        log.asset_id
+      );
+    }
+
+    try {
+      const res = await fetch('/api/work-orders/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          asset_id: log.asset_id,
+          work_order_id: log.work_order_id || log.id,
+          notes: 'Depot maintenance servicing complete. Subsystem recalibrated and cleared for flight operations.'
+        })
+      });
+      if (res.ok) {
+        await fetchLogs(true);
+        if (onDataChange) await onDataChange();
+        if (showToast) {
+          showToast(
+            `PLATFORM ${log.asset_id} RESTORED TO FLIGHT READY`,
+            `Work Order ${log.id} completed. Sensor telemetry recalibrated to 100% nominal baseline.`
+          );
+        }
+      }
+    } catch (err) {
+      console.error('Failed to complete repair:', err);
+    } finally {
+      setCompletingId(null);
+      if (hideActionOverlay) hideActionOverlay();
+      if (savedScroll > 0) {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: savedScroll, behavior: 'instant' });
+        });
+      }
+    }
+  };
+
+  const handleCompleteRepair = (log, e) => {
+    if (e) e.stopPropagation();
+    setConfirmModalConfig({
+      isOpen: true,
+      title: 'Confirm Work Order Completion & Signoff',
+      subtitle: `Depot Servicing Signoff for ${log.asset_id}`,
+      iconType: 'check',
+      badgeText: 'DEPOT SIGNOFF',
+      badgeType: 'success',
+      summaryItems: [
+        { label: 'Platform ID', value: log.asset_id, highlight: true },
+        { label: 'Model', value: log.model_name },
+        { label: 'Subsystem Serviced', value: log.component, color: 'var(--status-ready-text)' },
+        { label: 'Work Order ID', value: log.id }
+      ],
+      impactItems: [
+        `Registers formal maintenance completion for ${log.asset_id} in depot records.`,
+        'Recalibrates sensor envelopes back to nominal baseline tolerances and clears active telemetry anomaly alerts.',
+        'Restores composite health score to 100% and resets flight readiness roster status.'
+      ],
+      reflectionItems: [
+        'Platform status immediately updates to "Ready" (Flight Ready).',
+        'Work order status updates to "COMPLETED" in the unified audit log.',
+        'Fleet readiness KPIs dynamically increment across the mission dashboard.'
+      ],
+      confirmText: 'Confirm & Sign Off Repair',
+      confirmColor: 'var(--status-ready-dot)',
+      onConfirm: async () => {
+        setConfirmModalConfig(null);
+        await executeCompleteRepair(log);
+      }
+    });
+  };
 
   const fetchLogs = (isSilent = false) => {
     if (!isSilent && logs.length === 0) {
@@ -40,9 +122,39 @@ export default function ActivityLog({ onSelectAsset }) {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle printing all filtered audit logs
+  // Handle printing all filtered audit logs with confirmation
   const handlePrintAll = () => {
-    window.print();
+    setConfirmModalConfig({
+      isOpen: true,
+      title: 'Confirm Activity Audit Trail Print',
+      subtitle: 'Generate Official IAF Fleet Maintenance Report',
+      iconType: 'clock',
+      badgeText: 'OFFICIAL REPORT',
+      badgeType: 'accent',
+      summaryItems: [
+        { label: 'Total Records to Print', value: `${filteredLogs.length} Activities`, highlight: true },
+        { label: 'Active Category Filter', value: typeFilter === 'ALL' ? 'All Event Types' : (typeFilter === 'DISPATCH' ? 'Work Orders Only' : 'Historical Records Only') },
+        { label: 'Urgency Scope', value: urgencyFilter === 'ALL' ? 'All Urgencies' : urgencyFilter },
+        { label: 'Search Keyword', value: searchTerm ? `"${searchTerm}"` : 'Complete Fleet Log' }
+      ],
+      impactItems: [
+        `Compiles all ${filteredLogs.length} filtered maintenance work orders, parts reservations, and depot logs into an official multi-page IAF report document.`,
+        'Formats document with restricted military classification headers, station timestamp, and authorization signoff blocks.',
+        'Automatically optimizes layout for A4 portrait printing without cutting off cards or telemetry tables.'
+      ],
+      reflectionItems: [
+        'Opens browser print dialogue for high-fidelity PDF export or physical station depot hardcopy printing.',
+        'Document timestamp and filter parameters will be stamped on the generated report.'
+      ],
+      confirmText: 'Confirm & Open Print Dialog',
+      confirmColor: 'var(--accent-iaf)',
+      onConfirm: () => {
+        setConfirmModalConfig(null);
+        setTimeout(() => {
+          window.print();
+        }, 150);
+      }
+    });
   };
 
   // Handle printing a single activity/work order receipt
@@ -89,6 +201,73 @@ export default function ActivityLog({ onSelectAsset }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Official IAF Report Header (Prints only on paper/PDF) */}
+      <div className="print-only-report-header" style={{ display: 'none', marginBottom: '20px', paddingBottom: '14px', borderBottom: '2px solid #1B3F8B' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <img src="/IAF_logo.png" alt="IAF Crest" style={{ width: '50px', height: '50px', objectFit: 'contain' }} />
+            <div>
+              <div style={{ fontSize: '18px', fontWeight: 900, color: '#1B3F8B', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                INDIAN AIR FORCE • HEALTH & USAGE MONITORING SYSTEM (HUMS)
+              </div>
+              <div style={{ fontSize: '12px', fontWeight: 700, color: '#334155', marginTop: '2px' }}>
+                OFFICIAL FLEET MAINTENANCE ACTIVITY AUDIT TRAIL & WORK ORDER REPORT
+              </div>
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: '10px', fontWeight: 800, color: '#991B1B', textTransform: 'uppercase' }}>RESTRICTED • OFFICIAL SENSITIVE</div>
+            <div style={{ fontSize: '11px', color: '#475569', marginTop: '2px' }}>Date: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()} IST</div>
+            <div style={{ fontSize: '11px', fontWeight: 700, color: '#1B3F8B', marginTop: '2px' }}>Total Records Logged: {filteredLogs.length}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* New Notifications Alert Banner */}
+      {newLogIds && newLogIds.size > 0 && (
+        <div style={{
+          backgroundColor: 'rgba(255, 183, 3, 0.12)',
+          border: '1px solid #FFB703',
+          borderRadius: '8px',
+          padding: '14px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '12px',
+          boxShadow: '0 0 12px rgba(255, 183, 3, 0.2)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span style={{ fontSize: '20px' }}>🔔</span>
+            <div>
+              <div style={{ fontSize: '13px', fontWeight: 800, color: '#FFB703', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                {newLogIds.size} NEW ACTIVITY NOTIFICATION{newLogIds.size > 1 ? 'S' : ''} RECEIVED
+              </div>
+              <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                New activity entries are labeled with the <span style={{ fontWeight: 800, color: '#FFB703' }}>⚡ NEW</span> tag below.
+              </div>
+            </div>
+          </div>
+          {onMarkAllRead && (
+            <button
+              onClick={onMarkAllRead}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '6px',
+                border: '1px solid #FFB703',
+                backgroundColor: '#FFB703',
+                color: '#000000',
+                fontSize: '12px',
+                fontWeight: 800,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Mark All as Read
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Activity Log Banner Overview */}
       <div style={{
         display: 'grid',
@@ -266,16 +445,7 @@ export default function ActivityLog({ onSelectAsset }) {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              style={{
-                padding: '6px 10px',
-                borderRadius: '6px',
-                border: '1px solid var(--border-default)',
-                backgroundColor: 'var(--bg-subtle)',
-                color: 'var(--text-primary)',
-                fontSize: '12px',
-                outline: 'none',
-                cursor: 'pointer'
-              }}
+              className="iaf-select"
             >
               <option value="ALL">All Event Types</option>
               <option value="DISPATCH">Real-time Work Orders</option>
@@ -286,16 +456,7 @@ export default function ActivityLog({ onSelectAsset }) {
             <select
               value={urgencyFilter}
               onChange={(e) => setUrgencyFilter(e.target.value)}
-              style={{
-                padding: '6px 10px',
-                borderRadius: '6px',
-                border: '1px solid var(--border-default)',
-                backgroundColor: 'var(--bg-subtle)',
-                color: 'var(--text-primary)',
-                fontSize: '12px',
-                outline: 'none',
-                cursor: 'pointer'
-              }}
+              className="iaf-select"
             >
               <option value="ALL">All Urgencies</option>
               <option value="IMMEDIATE">IMMEDIATE</option>
@@ -320,10 +481,13 @@ export default function ActivityLog({ onSelectAsset }) {
             {filteredLogs.map((log, idx) => {
               const isDispatch = log.event_type === 'WORK_ORDER_DISPATCH';
               const isImmediate = log.urgency === 'IMMEDIATE';
+              const logKey = log.id || (log.asset_id + '-' + log.timestamp);
+              const isNewLog = newLogIds && (newLogIds.has(log.id) || newLogIds.has(logKey));
 
               return (
                 <div
                   key={log.id + '-' + idx}
+                  className="clean-panel audit-log-card"
                   style={{
                     backgroundColor: isDispatch ? 'var(--accent-iaf-subtle)' : 'var(--bg-surface)',
                     border: isDispatch ? '1px solid var(--accent-iaf)' : '1px solid var(--border-default)',
@@ -334,10 +498,37 @@ export default function ActivityLog({ onSelectAsset }) {
                   }}
                 >
                   {/* Card Header Row */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span className="mono-num" style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-muted)' }}>
-                        📅 {log.timestamp}
+                  <div style={{
+                    display: 'flex',
+                    justify: 'space-between',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '14px',
+                    paddingBottom: '10px',
+                    borderBottom: '1px solid var(--border-subtle)',
+                    flexWrap: 'wrap'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                      {isNewLog && (
+                        <span className="mono-num" style={{
+                          fontSize: '11px',
+                          fontWeight: 900,
+                          padding: '2px 9px',
+                          borderRadius: '12px',
+                          backgroundColor: '#FFB703',
+                          color: '#000000',
+                          letterSpacing: '0.04em',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          boxShadow: '0 0 10px rgba(255, 183, 3, 0.6)'
+                        }}>
+                          ⚡ NEW
+                        </span>
+                      )}
+                      <span className="mono-num" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '12px', fontWeight: 700, color: 'var(--text-muted)' }}>
+                        <span style={{ lineHeight: 1 }}>📅</span>
+                        <span>{log.timestamp}</span>
                       </span>
                       <span className="mono-num" style={{
                         fontSize: '11px',
@@ -362,16 +553,41 @@ export default function ActivityLog({ onSelectAsset }) {
                       </span>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                      {isDispatch && log.status !== 'COMPLETED' && (
+                        <button
+                          onClick={(e) => handleCompleteRepair(log, e)}
+                          disabled={completingId === log.id}
+                          className="no-print"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '4px 12px',
+                            borderRadius: '5px',
+                            border: '1px solid var(--status-ready-border)',
+                            backgroundColor: 'var(--status-ready-bg)',
+                            color: 'var(--status-ready-text)',
+                            fontSize: '11px',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                          title="Mark servicing completed and restore platform to FLIGHT_READY"
+                        >
+                          <CheckCircle2 size={13} />
+                          <span>{completingId === log.id ? 'Completing...' : 'Complete Repair & Mark Ready'}</span>
+                        </button>
+                      )}
                       <button
                         onClick={(e) => handlePrintSingle(log, e)}
                         className="no-print"
                         style={{
-                          display: 'flex',
+                          display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '4px',
-                          padding: '3px 10px',
-                          borderRadius: '4px',
+                          gap: '6px',
+                          padding: '4px 10px',
+                          borderRadius: '5px',
                           border: '1px solid var(--border-default)',
                           backgroundColor: 'var(--bg-subtle)',
                           color: 'var(--text-primary)',
@@ -383,10 +599,10 @@ export default function ActivityLog({ onSelectAsset }) {
                         title="Print single Work Order docket / service receipt"
                       >
                         <Printer size={13} />
-                        Print Receipt
+                        <span>Print Receipt</span>
                       </button>
                       <div className="mono-num" style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-iaf)' }}>
-                        ID: {log.id}
+                        ID: {log.work_order_id || log.id}
                       </div>
                     </div>
                   </div>
@@ -406,12 +622,12 @@ export default function ActivityLog({ onSelectAsset }) {
                       </div>
                       <div
                         onClick={() => onSelectAsset && onSelectAsset(log.asset_id)}
-                        style={{ cursor: 'pointer', marginTop: '4px' }}
+                        style={{ cursor: 'pointer', marginTop: '4px', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}
                       >
                         <span className="mono-num" style={{ fontSize: '15px', fontWeight: 800, color: 'var(--accent-iaf)' }}>
                           {log.asset_id}
                         </span>
-                        <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginLeft: '8px' }}>
+                        <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>
                           • {log.model_name}
                         </span>
                         <span style={{
@@ -420,14 +636,14 @@ export default function ActivityLog({ onSelectAsset }) {
                           borderRadius: '4px',
                           backgroundColor: 'var(--bg-subtle)',
                           color: 'var(--text-secondary)',
-                          marginLeft: '8px',
                           border: '1px solid var(--border-default)'
                         }}>
                           {log.category}
                         </span>
                       </div>
-                      <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '3px' }}>
-                        📍 {log.unit}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                        <span style={{ lineHeight: 1 }}>📍</span>
+                        <span>{log.unit}</span>
                       </div>
                     </div>
 
@@ -439,8 +655,9 @@ export default function ActivityLog({ onSelectAsset }) {
                       <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
                         {log.action_title}
                       </div>
-                      <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                        🔧 Subsystem: <strong>{log.component}</strong>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                        <span style={{ lineHeight: 1 }}>🔧</span>
+                        <span>Subsystem: <strong style={{ color: 'var(--text-primary)' }}>{log.component}</strong></span>
                       </div>
                     </div>
 
@@ -449,20 +666,26 @@ export default function ActivityLog({ onSelectAsset }) {
                       <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                         ASSIGNED CREW & RESERVED SPARE PARTS
                       </div>
-                      <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-iaf)', marginTop: '4px' }}>
-                        👷 {log.assigned_crew} ({log.estimated_hours} Hours Labor)
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 700, color: 'var(--accent-iaf)', marginTop: '4px' }}>
+                        <span style={{ fontSize: '14px', lineHeight: 1 }}>👷</span>
+                        <span>{log.assigned_crew} ({log.estimated_hours} Hours Labor)</span>
                       </div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '6px' }}>
                         {log.parts_reserved?.map((p, pidx) => (
                           <span key={pidx} style={{
-                            fontSize: '10px',
-                            padding: '2px 6px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            fontSize: '11px',
+                            fontWeight: 600,
+                            padding: '3px 8px',
                             borderRadius: '4px',
                             backgroundColor: 'var(--bg-subtle)',
                             color: 'var(--text-secondary)',
                             border: '1px solid var(--border-subtle)'
                           }}>
-                            📦 {p}
+                            <span style={{ fontSize: '12px', lineHeight: 1 }}>📦</span>
+                            <span>{p}</span>
                           </span>
                         ))}
                       </div>
@@ -470,9 +693,12 @@ export default function ActivityLog({ onSelectAsset }) {
                   </div>
 
                   {/* Technician Notes Box */}
-                  <div style={{ marginTop: '10px', fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                    <strong style={{ color: 'var(--text-primary)' }}>📝 Directive / Technician Log: </strong>
-                    <em>"{log.notes}"</em>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginTop: '12px', fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    <span style={{ fontSize: '14px', lineHeight: 1 }}>📝</span>
+                    <div>
+                      <strong style={{ color: 'var(--text-primary)' }}>Directive / Technician Log: </strong>
+                      <em>"{log.notes}"</em>
+                    </div>
                   </div>
                 </div>
               );
@@ -497,6 +723,9 @@ export default function ActivityLog({ onSelectAsset }) {
               <tbody>
                 {filteredLogs.map((log, idx) => {
                   const isDispatch = log.event_type === 'WORK_ORDER_DISPATCH';
+                  const logKey = log.id || (log.asset_id + '-' + log.timestamp);
+                  const isNewLog = newLogIds && (newLogIds.has(log.id) || newLogIds.has(logKey));
+
                   return (
                     <tr key={log.id + '-' + idx} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                       <td style={{ padding: '12px' }} className="mono-num">{log.timestamp.split(' ')[0]}</td>
@@ -508,36 +737,74 @@ export default function ActivityLog({ onSelectAsset }) {
                       <td style={{ padding: '12px' }}>{log.component}</td>
                       <td style={{ padding: '12px' }}>{log.assigned_crew} ({log.estimated_hours}h)</td>
                       <td style={{ padding: '12px' }}>
-                        <span className="mono-num" style={{
-                          fontSize: '11px',
-                          fontWeight: 700,
-                          padding: '2px 6px',
-                          borderRadius: '4px',
-                          backgroundColor: isDispatch ? 'var(--status-not-ready-bg)' : 'var(--status-ready-bg)',
-                          color: isDispatch ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)'
-                        }}>
-                          {log.status}
-                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span className="mono-num" style={{
+                            fontSize: '11px',
+                            fontWeight: 700,
+                            padding: '2px 6px',
+                            borderRadius: '4px',
+                            backgroundColor: isDispatch ? 'var(--status-not-ready-bg)' : 'var(--status-ready-bg)',
+                            color: isDispatch ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)'
+                          }}>
+                            {log.status}
+                          </span>
+                          {isNewLog && (
+                            <span className="mono-num" style={{
+                              fontSize: '10px',
+                              fontWeight: 900,
+                              padding: '1px 6px',
+                              borderRadius: '10px',
+                              backgroundColor: '#FFB703',
+                              color: '#000000'
+                            }}>
+                              ⚡ NEW
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td style={{ padding: '12px', textAlign: 'right' }} className="no-print">
-                        <button
-                          onClick={(e) => handlePrintSingle(log, e)}
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            padding: '3px 8px',
-                            borderRadius: '4px',
-                            border: '1px solid var(--border-default)',
-                            backgroundColor: 'var(--bg-subtle)',
-                            color: 'var(--text-primary)',
-                            fontSize: '11px',
-                            fontWeight: 600,
-                            cursor: 'pointer'
-                          }}
-                        >
-                          <Printer size={12} /> Print
-                        </button>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                          {isDispatch && log.status !== 'COMPLETED' && (
+                            <button
+                              onClick={(e) => handleCompleteRepair(log, e)}
+                              disabled={completingId === log.id}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                padding: '3px 8px',
+                                borderRadius: '4px',
+                                border: '1px solid var(--status-ready-border)',
+                                backgroundColor: 'var(--status-ready-bg)',
+                                color: 'var(--status-ready-text)',
+                                fontSize: '11px',
+                                fontWeight: 700,
+                                cursor: 'pointer'
+                              }}
+                            >
+                              <CheckCircle2 size={12} />
+                              {completingId === log.id ? 'Completing...' : 'Complete Repair'}
+                            </button>
+                          )}
+                          <button
+                            onClick={(e) => handlePrintSingle(log, e)}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              padding: '3px 8px',
+                              borderRadius: '4px',
+                              border: '1px solid var(--border-default)',
+                              backgroundColor: 'var(--bg-subtle)',
+                              color: 'var(--text-primary)',
+                              fontSize: '11px',
+                              fontWeight: 600,
+                              cursor: 'pointer'
+                            }}
+                          >
+                            <Printer size={12} /> Print
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -549,7 +816,7 @@ export default function ActivityLog({ onSelectAsset }) {
       </div>
 
       {/* Single Activity / Work Order Printable Docket Modal */}
-      {selectedLogForPrint && (
+      {selectedLogForPrint && createPortal(
         <div className="modal-overlay" style={{
           position: 'fixed',
           inset: 0,
@@ -720,7 +987,43 @@ export default function ActivityLog({ onSelectAsset }) {
               </div>
             </div>
           </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Official Print Signoff Stamp Block (Prints only on paper/PDF) */}
+      <div className="print-only-signoff" style={{ display: 'none', marginTop: '30px', paddingTop: '16px', borderTop: '1px dashed #94A3B8' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px' }}>
+          <div>
+            <div style={{ height: '35px' }}></div>
+            <div style={{ borderTop: '1px solid #475569', paddingTop: '4px', fontSize: '11px', fontWeight: 700, color: '#334155' }}>
+              SQUADRON ENGINEERING OFFICER
+            </div>
+            <div style={{ fontSize: '10px', color: '#64748B' }}>Signature & Rank Stamp</div>
+          </div>
+          <div>
+            <div style={{ height: '35px' }}></div>
+            <div style={{ borderTop: '1px solid #475569', paddingTop: '4px', fontSize: '11px', fontWeight: 700, color: '#334155' }}>
+              CHIEF LOGISTICS CONTROLLER
+            </div>
+            <div style={{ fontSize: '10px', color: '#64748B' }}>Depot Inventory & Parts Signoff</div>
+          </div>
+          <div>
+            <div style={{ height: '35px' }}></div>
+            <div style={{ borderTop: '1px solid #475569', paddingTop: '4px', fontSize: '11px', fontWeight: 700, color: '#334155' }}>
+              STATION COMMANDING OFFICER
+            </div>
+            <div style={{ fontSize: '10px', color: '#64748B' }}>Air Force Station Authorization</div>
+          </div>
         </div>
+      </div>
+
+      {/* Reusable Confirmation Modal */}
+      {confirmModalConfig && (
+        <ConfirmationModal
+          {...confirmModalConfig}
+          onClose={() => setConfirmModalConfig(null)}
+        />
       )}
     </div>
   );

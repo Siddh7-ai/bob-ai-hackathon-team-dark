@@ -20,7 +20,8 @@ export default function FighterJetLoader({
   variant = 'fullscreen',
   progress = 0,
   size = 'md',
-  statusText = 'LOADING...'
+  statusText = 'LOADING...',
+  subtitleText = 'This process may take a few moments while sensor streams & ML models recalibrate. Please do not refresh or close this tab/window.'
 }) {
   const canvasRef = useRef(null);
   const [wordIndex, setWordIndex] = useState(0);
@@ -297,6 +298,8 @@ export default function FighterJetLoader({
         color: 'var(--text-primary, #0F172A)',
         width: variant === 'fullscreen' ? '100%' : (isSmall ? '280px' : (isLarge ? '420px' : '350px')),
         height: variant === 'fullscreen' ? '100%' : (isSmall ? '140px' : (isLarge ? '200px' : '170px')),
+        margin: variant === 'fullscreen' ? 0 : '0 auto',
+        alignSelf: 'center',
         pointerEvents: variant === 'fullscreen' ? 'all' : 'none',
         userSelect: 'none',
         transition: 'background-color 0.25s ease, opacity 0.3s ease'
@@ -345,33 +348,70 @@ export default function FighterJetLoader({
         />
       </div>
 
-      {/* Fullscreen Variant: Rapid Multilingual India Name Transition */}
-      {variant === 'fullscreen' && (
+      {/* Inline Variant: Centered Status Text */}
+      {variant !== 'fullscreen' && statusText && (
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '18px',
-            height: '40px',
-            minWidth: '280px'
+            marginTop: '8px',
+            fontSize: isSmall ? '11px' : '13px',
+            fontWeight: 700,
+            color: 'var(--accent-iaf, var(--text-primary))',
+            letterSpacing: '0.05em',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            userSelect: 'none'
           }}
         >
-          <span
-            key={wordIndex}
+          {statusText}
+        </div>
+      )}
+
+      {/* Fullscreen Variant: Rapid Multilingual India Name Transition & Subtitle */}
+      {variant === 'fullscreen' && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '16px' }}>
+          <div
             style={{
-              fontSize: '24px',
-              fontWeight: 800,
-              color: 'var(--text-primary, #0F172A)',
-              letterSpacing: '0.08em',
-              fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
-              animation: 'rapidWordFade 0.11s ease-in-out forwards',
-              textAlign: 'center',
-              userSelect: 'none'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '36px',
+              minWidth: '280px'
             }}
           >
-            {indiaWords[wordIndex]}
-          </span>
+            <span
+              key={wordIndex}
+              style={{
+                fontSize: '24px',
+                fontWeight: 800,
+                color: 'var(--text-primary, #0F172A)',
+                letterSpacing: '0.08em',
+                fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
+                animation: 'rapidWordFade 0.11s ease-in-out forwards',
+                textAlign: 'center',
+                userSelect: 'none'
+              }}
+            >
+              {indiaWords[wordIndex]}
+            </span>
+          </div>
+
+          {subtitleText && (
+            <div
+              style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: 'var(--text-secondary, #64748B)',
+                marginTop: '24px',
+                textAlign: 'center',
+                letterSpacing: '0.03em',
+                userSelect: 'none',
+                maxWidth: '480px',
+                lineHeight: '1.4'
+              }}
+            >
+              {subtitleText}
+            </div>
+          )}
         </div>
       )}
 

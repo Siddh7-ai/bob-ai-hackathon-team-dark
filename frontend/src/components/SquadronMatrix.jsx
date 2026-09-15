@@ -80,7 +80,7 @@ export default function SquadronMatrix({ assets, onSelectAsset }) {
               {/* Assets list pills */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {sq.assets.map(asset => {
-                  const isGrounded = asset.status === 'Not-Ready';
+                  const isGrounded = asset.status === 'Not-Ready' || asset.status === 'Under-Maintenance';
                   const isAtRisk = asset.status === 'At-Risk';
                   return (
                     <button

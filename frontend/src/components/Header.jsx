@@ -1,172 +1,114 @@
-import React from 'react';
-import { Shield, RefreshCw, BarChart2, Sun, Moon } from './Icons';
+import React, { useState, useEffect } from 'react';
+import { ShieldCheck, Clock, Activity, Zap, Wrench, FileText, Shield } from './Icons';
 
-export default function Header({ 
-  activeTab, 
-  setActiveTab, 
-  unreadLogCount = 0,
-  onOpenEvaluation, 
-  onRegenerate, 
-  isRegenerating,
-  kpis,
-  theme,
-  onToggleTheme
-}) {
+export default function Header({ activeTab, kpis }) {
+  const [timeStr, setTimeStr] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTimeStr(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' IST');
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const titles = {
+    fleet: { title: 'Fleet Telemetry & Health Monitoring', sub: 'Real-time multi-sensor telemetry & RUL predictions across air assets' },
+    maintenance: { title: 'Prioritised Maintenance Action Queue', sub: 'Weighted ML ranking based on health score, risk, and remaining cycles' },
+    sortie: { title: 'Combat Sortie "What-If" Tactical Planner', sub: 'Simulate mission duration stress and harsh environments across squadrons' },
+    matrix: { title: 'Squadron Readiness & Base Matrix', sub: 'Unit-by-unit platform operational availability & depot status' },
+    log: { title: 'Activity Audit Trail & Work Orders', sub: 'Unified log of real-time dispatched work orders & historical service records' }
+  };
+
+  const current = titles[activeTab] || titles.fleet;
+
   return (
     <header style={{
+      height: '68px',
+      boxSizing: 'border-box',
+      display: 'flex',
+      alignItems: 'center',
       borderBottom: '1px solid var(--border-default)',
       backgroundColor: 'var(--bg-surface)',
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      padding: '12px 32px'
+      padding: '0 32px 0 84px',
+      transition: 'padding-left 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
     }}>
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: '16px',
-        overflowX: 'auto'
+        width: '100%',
+        flexWrap: 'nowrap'
       }}>
-        {/* Left: Branding & Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-          <img 
-            src="/IAF_logo.png" 
-            alt="Indian Air Force Logo" 
-            style={{
-              height: '38px',
-              width: 'auto',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2))'
-            }}
-          />
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>
-                APEX HUMS
-              </span>
-              <span style={{
-                fontSize: '10px',
-                fontWeight: 700,
-                padding: '1px 6px',
-                borderRadius: '4px',
-                backgroundColor: 'var(--bg-subtle)',
-                color: 'var(--text-secondary)',
-                border: '1px solid var(--border-default)'
-              }}>
-                IAF Operational Spec
-              </span>
-            </div>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '1px' }}>
-              Health & Usage Monitoring System • NASA CMAPSS Analog
-            </p>
+        {/* Active Section Info */}
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <h1 style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.01em' }}>
+              {current.title}
+            </h1>
+            <span style={{
+              fontSize: '10px',
+              fontWeight: 700,
+              padding: '2px 8px',
+              borderRadius: '4px',
+              backgroundColor: 'var(--status-ready-bg)',
+              color: 'var(--status-ready-text)',
+              border: '1px solid var(--status-ready-border)'
+            }}>
+              IAF OPERATIONAL SPEC
+            </span>
           </div>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px', margin: 0 }}>
+            {current.sub}
+          </p>
         </div>
 
-        {/* Center: View Navigation */}
-        <nav style={{
-          display: 'flex',
-          gap: '4px',
-          backgroundColor: 'var(--bg-subtle)',
-          padding: '3px',
-          borderRadius: '7px',
-          border: '1px solid var(--border-subtle)',
-          flexShrink: 0
-        }}>
-          {[
-            { id: 'fleet', label: 'Fleet Telemetry', count: kpis?.total_assets },
-            { id: 'maintenance', label: 'Prioritised Maintenance', count: kpis?.critical_maintenance_actions, alert: true },
-            { id: 'matrix', label: 'Squadron Readiness' },
-            { id: 'log', label: 'Activity Audit Log', unread: unreadLogCount }
-          ].map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  backgroundColor: isActive ? 'var(--bg-surface)' : 'transparent',
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  border: isActive ? '1px solid var(--border-default)' : '1px solid transparent',
-                  padding: '6px 14px',
-                  borderRadius: '5px',
-                  fontSize: '12px',
-                  fontWeight: isActive ? 700 : 500,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
-                  transition: 'all 0.15s ease',
-                  position: 'relative'
-                }}
-              >
-                <span>{tab.label}</span>
+        {/* System Status Indicators */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {/* Operational Availability Badge */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: 'var(--bg-subtle)',
+            padding: '5px 12px',
+            borderRadius: '6px',
+            border: '1px solid var(--border-default)'
+          }}>
+            <span style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--status-ready-dot)',
+              boxShadow: '0 0 8px var(--status-ready-dot)'
+            }} />
+            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-primary)' }}>
+              SYSTEM READY ({kpis?.ready_count || 0}/{kpis?.total_assets || 40} SORTIE CLEARED)
+            </span>
+          </div>
 
-                {/* Unread Dispatch Notification Badge */}
-                {tab.unread > 0 && (
-                  <span className="mono-num" style={{
-                    fontSize: '10px',
-                    fontWeight: 800,
-                    padding: '1px 6px',
-                    borderRadius: '10px',
-                    backgroundColor: 'var(--status-not-ready-bg)',
-                    color: 'var(--status-not-ready-text)',
-                    border: '1px solid var(--status-not-ready-border)',
-                    boxShadow: '0 0 8px rgba(239, 68, 68, 0.4)'
-                  }}>
-                    {tab.unread} NEW
-                  </span>
-                )}
-
-                {tab.count !== undefined && (
-                  <span className="mono-num" style={{
-                    fontSize: '11px',
-                    padding: '1px 6px',
-                    borderRadius: '10px',
-                    backgroundColor: tab.alert ? 'var(--status-not-ready-bg)' : 'var(--bg-subtle)',
-                    color: tab.alert ? 'var(--status-not-ready-text)' : 'var(--text-muted)',
-                    fontWeight: 600
-                  }}>
-                    {tab.count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Right: Theme Toggle & Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-          {/* Theme Toggle Button */}
-          <button
-            onClick={onToggleTheme}
-            className="btn-secondary"
-            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
-            style={{ padding: '7px 10px', borderRadius: '6px' }}
-            aria-label="Toggle Theme"
-          >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-
-          <button
-            className="btn-secondary"
-            onClick={onOpenEvaluation}
-            title="Inspect Model Validation Report & Held-Out Test Metrics"
-          >
-            <BarChart2 size={15} />
-            <span>Model Validation</span>
-          </button>
-
-          <button
-            className="btn-primary"
-            onClick={onRegenerate}
-            disabled={isRegenerating}
-            title="Simulate New Run-to-Failure Fleet Cycles"
-          >
-            <RefreshCw size={15} className={isRegenerating ? 'animate-spin' : ''} />
-            <span>{isRegenerating ? 'Simulating...' : 'Simulate Telemetry'}</span>
-          </button>
+          {/* Real-time Base Clock */}
+          <div className="mono-num" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontSize: '12px',
+            fontWeight: 700,
+            color: 'var(--accent-iaf)',
+            backgroundColor: 'var(--accent-iaf-subtle)',
+            padding: '5px 12px',
+            borderRadius: '6px',
+            border: '1px solid var(--accent-iaf)'
+          }}>
+            <Clock size={14} />
+            <span>{timeStr}</span>
+          </div>
         </div>
       </div>
     </header>

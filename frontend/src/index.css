@@ -236,37 +236,47 @@ body::-webkit-scrollbar {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
-  z-index: 100;
+  background: rgba(0, 5, 15, 0.78);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
 }
 
-/* PRINT SPECIFIC STYLING - Ensures ONLY the Work Order Dispatch Certificate is printed (Single 1 Page output) */
+/* ==========================================================================
+   PRINT STYLES - Full Audit Log Report & Single Work Order Docket Printing
+   ========================================================================== */
 @media print {
-  body {
+  html, body {
     background: #FFFFFF !important;
     color: #0F172A !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  /* Hide main application navigation, header, and non-modal dashboard pages */
-  #root > div > header,
-  #root > div > nav,
-  .clean-panel:not(.printable-receipt),
-  .dashboard-grid,
-  .main-content-area,
-  body > *:not(#root) {
+  /* Completely remove sidebar, header bar, action buttons, inputs, loaders */
+  aside,
+  header,
+  nav,
+  .no-print,
+  .fighter-loader-wrapper {
     display: none !important;
   }
 
-  /* Force modal overlay to render flat as page container */
-  .modal-overlay {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+  /* When single docket modal is open (.printable-receipt exists outside #root via React Portal) */
+  body:has(.printable-receipt) #root {
+    display: none !important;
+  }
+
+  body:has(.printable-receipt) .modal-overlay {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
     width: 100% !important;
     height: auto !important;
     background: #FFFFFF !important;
@@ -274,31 +284,113 @@ body::-webkit-scrollbar {
     padding: 0 !important;
     margin: 0 !important;
     display: block !important;
-    z-index: 99999 !important;
+    box-shadow: none !important;
+    border: none !important;
+    inset: auto !important;
   }
 
-  /* Expand the receipt card to fit cleanly on Page 1 */
-  .printable-receipt {
+  body:has(.printable-receipt) .printable-receipt {
+    position: static !important;
     width: 100% !important;
     max-width: 100% !important;
     border: 2px solid #1B3F8B !important;
     box-shadow: none !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     margin: 0 !important;
+    padding: 20px !important;
     background: #FFFFFF !important;
+    color: #0F172A !important;
     page-break-inside: avoid !important;
   }
 
-  /* Hide interactive buttons, copy actions, and close icons during printing */
-  .no-print {
-    display: none !important;
+  /* Reset main layout padding when printing full page without modal */
+  body:not(:has(.printable-receipt)) #root,
+  body:not(:has(.printable-receipt)) #root > div,
+  body:not(:has(.printable-receipt)) main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    position: static !important;
   }
 
+  /* Regular panels in print: ensure dark mode is neutralized to crisp white paper */
+  .clean-panel {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    box-shadow: none !important;
+    border: 1px solid #CBD5E1 !important;
+  }
+
+  /* Text colors on paper */
+  .printable-receipt *,
+  .clean-panel *,
+  .mono-num {
+    color: #0F172A !important;
+  }
+
+  /* Official report print-only header & signoff */
+  .print-only-report-header {
+    display: block !important;
+  }
+
+  .print-only-signoff {
+    display: block !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Avoid awkward card breaks mid-page */
+  .audit-log-card,
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
   @page {
     size: A4 portrait;
-    margin: 8mm;
+    margin: 10mm 10mm 10mm 10mm;
   }
 }
+
+/* Standardized IAF System Dropdown UI */
+.iaf-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 8px 34px 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.iaf-select:hover {
+  border-color: var(--accent-iaf);
+  background-color: var(--bg-surface);
+}
+
+.iaf-select:focus {
+  border-color: var(--accent-iaf);
+  box-shadow: 0 0 0 3px var(--accent-iaf-subtle);
+}
+
+.iaf-select option {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  padding: 8px;
+}
+
+
 
 
 

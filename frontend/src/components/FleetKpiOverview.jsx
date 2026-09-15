@@ -11,7 +11,7 @@ export default function FleetKpiOverview({ kpis }) {
   const notReadyCount = kpis.not_ready_count || 0;
   const totalAssets = kpis.total_assets || 0;
   const maintenanceCount = kpis.critical_maintenance_actions || 0;
-  const avgHealth = kpis.average_health_score || 0;
+  const avgHealth = kpis.avg_fleet_health_score ?? kpis.average_health_score ?? kpis.mean_fleet_health ?? 0;
 
   return (
     <div style={{

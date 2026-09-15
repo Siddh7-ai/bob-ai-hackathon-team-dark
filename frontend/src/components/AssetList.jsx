@@ -38,7 +38,11 @@ export default function AssetList({ assets, onSelectAsset }) {
         item.unit.toLowerCase().includes(searchTerm.toLowerCase())
       );
       const matchCategory = categoryFilter === 'ALL' || item.category?.toUpperCase() === categoryFilter.toUpperCase();
-      const matchStatus = statusFilter === 'ALL' || item.status.toUpperCase() === statusFilter.toUpperCase();
+      const matchStatus = statusFilter === 'ALL' || (
+        statusFilter === 'NOT-READY' 
+          ? (item.status === 'Not-Ready' || item.status === 'Under-Maintenance' || item.status?.toUpperCase()?.includes('NOT-READY'))
+          : item.status?.toUpperCase() === statusFilter.toUpperCase()
+      );
       const matchType = typeFilter === 'ALL' || item.asset_type.toUpperCase() === typeFilter.toUpperCase();
       const matchUnit = unitFilter === 'ALL' || item.unit === unitFilter;
 
@@ -224,16 +228,7 @@ export default function AssetList({ assets, onSelectAsset }) {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              style={{
-                backgroundColor: 'var(--bg-surface)',
-                border: '1px solid var(--border-default)',
-                color: 'var(--text-primary)',
-                borderRadius: '6px',
-                padding: '6px 12px',
-                fontSize: '12px',
-                outline: 'none',
-                cursor: 'pointer'
-              }}
+              className="iaf-select"
             >
               <option value="ALL">All Sub-Types</option>
               {availableTypes.filter(t => t !== 'ALL').map(t => (
@@ -244,16 +239,7 @@ export default function AssetList({ assets, onSelectAsset }) {
             <select
               value={unitFilter}
               onChange={(e) => setUnitFilter(e.target.value)}
-              style={{
-                backgroundColor: 'var(--bg-surface)',
-                border: '1px solid var(--border-default)',
-                color: 'var(--text-primary)',
-                borderRadius: '6px',
-                padding: '6px 12px',
-                fontSize: '12px',
-                outline: 'none',
-                cursor: 'pointer'
-              }}
+              className="iaf-select"
             >
               {units.map(u => (
                 <option key={u} value={u}>{u === 'ALL' ? 'All Squadrons' : u}</option>
@@ -530,7 +516,7 @@ export default function AssetList({ assets, onSelectAsset }) {
               }}>
                 <div style={{
                   fontSize: '12px',
-                  color: asset.status === 'Not-Ready' ? 'var(--status-not-ready-text)' : (asset.status === 'At-Risk' ? 'var(--status-at-risk-text)' : 'var(--text-secondary)'),
+                  color: (asset.status === 'Not-Ready' || asset.status === 'Under-Maintenance') ? 'var(--status-not-ready-text)' : (asset.status === 'At-Risk' ? 'var(--status-at-risk-text)' : 'var(--text-secondary)'),
                   fontWeight: asset.status === 'Ready' ? 400 : 500,
                   lineHeight: '1.4',
                   flex: 1

@@ -8,6 +8,9 @@ import ActivityLog from './components/ActivityLog';
 import AssetDetailModal from './components/AssetDetailModal';
 import ModelEvaluationModal from './components/ModelEvaluationModal';
 import FighterJetLoader from './components/FighterJetLoader';
+import SortiePlanner from './components/SortiePlanner';
+
+import Sidebar from './components/Sidebar';
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -23,16 +26,96 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(15);
   const [unreadLogCount, setUnreadLogCount] = useState(0);
+  const [actionOverlay, setActionOverlay] = useState(null); // { title, message, assetId }
+  const [toastNotification, setToastNotification] = useState(null); // { type, title, message }
+  const [readLogIds, setReadLogIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem('iaf_hums_read_log_ids');
+      return saved ? new Set(JSON.parse(saved)) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+  const [unacknowledgedLogIds, setUnacknowledgedLogIds] = useState(new Set());
+  const [activeNewLogIds, setActiveNewLogIds] = useState(new Set());
+
+  // Sync activity notifications and calculate exact unread badge count
+  const syncActivityNotifications = async () => {
+    try {
+      const res = await fetch(`/api/activity-log?_t=${Date.now()}`);
+      if (res.ok) {
+        const logs = await res.json();
+        if (Array.isArray(logs)) {
+          if (readLogIds === null) {
+            const initialSet = new Set(logs.map(l => l.id || (l.asset_id + '-' + l.timestamp)));
+            setReadLogIds(initialSet);
+            localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...initialSet]));
+            setUnacknowledgedLogIds(new Set());
+            setUnreadLogCount(0);
+          } else {
+            const unread = new Set();
+            logs.forEach(l => {
+              const logId = l.id || (l.asset_id + '-' + l.timestamp);
+              if (!readLogIds.has(logId)) {
+                unread.add(logId);
+              }
+            });
+            setUnacknowledgedLogIds(unread);
+            setUnreadLogCount(unread.size);
+            if (activeTab === 'log' && unread.size > 0) {
+              setActiveNewLogIds(prev => new Set([...prev, ...unread]));
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Failed to sync activity notifications:', err);
+    }
+  };
+
+  const markAllLogsAsRead = () => {
+    setReadLogIds(prev => {
+      const next = new Set(prev || []);
+      unacknowledgedLogIds.forEach(id => next.add(id));
+      activeNewLogIds.forEach(id => next.add(id));
+      localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
+      return next;
+    });
+    setUnacknowledgedLogIds(new Set());
+    setActiveNewLogIds(new Set());
+    setUnreadLogCount(0);
+  };
+
+  const showActionOverlay = (title, message, assetId) => {
+    setActionOverlay({ title, message, assetId });
+  };
+
+  const hideActionOverlay = () => {
+    setActionOverlay(null);
+  };
+
+  const showToast = (title, message, type = 'success') => {
+    setToastNotification({ title, message, type });
+    setTimeout(() => {
+      setToastNotification(null);
+    }, 4500);
+  };
 
   const handleTabSelect = (tabId) => {
-    setActiveTab(tabId);
     if (tabId === 'log') {
+      setActiveTab('log');
+      setActiveNewLogIds(new Set(unacknowledgedLogIds));
       setUnreadLogCount(0);
+    } else {
+      if (activeTab === 'log' && (unacknowledgedLogIds.size > 0 || activeNewLogIds.size > 0)) {
+        markAllLogsAsRead();
+      }
+      setActiveTab(tabId);
     }
   };
 
   const handleOrderDispatched = () => {
-    setUnreadLogCount(prev => prev + 1);
+    syncActivityNotifications();
     fetchDashboardData();
   };
 
@@ -87,17 +170,24 @@ export default function App() {
 
   useEffect(() => {
     fetchDashboardData();
+    syncActivityNotifications();
+
+    const interval = setInterval(() => {
+      syncActivityNotifications();
+    }, 5000);
 
     // Auto-refresh when tab gains focus or visibility changes to prevent desync
     const onSync = () => {
       if (document.visibilityState === 'visible') {
         fetchDashboardData();
+        syncActivityNotifications();
       }
     };
     window.addEventListener('focus', onSync);
     document.addEventListener('visibilitychange', onSync);
 
     return () => {
+      clearInterval(interval);
       window.removeEventListener('focus', onSync);
       document.removeEventListener('visibilitychange', onSync);
     };
@@ -121,33 +211,23 @@ export default function App() {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isRegenerating) {
     return (
       <FighterJetLoader
         variant="fullscreen"
-        progress={loadProgress}
-        statusText="LOADING..."
+        progress={isRegenerating ? 85 : loadProgress}
+        statusText={isRegenerating ? "SIMULATING LIVE TELEMETRY STREAM & RECALIBRATING ML MODELS..." : "INITIALIZING TACTICAL HUMS ENGINE..."}
+        subtitleText={isRegenerating 
+          ? "This process may take a few moments while sensor streams & ML models recalibrate. Please do not refresh or close this tab/window."
+          : "Initializing multi-sensor telemetry engine & loading fleet health predictions."}
       />
     );
   }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-      {/* Ongoing Transparent Working Loader Overlay when Regenerating Telemetry */}
-      {isRegenerating && (
-        <div style={{
-          position: 'fixed',
-          top: '75px',
-          right: '32px',
-          zIndex: 9999,
-          pointerEvents: 'none'
-        }}>
-          <FighterJetLoader variant="inline" size="sm" />
-        </div>
-      )}
-
-      {/* Top Header */}
-      <Header
+      {/* Left Hover-Expandable Collapsible Sidebar */}
+      <Sidebar
         activeTab={activeTab}
         setActiveTab={handleTabSelect}
         unreadLogCount={unreadLogCount}
@@ -159,8 +239,20 @@ export default function App() {
         onToggleTheme={toggleTheme}
       />
 
-      {/* Main Command Workspace */}
-      <main style={{ flex: 1, padding: '24px 32px', maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+      {/* Top Header Status Bar */}
+      <Header
+        activeTab={activeTab}
+        kpis={kpis}
+      />
+
+      {/* Main Command Workspace (Shifted right for 68px sidebar) */}
+      <main style={{
+        flex: 1,
+        padding: '24px 32px 32px 100px',
+        maxWidth: '1680px',
+        margin: '0 auto',
+        width: '100%'
+      }}>
         {/* Fleet KPI Banner */}
         <FleetKpiOverview kpis={kpis} />
 
@@ -177,6 +269,21 @@ export default function App() {
                 plan={maintenancePlan}
                 onSelectAsset={(id) => setSelectedAssetId(id)}
                 onOrderDispatched={handleOrderDispatched}
+                onDataChange={fetchDashboardData}
+                showActionOverlay={showActionOverlay}
+                hideActionOverlay={hideActionOverlay}
+                showToast={showToast}
+              />
+            )}
+
+            {activeTab === 'sortie' && (
+              <SortiePlanner
+                assets={assets}
+                onSelectAsset={(id) => setSelectedAssetId(id)}
+                onDataChange={fetchDashboardData}
+                showActionOverlay={showActionOverlay}
+                hideActionOverlay={hideActionOverlay}
+                showToast={showToast}
               />
             )}
 
@@ -190,6 +297,15 @@ export default function App() {
             {activeTab === 'log' && (
               <ActivityLog
                 onSelectAsset={(id) => setSelectedAssetId(id)}
+                onDataChange={() => {
+                  fetchDashboardData();
+                  syncActivityNotifications();
+                }}
+                showActionOverlay={showActionOverlay}
+                hideActionOverlay={hideActionOverlay}
+                showToast={showToast}
+                newLogIds={activeNewLogIds}
+                onMarkAllRead={markAllLogsAsRead}
               />
             )}
       </main>
@@ -199,6 +315,10 @@ export default function App() {
         <AssetDetailModal
           assetId={selectedAssetId}
           onClose={() => setSelectedAssetId(null)}
+          onDataChange={fetchDashboardData}
+          showActionOverlay={showActionOverlay}
+          hideActionOverlay={hideActionOverlay}
+          showToast={showToast}
         />
       )}
 
@@ -207,6 +327,96 @@ export default function App() {
         isOpen={isEvalOpen}
         onClose={() => setIsEvalOpen(false)}
       />
+
+      {/* Fullscreen Unclickable Action Processing Overlay */}
+      {actionOverlay && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100000,
+          backgroundColor: 'rgba(0, 5, 15, 0.78)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          pointerEvents: 'auto',
+          userSelect: 'none'
+        }}>
+          <div className="clean-panel" style={{
+            padding: '36px 44px',
+            textAlign: 'center',
+            maxWidth: '520px',
+            width: '90%',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--accent-iaf)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '16px'
+          }}>
+            <FighterJetLoader variant="inline" size="md" statusText="" />
+            <div>
+              <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+                {actionOverlay.title}
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '6px', lineHeight: '1.5' }}>
+                {actionOverlay.message}
+              </p>
+            </div>
+            <div style={{
+              width: '100%',
+              height: '4px',
+              backgroundColor: 'var(--bg-subtle)',
+              borderRadius: '2px',
+              overflow: 'hidden',
+              marginTop: '4px'
+            }}>
+              <div style={{
+                height: '100%',
+                width: '100%',
+                backgroundColor: 'var(--accent-iaf)',
+                animation: 'pulse 1.5s infinite ease-in-out'
+              }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Success Toast Banner */}
+      {toastNotification && (
+        <div style={{
+          position: 'fixed',
+          top: '80px',
+          right: '32px',
+          zIndex: 9999,
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--status-ready-border)',
+          borderLeft: '4px solid var(--status-ready-dot)',
+          borderRadius: '8px',
+          padding: '14px 20px',
+          boxShadow: 'var(--shadow-hover)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          animation: 'fadeIn 0.25s ease forwards'
+        }}>
+          <div style={{
+            width: '10px',
+            height: '10px',
+            borderRadius: '50%',
+            backgroundColor: 'var(--status-ready-dot)'
+          }} />
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: 'var(--text-primary)' }}>
+              {toastNotification.title}
+            </div>
+            <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+              {toastNotification.message}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

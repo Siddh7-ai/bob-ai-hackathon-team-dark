@@ -118,8 +118,50 @@ def test_work_order_dispatch_and_activity_log():
     log_resp = client.get("/api/activity-log")
     assert log_resp.status_code == 200
     logs = log_resp.json()
-    dispatched_items = [l for l in logs if l.get("id") == "WO-2026-AC1011"]
-    assert len(dispatched_items) == 1
+    dispatched_items = [l for l in logs if l.get("work_order_id") == "WO-2026-AC1011" or l.get("id") == "WO-2026-AC1011-DISPATCHED"]
+    assert len(dispatched_items) >= 1
     assert dispatched_items[0]["event_type"] == "WORK_ORDER_DISPATCH"
     assert dispatched_items[0]["asset_id"] == "AC-1011"
+
+
+def test_work_order_completion_restores_ready_status():
+    # Complete work order for AC-1011
+    comp_resp = client.post(
+        "/api/work-orders/complete",
+        json={
+            "asset_id": "AC-1011",
+            "notes": "Hydraulic system overhauled and recalibrated."
+        }
+    )
+    assert comp_resp.status_code == 200
+    cdata = comp_resp.json()
+    assert cdata["status"] == "SUCCESS"
+    assert cdata["asset"]["status"] == "Ready"
+    assert cdata["asset"]["flight_roster_status"] == "FLIGHT_READY"
+
+    # Verify asset endpoint reflects Ready status
+    asset_resp = client.get("/api/assets/AC-1011")
+    assert asset_resp.status_code == 200
+    adata = asset_resp.json()
+    assert adata["asset"]["status"] == "Ready"
+
+
+def test_sortie_simulation_endpoint():
+    sim_resp = client.post(
+        "/api/sortie/simulate",
+        json={
+            "duration_hours": 8,
+            "environment": "DESERT_HEAT",
+            "unit_filter": "ALL"
+        }
+    )
+    assert sim_resp.status_code == 200
+    sdata = sim_resp.json()
+    assert "scenario" in sdata
+    assert "summary" in sdata
+    assert "assessed_assets" in sdata
+    assert sdata["scenario"]["duration_hours"] == 8
+    assert sdata["scenario"]["environment"] == "DESERT_HEAT"
+    assert len(sdata["assessed_assets"]) > 0
+
 

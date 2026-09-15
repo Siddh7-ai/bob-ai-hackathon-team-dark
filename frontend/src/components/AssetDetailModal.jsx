@@ -4,18 +4,19 @@ import AssetIcon from './AssetIcon';
 import SensorTelemetryCharts from './SensorTelemetryCharts';
 import { getAssetRealImage } from '../utils/assetImages';
 import FighterJetLoader from './FighterJetLoader';
+import ConfirmationModal from './ConfirmationModal';
 
-export default function AssetDetailModal({ assetId, onClose }) {
+export default function AssetDetailModal({ assetId, onClose, onDataChange }) {
   const [detailData, setDetailData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [workOrder, setWorkOrder] = useState(null);
   const [error, setError] = useState(null);
+  const [isCompleting, setIsCompleting] = useState(false);
+  const [confirmModalConfig, setConfirmModalConfig] = useState(null);
 
-  useEffect(() => {
+  const fetchModalData = () => {
     if (assetId) {
-      document.body.style.overflow = 'hidden';
       setLoading(true);
-      
       Promise.all([
         fetch(`/api/assets/${assetId}`).then(res => res.ok ? res.json() : null),
         fetch('/api/work-orders').then(res => res.ok ? res.json() : [])
@@ -23,7 +24,7 @@ export default function AssetDetailModal({ assetId, onClose }) {
         .then(([data, orders]) => {
           if (data) setDetailData(data);
           if (Array.isArray(orders)) {
-            const match = orders.find(o => o.asset_id.toUpperCase() === assetId.toUpperCase());
+            const match = orders.find(o => o.asset_id.toUpperCase() === assetId.toUpperCase() && o.status !== 'COMPLETED');
             setWorkOrder(match || null);
           }
           setLoading(false);
@@ -32,6 +33,69 @@ export default function AssetDetailModal({ assetId, onClose }) {
           setError(err.message);
           setLoading(false);
         });
+    }
+  };
+
+  const executeCompleteRepair = async () => {
+    setIsCompleting(true);
+    try {
+      const res = await fetch('/api/work-orders/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          asset_id: assetId,
+          work_order_id: workOrder?.work_order_id,
+          notes: 'Depot maintenance servicing complete. Subsystem recalibrated and cleared for flight operations.'
+        })
+      });
+      if (res.ok) {
+        fetchModalData();
+        if (onDataChange) onDataChange();
+      }
+    } catch (err) {
+      console.error('Failed to complete repair from modal:', err);
+    } finally {
+      setIsCompleting(false);
+    }
+  };
+
+  const handleCompleteRepair = () => {
+    setConfirmModalConfig({
+      isOpen: true,
+      title: 'Confirm Work Order Completion & Signoff',
+      subtitle: `Depot Servicing Signoff for ${assetId}`,
+      iconType: 'check',
+      badgeText: 'DEPOT SIGNOFF',
+      badgeType: 'success',
+      summaryItems: [
+        { label: 'Platform ID', value: assetId, highlight: true },
+        { label: 'Model', value: detailData?.asset?.model_name || 'Platform' },
+        { label: 'Subsystem Serviced', value: detailData?.asset?.predicted_failing_component || 'Subsystem', color: 'var(--status-ready-text)' },
+        { label: 'Work Order ID', value: workOrder?.work_order_id || 'WO-RECORDED' }
+      ],
+      impactItems: [
+        `Registers formal maintenance completion for ${assetId} in depot records.`,
+        'Recalibrates sensor envelopes back to nominal baseline tolerances and clears active anomaly alerts.',
+        'Restores composite health score to 100% and resets flight readiness roster status.'
+      ],
+      reflectionItems: [
+        'Platform status immediately updates to "Ready" (Flight Ready).',
+        'Work order status updates to "COMPLETED" in the unified audit log.',
+        'Fleet readiness KPIs dynamically increment across the mission dashboard.'
+      ],
+      confirmText: 'Confirm & Sign Off Repair',
+      confirmColor: 'var(--status-ready-dot)',
+      onConfirm: async () => {
+        setConfirmModalConfig(null);
+        await executeCompleteRepair();
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (assetId) {
+      document.body.style.overflow = 'hidden';
+      fetchModalData();
     } else {
       document.body.style.overflow = '';
     }
@@ -79,7 +143,8 @@ export default function AssetDetailModal({ assetId, onClose }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <>
+      <div className="modal-overlay" onClick={onClose}>
       <div
         className="clean-panel"
         onClick={(e) => e.stopPropagation()}
@@ -200,8 +265,27 @@ export default function AssetDetailModal({ assetId, onClose }) {
                   </div>
                 </div>
 
-                <div className="mono-num" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                  Dispatched {workOrder.dispatched_time}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <div className="mono-num" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                    Dispatched {workOrder.dispatched_time}
+                  </div>
+                  <button
+                    onClick={handleCompleteRepair}
+                    disabled={isCompleting}
+                    style={{
+                      padding: '6px 14px',
+                      borderRadius: '6px',
+                      border: '1px solid var(--status-ready-border)',
+                      backgroundColor: 'var(--status-ready-dot)',
+                      color: '#FFFFFF',
+                      fontSize: '12px',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    {isCompleting ? 'Completing...' : '✓ Complete Repair & Mark Ready'}
+                  </button>
                 </div>
               </div>
             )}
@@ -384,5 +468,13 @@ export default function AssetDetailModal({ assetId, onClose }) {
         )}
       </div>
     </div>
-  );
+
+    {confirmModalConfig && (
+      <ConfirmationModal
+        {...confirmModalConfig}
+        onClose={() => setConfirmModalConfig(null)}
+      />
+    )}
+  </>
+);
 }

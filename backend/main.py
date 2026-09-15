@@ -1,7 +1,8 @@
 """
 FastAPI Backend for HUMS Predictive Maintenance System
 Provides REST endpoints for fleet readiness KPIs, asset telemetry drill-downs,
-failure predictions (RUL), diagnostic explanations, and prioritised maintenance plans.
+failure predictions (RUL), diagnostic explanations, prioritised maintenance plans,
+work order lifecycle dispatch & completion, and mission sortie simulations.
 """
 
 import os
@@ -44,9 +45,41 @@ DATA_PROCESSED_DIR = os.path.join(PROJECT_ROOT, "data", "processed")
 
 def load_json(filepath: str, default: Any = None) -> Any:
     if os.path.exists(filepath):
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
     return default
+
+
+def recalculate_and_save_kpis(fleet: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Helper to keep system-wide fleet KPIs 100% synchronized across all events."""
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    total_count = len(fleet)
+    ready_count = sum(1 for a in fleet if a.get("status") == "Ready")
+    at_risk_count = sum(1 for a in fleet if a.get("status") == "At-Risk")
+    not_ready_count = sum(1 for a in fleet if a.get("status") in ["Not-Ready", "Under-Maintenance"])
+    readiness_pct = round((ready_count / total_count) * 100, 1) if total_count > 0 else 0
+    avg_health = round(sum(a.get("health_score", 85) for a in fleet) / total_count, 1) if total_count > 0 else 0
+
+    kpis = {
+        "total_assets": total_count,
+        "ready_count": ready_count,
+        "at_risk_count": at_risk_count,
+        "not_ready_count": not_ready_count,
+        "fleet_readiness_pct": readiness_pct,
+        "avg_fleet_health_score": avg_health,
+        "average_health_score": avg_health,
+        "mean_fleet_health": avg_health,
+        "actions_pending": sum(1 for a in fleet if a.get("status") != "Ready"),
+        "critical_maintenance_actions": sum(1 for a in fleet if a.get("status") != "Ready"),
+        "grounded_count": not_ready_count,
+        "last_updated": now_str
+    }
+
+    kpi_path = os.path.join(DATA_PROCESSED_DIR, "fleet_kpis.json")
+    with open(kpi_path, "w", encoding="utf-8") as f:
+        json.dump(kpis, f, indent=2)
+
+    return kpis
 
 
 @app.get("/")
@@ -63,7 +96,11 @@ def root():
             "/api/maintenance/plan",
             "/api/explanations/{asset_id}",
             "/api/evaluation",
-            "/api/sensor-envelopes"
+            "/api/sensor-envelopes",
+            "/api/work-orders",
+            "/api/work-orders/dispatch",
+            "/api/work-orders/complete",
+            "/api/sortie/simulate"
         ]
     }
 
@@ -79,7 +116,6 @@ def get_fleet_summary():
     """Returns top-level fleet readiness KPIs."""
     kpis = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_kpis.json"))
     if not kpis:
-        # If not computed yet, run inference
         pipeline = HUMSPipeline()
         results = pipeline.run_fleet_inference()
         kpis = results["kpis"]
@@ -138,7 +174,6 @@ def get_asset_detail(asset_id: str):
     if not asset_record:
         raise HTTPException(status_code=404, detail=f"Asset {asset_id} not found in fleet records")
 
-    # Load sensor time-series history
     ingestion = HUMSDataIngestion(data_dir=DATA_RAW_DIR)
     assets_df, sensors_df, services_df, _ = ingestion.load_data()
 
@@ -183,7 +218,24 @@ def get_maintenance_plan():
         pipeline = HUMSPipeline()
         results = pipeline.run_fleet_inference()
         plan = results["maintenance_plan"]
-    return plan
+
+    fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
+    fleet_status_map = {a["asset_id"].upper(): a.get("status") for a in fleet}
+
+    active_plan = []
+    rank_counter = 1
+    for item in plan:
+        aid = item.get("asset_id", "").upper()
+        current_status = fleet_status_map.get(aid, item.get("status"))
+        # Exclude assets that are currently Ready
+        if current_status == "Ready":
+            continue
+        item["status"] = current_status
+        item["priority_rank"] = rank_counter
+        rank_counter += 1
+        active_plan.append(item)
+
+    return active_plan
 
 
 @app.get("/api/explanations/{asset_id}")
@@ -210,7 +262,7 @@ def get_asset_explanation(asset_id: str):
 
 @app.get("/api/evaluation")
 def get_model_evaluation():
-    """Returns hold-out model evaluation metrics (Deliverable 1 and Deliverable 3)."""
+    """Returns hold-out model evaluation metrics."""
     report = load_json(os.path.join(DATA_MODELS_DIR, "evaluation_report.json"))
     if not report:
         pipeline = HUMSPipeline()
@@ -256,6 +308,18 @@ class WorkOrderDispatchRequest(BaseModel):
     urgency: Optional[str] = "HIGH"
     unit: Optional[str] = None
     model_name: Optional[str] = None
+
+
+class WorkOrderCompleteRequest(BaseModel):
+    asset_id: str
+    work_order_id: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class SortieSimulateRequest(BaseModel):
+    duration_hours: int = 8
+    environment: str = "STANDARD"  # STANDARD | DESERT_HEAT | HIGH_ALTITUDE_LEH
+    unit_filter: Optional[str] = "ALL"
 
 
 @app.get("/api/work-orders")
@@ -305,14 +369,12 @@ def dispatch_work_order(req: WorkOrderDispatchRequest):
         "status": "DISPATCHED"
     }
 
-    # Upsert order in work_orders.json
     orders = [o for o in orders if o.get("asset_id", "").upper() != req.asset_id.upper()]
     orders.append(new_order)
 
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(orders, f, indent=2)
 
-    # Persist asset status grounding in fleet_status.json
     fleet_path = os.path.join(DATA_PROCESSED_DIR, "fleet_status.json")
     fleet = load_json(fleet_path, default=[])
     for a in fleet:
@@ -325,10 +387,184 @@ def dispatch_work_order(req: WorkOrderDispatchRequest):
     with open(fleet_path, "w", encoding="utf-8") as f:
         json.dump(fleet, f, indent=2)
 
+    kpis = recalculate_and_save_kpis(fleet)
+
     return {
         "status": "SUCCESS",
         "message": f"Work Order {wo_id} successfully dispatched for asset {req.asset_id}.",
-        "work_order": new_order
+        "work_order": new_order,
+        "kpis": kpis
+    }
+
+
+@app.post("/api/work-orders/complete")
+def complete_work_order(req: WorkOrderCompleteRequest):
+    """
+    Completes maintenance servicing for an asset:
+    1. Marks active work order status as COMPLETED.
+    2. Recalibrates asset health metrics to nominal 100% / Ready status.
+    3. Restores flight roster status to FLIGHT_READY.
+    4. Automatically recalculates fleet KPIs across the system.
+    """
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    wo_path = os.path.join(DATA_PROCESSED_DIR, "work_orders.json")
+    orders = load_json(wo_path, default=[])
+    updated_order = None
+
+    for wo in orders:
+        if (wo.get("asset_id", "").upper() == req.asset_id.upper() or 
+            (req.work_order_id and wo.get("work_order_id", "").upper() == req.work_order_id.upper())):
+            wo["status"] = "COMPLETED"
+            wo["completed_at"] = now_str
+            wo["technician_notes"] = req.notes or "Depot servicing complete. Subsystem recalibrated to nominal baseline."
+            updated_order = wo
+
+    with open(wo_path, "w", encoding="utf-8") as f:
+        json.dump(orders, f, indent=2)
+
+    fleet_path = os.path.join(DATA_PROCESSED_DIR, "fleet_status.json")
+    fleet = load_json(fleet_path, default=[])
+    target_asset = None
+
+    for a in fleet:
+        if a.get("asset_id", "").upper() == req.asset_id.upper():
+            a["status"] = "Ready"
+            a["flight_roster_status"] = "FLIGHT_READY"
+            a["active_work_order"] = None
+            a["predicted_rul_cycles"] = 185
+            a["estimated_days_to_failure"] = 92
+            a["failure_probability_14d"] = 0.01
+            a["failure_probability_30d"] = 0.04
+            a["health_score"] = 98.5
+            a["composite_risk_score"] = 4.2
+            a["executive_summary"] = "Platform fully serviced, recalibrated, and cleared for flight operations."
+            a["action_recommendation"] = "Sortie Ready - Nominal baseline performance."
+            a["trend_note"] = "Post-servicing telemetry indicates 100% nominal sensor envelopes."
+            a["top_contributing_factors"] = []
+            a["breached_sensors"] = []
+            target_asset = a
+
+    with open(fleet_path, "w", encoding="utf-8") as f:
+        json.dump(fleet, f, indent=2)
+
+    kpis = recalculate_and_save_kpis(fleet)
+
+    return {
+        "status": "SUCCESS",
+        "message": f"Asset {req.asset_id} repair completed. Restored to FLIGHT_READY status.",
+        "asset": target_asset,
+        "work_order": updated_order,
+        "kpis": kpis
+    }
+
+
+@app.post("/api/sortie/simulate")
+def simulate_sortie_scenario(req: SortieSimulateRequest):
+    """
+    Simulates a tactical mission sortie under specified environmental & duration stress.
+    Predicts mid-mission risk per asset and computes squadron mission clearance rate.
+    """
+    fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
+
+    env_multiplier = 1.35 if req.environment == "DESERT_HEAT" else (1.25 if req.environment == "HIGH_ALTITUDE_LEH" else 1.0)
+    required_rul = int(req.duration_hours * 2.2 * env_multiplier)
+
+    assessed = []
+    suitable_count = 0
+
+    for a in fleet:
+        if req.unit_filter and req.unit_filter != "ALL" and a.get("unit", "").lower() != req.unit_filter.lower():
+            continue
+
+        rul = a.get("predicted_rul_cycles", 0)
+        curr_status = a.get("status", "Ready")
+        health_score = float(a.get("health_score", 85.0))
+        composite_risk = float(a.get("composite_risk_score", 0.0))
+        fail_prob_14d = float(a.get("failure_probability_14d", 0.05))
+        failing_comp = a.get("predicted_failing_component", "High-Stress Subsystem")
+        diag_reason = a.get("component_diagnosis_reason", "")
+        breached_sensors = a.get("breached_sensors", [])
+        top_factors = a.get("top_contributing_factors", [])
+
+        # Realistic Combat Survivability calculation based on actual system health
+        if curr_status in ["Under-Maintenance", "Not-Ready"]:
+            if curr_status == "Under-Maintenance":
+                survivability = 0  # Platform is grounded in depot bay
+            else:
+                survivability = max(5, min(30, round(health_score * (1.0 - fail_prob_14d) * 0.3)))
+            is_suitable = False
+        elif curr_status == "At-Risk":
+            base_ratio = min(1.0, rul / max(1, required_rul))
+            env_penalty = (env_multiplier - 1.0) * 0.5
+            calc_surv = round(health_score * base_ratio * (1.0 - max(composite_risk, 0.15)) * (1.0 - env_penalty))
+            survivability = max(10, min(80, calc_surv))
+            is_suitable = False
+        else:  # Ready
+            breached_sensors = []
+            top_factors = []
+            base_ratio = rul / max(1, required_rul)
+            if base_ratio >= 1.0:
+                survivability = 100
+                is_suitable = True
+            else:
+                survivability = max(15, min(95, round(base_ratio * 100)))
+                is_suitable = False
+
+        # Build Real System Diagnostic Message
+        breach_summary = ", ".join([b.get("sensor", "").replace("_", " ").title() for b in breached_sensors[:2]]) if breached_sensors else ""
+        
+        if curr_status == "Under-Maintenance":
+            warning_msg = f"Depot Grounded: Active servicing for {failing_comp}. Platform unavailable until repair clearance."
+        elif curr_status == "Not-Ready":
+            warning_msg = f"Critical Telemetry Fault: {failing_comp} failure risk ({health_score}% health). Breached: {breach_summary or 'Critical sensor limit'}."
+        elif curr_status == "At-Risk":
+            warning_msg = f"At-Risk Subsystem Degradation: {failing_comp} ({diag_reason or 'abnormal sensor drift'}). Breached: {breach_summary or 'Threshold warning'}."
+        elif rul < required_rul:
+            warning_msg = f"Insufficient Mission RUL: {rul} cycles available vs {required_rul} cycles required under {req.environment} ({int(env_multiplier*100)}% stress)."
+        else:
+            warning_msg = f"Nominal Flight Envelope: {rul} cycles available (exceeds {required_rul} req). Health {health_score}%. All sensor channels clear."
+
+        if is_suitable:
+            suitable_count += 1
+
+        assessed.append({
+            "asset_id": a["asset_id"],
+            "model_name": a.get("model_name", "Platform"),
+            "category": a.get("category", "Defense"),
+            "unit": a.get("unit", "Squadron"),
+            "current_status": curr_status,
+            "health_score": health_score,
+            "composite_risk_score": composite_risk,
+            "predicted_failing_component": failing_comp,
+            "component_diagnosis_reason": diag_reason,
+            "breached_sensors": breached_sensors,
+            "top_contributing_factors": top_factors,
+            "predicted_rul_cycles": rul,
+            "required_rul_cycles": required_rul,
+            "survivability_pct": survivability,
+            "is_suitable": is_suitable,
+            "mission_clearance_status": "CLEARED" if is_suitable else "RISK_HIGH",
+            "warning": warning_msg
+        })
+
+    total_assessed = len(assessed)
+    clearance_rate = round((suitable_count / total_assessed) * 100, 1) if total_assessed > 0 else 0
+
+    return {
+        "scenario": {
+            "duration_hours": req.duration_hours,
+            "environment": req.environment,
+            "required_rul_cycles": required_rul,
+            "env_multiplier": env_multiplier
+        },
+        "summary": {
+            "total_assessed": total_assessed,
+            "suitable_count": suitable_count,
+            "high_risk_count": total_assessed - suitable_count,
+            "mission_clearance_rate_pct": clearance_rate
+        },
+        "assessed_assets": assessed
     }
 
 
@@ -346,29 +582,72 @@ def get_activity_log():
 
     activity_log = []
 
-    # 1. Real-time Dispatched Work Orders
     for wo in work_orders:
         aid = wo.get("asset_id", "").upper()
         asset_info = asset_map.get(aid, {})
-        activity_log.append({
-            "id": wo.get("work_order_id"),
-            "timestamp": wo.get("dispatched_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-            "asset_id": wo.get("asset_id"),
-            "model_name": wo.get("model_name") or asset_info.get("model_name", "Military Platform"),
-            "category": asset_info.get("category", "Defense Platform"),
-            "unit": wo.get("unit") or asset_info.get("unit", "Base Squadron"),
-            "event_type": "WORK_ORDER_DISPATCH",
-            "action_title": wo.get("action_label", "Work Order Dispatched"),
-            "component": wo.get("failing_component", "Subsystem"),
-            "parts_reserved": wo.get("parts_reserved", []),
-            "assigned_crew": wo.get("assigned_crew", "Base Depot Crew"),
-            "estimated_hours": wo.get("estimated_labor_hours", 8),
-            "urgency": wo.get("urgency", "HIGH"),
-            "status": "DISPATCHED_TO_DEPOT",
-            "notes": f"Work Order {wo.get('work_order_id')} issued. Inventory reserved & flight roster locked."
-        })
+        wo_status = wo.get("status", "DISPATCHED")
+        is_completed = wo_status == "COMPLETED"
+        wo_id = wo.get("work_order_id")
 
-    # 2. Historical Service Logs
+        if is_completed:
+            # Completion Audit Event Entry
+            activity_log.append({
+                "id": f"{wo_id}-COMPLETED" if wo_id else f"{aid}-COMPLETED-{wo.get('completed_at', '')}",
+                "work_order_id": wo_id,
+                "timestamp": wo.get("completed_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                "asset_id": wo.get("asset_id"),
+                "model_name": wo.get("model_name") or asset_info.get("model_name", "Military Platform"),
+                "category": asset_info.get("category", "Defense Platform"),
+                "unit": wo.get("unit") or asset_info.get("unit", "Base Squadron"),
+                "event_type": "DEPOT_SERVICE_RECORD",
+                "action_title": f"Depot Repair Servicing Complete",
+                "component": wo.get("failing_component", "Subsystem"),
+                "parts_reserved": wo.get("parts_reserved", []),
+                "assigned_crew": wo.get("assigned_crew", "Base Depot Crew"),
+                "estimated_hours": wo.get("estimated_labor_hours", 8),
+                "urgency": wo.get("urgency", "HIGH"),
+                "status": "COMPLETED",
+                "notes": wo.get("technician_notes") or "Depot maintenance complete. Subsystem recalibrated to nominal baseline."
+            })
+            # Original Dispatch Event Entry
+            activity_log.append({
+                "id": f"{wo_id}-DISPATCHED" if wo_id else f"{aid}-DISPATCHED-{wo.get('dispatched_at', '')}",
+                "work_order_id": wo_id,
+                "timestamp": wo.get("dispatched_at", wo.get("completed_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))),
+                "asset_id": wo.get("asset_id"),
+                "model_name": wo.get("model_name") or asset_info.get("model_name", "Military Platform"),
+                "category": asset_info.get("category", "Defense Platform"),
+                "unit": wo.get("unit") or asset_info.get("unit", "Base Squadron"),
+                "event_type": "WORK_ORDER_DISPATCH",
+                "action_title": wo.get("action_label", "Work Order Dispatched"),
+                "component": wo.get("failing_component", "Subsystem"),
+                "parts_reserved": wo.get("parts_reserved", []),
+                "assigned_crew": wo.get("assigned_crew", "Base Depot Crew"),
+                "estimated_hours": wo.get("estimated_labor_hours", 8),
+                "urgency": wo.get("urgency", "HIGH"),
+                "status": "DISPATCHED_TO_DEPOT",
+                "notes": f"Work Order {wo_id} issued. Inventory reserved & flight roster locked."
+            })
+        else:
+            activity_log.append({
+                "id": f"{wo_id}-DISPATCHED" if wo_id else f"{aid}-DISPATCHED",
+                "work_order_id": wo_id,
+                "timestamp": wo.get("dispatched_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                "asset_id": wo.get("asset_id"),
+                "model_name": wo.get("model_name") or asset_info.get("model_name", "Military Platform"),
+                "category": asset_info.get("category", "Defense Platform"),
+                "unit": wo.get("unit") or asset_info.get("unit", "Base Squadron"),
+                "event_type": "WORK_ORDER_DISPATCH",
+                "action_title": wo.get("action_label", "Work Order Dispatched"),
+                "component": wo.get("failing_component", "Subsystem"),
+                "parts_reserved": wo.get("parts_reserved", []),
+                "assigned_crew": wo.get("assigned_crew", "Base Depot Crew"),
+                "estimated_hours": wo.get("estimated_labor_hours", 8),
+                "urgency": wo.get("urgency", "HIGH"),
+                "status": "DISPATCHED_TO_DEPOT",
+                "notes": f"Work Order {wo_id} issued. Inventory reserved & flight roster locked."
+            })
+
     try:
         ingestion = HUMSDataIngestion(data_dir=DATA_RAW_DIR)
         _, _, services_df, _ = ingestion.load_data()
@@ -395,8 +674,5 @@ def get_activity_log():
     except Exception as e:
         print("Historical service load note:", e)
 
-    # Sort descending by timestamp
     activity_log.sort(key=lambda x: x["timestamp"], reverse=True)
     return activity_log
-
-
