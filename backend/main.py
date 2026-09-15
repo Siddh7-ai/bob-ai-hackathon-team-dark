@@ -10,7 +10,7 @@ import sys
 import json
 from typing import Optional, List, Dict, Any
 from datetime import datetime
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -101,7 +101,35 @@ def health_check():
 
 
 @app.get("/")
-def root():
+def root(request: Request):
+    accept_header = request.headers.get("accept", "")
+    if "application/json" in accept_header and "text/html" not in accept_header:
+        return {
+            "system": "HUMS Predictive Maintenance API",
+            "status": "OPERATIONAL",
+            "version": "1.0.0",
+            "health": "/health",
+            "endpoints": [
+                "/health",
+                "/api/health",
+                "/api/fleet/summary",
+                "/api/assets",
+                "/api/assets/{asset_id}",
+                "/api/predictions",
+                "/api/maintenance/plan",
+                "/api/explanations/{asset_id}",
+                "/api/evaluation",
+                "/api/sensor-envelopes",
+                "/api/work-orders",
+                "/api/work-orders/dispatch",
+                "/api/work-orders/complete",
+                "/api/sortie/simulate"
+            ]
+        }
+    index_path = os.path.join(FRONTEND_DIST_DIR, "index.html")
+    if os.path.exists(index_path):
+        from fastapi.responses import FileResponse
+        return FileResponse(index_path)
     return {
         "system": "HUMS Predictive Maintenance API",
         "status": "OPERATIONAL",

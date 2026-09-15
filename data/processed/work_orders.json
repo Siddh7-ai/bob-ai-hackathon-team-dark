@@ -618,10 +618,10 @@
     "assigned_crew": "Alpha Maintenance Squad - Bay 3",
     "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
     "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
-    "dispatched_at": "2026-09-15 19:07:43",
-    "dispatched_time": "07:07:43 PM",
+    "dispatched_at": "2026-09-15 19:19:08",
+    "dispatched_time": "07:19:08 PM",
     "status": "COMPLETED",
-    "completed_at": "2026-09-15 19:07:43",
+    "completed_at": "2026-09-15 19:19:09",
     "technician_notes": "Hydraulic system overhauled and recalibrated."
   }
 ]
