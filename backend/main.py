@@ -101,31 +101,7 @@ def health_check():
 
 
 @app.get("/")
-def root(request: Request):
-    accept_header = request.headers.get("accept", "")
-    if "application/json" in accept_header and "text/html" not in accept_header:
-        return {
-            "system": "HUMS Predictive Maintenance API",
-            "status": "OPERATIONAL",
-            "version": "1.0.0",
-            "health": "/health",
-            "endpoints": [
-                "/health",
-                "/api/health",
-                "/api/fleet/summary",
-                "/api/assets",
-                "/api/assets/{asset_id}",
-                "/api/predictions",
-                "/api/maintenance/plan",
-                "/api/explanations/{asset_id}",
-                "/api/evaluation",
-                "/api/sensor-envelopes",
-                "/api/work-orders",
-                "/api/work-orders/dispatch",
-                "/api/work-orders/complete",
-                "/api/sortie/simulate"
-            ]
-        }
+def root():
     index_path = os.path.join(FRONTEND_DIST_DIR, "index.html")
     if os.path.exists(index_path):
         from fastapi.responses import FileResponse
