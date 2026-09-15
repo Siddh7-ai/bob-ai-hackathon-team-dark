@@ -1,14 +1,14 @@
 {
   "total_assets": 40,
   "ready_count": 25,
-  "at_risk_count": 12,
-  "not_ready_count": 3,
+  "at_risk_count": 11,
+  "not_ready_count": 4,
   "fleet_readiness_pct": 62.5,
   "avg_fleet_health_score": 87.1,
   "average_health_score": 87.1,
   "mean_fleet_health": 87.1,
   "actions_pending": 15,
   "critical_maintenance_actions": 15,
-  "grounded_count": 3,
-  "last_updated": "2026-09-15 22:41:18"
+  "grounded_count": 4,
+  "last_updated": "2026-09-15 22:52:41"
 }

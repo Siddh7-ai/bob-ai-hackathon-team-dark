@@ -579,52 +579,6 @@
     "status": "DISPATCHED"
   },
   {
-    "work_order_id": "WO-2026-AC1009",
-    "asset_id": "AC-1009",
-    "model_name": "T-72 Ajeya Combat Tank",
-    "unit": "50th Tactical Logistics Regiment",
-    "action_code": "EMERGENCY_REPLACE",
-    "action_label": "Emergency Overhaul & Component Replacement",
-    "failing_component": "Main Bearing / Gearbox",
-    "parts_reserved": [
-      "Main Bearing / Gearbox Replacement Kit",
-      "High-temp Seals",
-      "Fluid Flush Pack"
-    ],
-    "parts_reserved_count": 3,
-    "estimated_labor_hours": 18,
-    "urgency": "IMMEDIATE",
-    "assigned_crew": "Alpha Maintenance Squad - Bay 3",
-    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
-    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
-    "dispatched_at": "2026-09-15 18:47:17",
-    "dispatched_time": "06:47:17 PM",
-    "status": "DISPATCHED"
-  },
-  {
-    "work_order_id": "WO-2026-AC1011",
-    "asset_id": "AC-1011",
-    "model_name": "Tatra Heavy Truck",
-    "unit": "82nd Airborne Combat Aviation",
-    "action_code": "EMERGENCY_OVERHAUL",
-    "action_label": "Emergency Component Replacement",
-    "failing_component": "Hydraulic Pump",
-    "parts_reserved": [
-      "Hydraulic Pump Kit"
-    ],
-    "parts_reserved_count": 1,
-    "estimated_labor_hours": 18,
-    "urgency": "IMMEDIATE",
-    "assigned_crew": "Alpha Maintenance Squad - Bay 3",
-    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
-    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
-    "dispatched_at": "2026-09-15 21:10:58",
-    "dispatched_time": "09:10:58 PM",
-    "status": "COMPLETED",
-    "completed_at": "2026-09-15 21:10:58",
-    "technician_notes": "Hydraulic system overhauled and recalibrated."
-  },
-  {
     "work_order_id": "WO-2026-AC1027",
     "asset_id": "AC-1027",
     "model_name": "Rafale DH",
@@ -666,6 +620,51 @@
     "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
     "dispatched_at": "2026-09-15 22:41:18",
     "dispatched_time": "10:41:18 PM",
+    "status": "DISPATCHED"
+  },
+  {
+    "work_order_id": "WO-2026-AC1011",
+    "asset_id": "AC-1011",
+    "model_name": "Tatra Heavy Truck",
+    "unit": "82nd Airborne Combat Aviation",
+    "action_code": "EMERGENCY_OVERHAUL",
+    "action_label": "Emergency Component Replacement",
+    "failing_component": "Hydraulic Pump",
+    "parts_reserved": [
+      "Hydraulic Pump Kit"
+    ],
+    "parts_reserved_count": 1,
+    "estimated_labor_hours": 18,
+    "urgency": "IMMEDIATE",
+    "assigned_crew": "Alpha Maintenance Squad - Bay 3",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-15 22:51:56",
+    "dispatched_time": "10:51:56 PM",
+    "status": "COMPLETED",
+    "completed_at": "2026-09-15 22:51:56",
+    "technician_notes": "Hydraulic system overhauled and recalibrated."
+  },
+  {
+    "work_order_id": "WO-2026-AC1009",
+    "asset_id": "AC-1009",
+    "model_name": "T-72 Ajeya Combat Tank",
+    "unit": "50th Tactical Logistics Regiment",
+    "action_code": "SORTIE_PREEMPTIVE_MAINTENANCE",
+    "action_label": "Sortie Pre-emptive Overhaul",
+    "failing_component": "Main Bearing / Gearbox",
+    "parts_reserved": [
+      "Pre-flight Calibration Kit",
+      "Hydraulic Seals"
+    ],
+    "parts_reserved_count": 2,
+    "estimated_labor_hours": 6,
+    "urgency": "HIGH",
+    "assigned_crew": "Bravo Depot Repair Team - Hangar 2",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-15 22:52:41",
+    "dispatched_time": "10:52:41 PM",
     "status": "DISPATCHED"
   }
 ]
