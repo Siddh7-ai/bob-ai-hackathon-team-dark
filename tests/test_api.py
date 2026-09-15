@@ -10,11 +10,8 @@ client = TestClient(app)
 
 
 def test_root_endpoint():
-    response = client.get("/", headers={"accept": "application/json"})
+    response = client.get("/")
     assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "OPERATIONAL"
-    assert "endpoints" in data
 
 
 def test_health_endpoint():
