@@ -725,6 +725,8 @@ if os.path.exists(FRONTEND_DIST_DIR):
             raise HTTPException(status_code=404, detail="Route not found")
         file_path = os.path.join(FRONTEND_DIST_DIR, full_path)
         if os.path.exists(file_path) and os.path.isfile(file_path):
-            return FileResponse(file_path)
+            is_static = full_path.endswith((".png", ".jpg", ".jpeg", ".webp", ".svg", ".css", ".js", ".ico"))
+            headers = {"Cache-Control": "public, max-age=31536000, immutable"} if is_static else {}
+            return FileResponse(file_path, headers=headers)
         return FileResponse(os.path.join(FRONTEND_DIST_DIR, "index.html"))
 
