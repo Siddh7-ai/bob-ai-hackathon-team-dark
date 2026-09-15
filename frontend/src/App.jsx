@@ -60,10 +60,22 @@ export default function App() {
                 unread.add(logId);
               }
             });
-            setUnacknowledgedLogIds(unread);
-            setUnreadLogCount(unread.size);
-            if (activeTab === 'log' && unread.size > 0) {
-              setActiveNewLogIds(prev => new Set([...prev, ...unread]));
+
+            if (activeTab === 'log') {
+              if (unread.size > 0) {
+                setReadLogIds(prev => {
+                  const next = new Set(prev || []);
+                  unread.forEach(id => next.add(id));
+                  localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
+                  return next;
+                });
+                setActiveNewLogIds(prev => new Set([...prev, ...unread]));
+                setUnacknowledgedLogIds(new Set());
+              }
+              setUnreadLogCount(0);
+            } else {
+              setUnacknowledgedLogIds(unread);
+              setUnreadLogCount(unread.size);
             }
           }
         }
@@ -104,7 +116,16 @@ export default function App() {
   const handleTabSelect = (tabId) => {
     if (tabId === 'log') {
       setActiveTab('log');
-      setActiveNewLogIds(new Set(unacknowledgedLogIds));
+      if (unacknowledgedLogIds.size > 0) {
+        setActiveNewLogIds(new Set(unacknowledgedLogIds));
+        setReadLogIds(prev => {
+          const next = new Set(prev || []);
+          unacknowledgedLogIds.forEach(id => next.add(id));
+          localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
+          return next;
+        });
+        setUnacknowledgedLogIds(new Set());
+      }
       setUnreadLogCount(0);
     } else {
       if (activeTab === 'log' && (unacknowledgedLogIds.size > 0 || activeNewLogIds.size > 0)) {

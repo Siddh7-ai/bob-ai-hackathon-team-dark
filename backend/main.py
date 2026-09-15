@@ -50,6 +50,14 @@ def load_json(filepath: str, default: Any = None) -> Any:
     return default
 
 
+def normalize_id(val: Any) -> str:
+    """Hyphen and case insensitive normalizer for asset IDs and work order IDs."""
+    if not val:
+        return ""
+    return str(val).replace("-", "").strip().upper()
+
+
+
 def recalculate_and_save_kpis(fleet: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Helper to keep system-wide fleet KPIs 100% synchronized across all events."""
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -170,15 +178,16 @@ def get_asset_detail(asset_id: str):
     Full historical sensor telemetry time-series, service logs, and diagnostics.
     """
     fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
-    asset_record = next((a for a in fleet if a["asset_id"].upper() == asset_id.upper()), None)
+    norm_aid = normalize_id(asset_id)
+    asset_record = next((a for a in fleet if normalize_id(a.get("asset_id")) == norm_aid), None)
     if not asset_record:
         raise HTTPException(status_code=404, detail=f"Asset {asset_id} not found in fleet records")
 
     ingestion = HUMSDataIngestion(data_dir=DATA_RAW_DIR)
     assets_df, sensors_df, services_df, _ = ingestion.load_data()
 
-    history = sensors_df[sensors_df["asset_id"].str.upper() == asset_id.upper()].sort_values("cycle").to_dict(orient="records")
-    services = services_df[services_df["asset_id"].str.upper() == asset_id.upper()].sort_values("service_date", ascending=False).to_dict(orient="records")
+    history = sensors_df[sensors_df["asset_id"].astype(str).str.replace("-", "").str.upper() == norm_aid].sort_values("cycle").to_dict(orient="records")
+    services = services_df[services_df["asset_id"].astype(str).str.replace("-", "").str.upper() == norm_aid].sort_values("service_date", ascending=False).to_dict(orient="records")
 
     return {
         "asset": asset_record,
@@ -220,12 +229,12 @@ def get_maintenance_plan():
         plan = results["maintenance_plan"]
 
     fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
-    fleet_status_map = {a["asset_id"].upper(): a.get("status") for a in fleet}
+    fleet_status_map = {normalize_id(a.get("asset_id")): a.get("status") for a in fleet}
 
     active_plan = []
     rank_counter = 1
     for item in plan:
-        aid = item.get("asset_id", "").upper()
+        aid = normalize_id(item.get("asset_id", ""))
         current_status = fleet_status_map.get(aid, item.get("status"))
         # Exclude assets that are currently Ready
         if current_status == "Ready":
@@ -242,7 +251,8 @@ def get_maintenance_plan():
 def get_asset_explanation(asset_id: str):
     """Returns plain-language diagnostic explanation and contributing sensor breaches."""
     fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
-    asset_record = next((a for a in fleet if a["asset_id"].upper() == asset_id.upper()), None)
+    norm_aid = normalize_id(asset_id)
+    asset_record = next((a for a in fleet if normalize_id(a.get("asset_id")) == norm_aid), None)
     if not asset_record:
         raise HTTPException(status_code=404, detail=f"Asset {asset_id} not found")
 
@@ -340,7 +350,7 @@ def dispatch_work_order(req: WorkOrderDispatchRequest):
     file_path = os.path.join(DATA_PROCESSED_DIR, "work_orders.json")
     orders = load_json(file_path, default=[])
 
-    clean_id = req.asset_id.replace("-", "").upper()
+    clean_id = req.asset_id.replace("-", "").strip().upper()
     wo_id = f"WO-2026-{clean_id}"
 
     now_dt = datetime.now()
@@ -369,7 +379,8 @@ def dispatch_work_order(req: WorkOrderDispatchRequest):
         "status": "DISPATCHED"
     }
 
-    orders = [o for o in orders if o.get("asset_id", "").upper() != req.asset_id.upper()]
+    norm_req_aid = normalize_id(req.asset_id)
+    orders = [o for o in orders if normalize_id(o.get("asset_id")) != norm_req_aid]
     orders.append(new_order)
 
     with open(file_path, "w", encoding="utf-8") as f:
@@ -378,7 +389,7 @@ def dispatch_work_order(req: WorkOrderDispatchRequest):
     fleet_path = os.path.join(DATA_PROCESSED_DIR, "fleet_status.json")
     fleet = load_json(fleet_path, default=[])
     for a in fleet:
-        if a.get("asset_id", "").upper() == req.asset_id.upper():
+        if normalize_id(a.get("asset_id")) == norm_req_aid:
             a["status"] = "Under-Maintenance"
             a["flight_roster_status"] = "GROUNDED_FOR_MAINTENANCE"
             a["active_work_order"] = wo_id
@@ -412,9 +423,13 @@ def complete_work_order(req: WorkOrderCompleteRequest):
     orders = load_json(wo_path, default=[])
     updated_order = None
 
+    norm_req_aid = normalize_id(req.asset_id)
+    norm_req_woid = normalize_id(req.work_order_id) if req.work_order_id else None
+
     for wo in orders:
-        if (wo.get("asset_id", "").upper() == req.asset_id.upper() or 
-            (req.work_order_id and wo.get("work_order_id", "").upper() == req.work_order_id.upper())):
+        wo_aid = normalize_id(wo.get("asset_id"))
+        wo_woid = normalize_id(wo.get("work_order_id"))
+        if (norm_req_aid and wo_aid == norm_req_aid) or (norm_req_woid and wo_woid == norm_req_woid):
             wo["status"] = "COMPLETED"
             wo["completed_at"] = now_str
             wo["technician_notes"] = req.notes or "Depot servicing complete. Subsystem recalibrated to nominal baseline."
@@ -428,7 +443,7 @@ def complete_work_order(req: WorkOrderCompleteRequest):
     target_asset = None
 
     for a in fleet:
-        if a.get("asset_id", "").upper() == req.asset_id.upper():
+        if normalize_id(a.get("asset_id")) == norm_req_aid:
             a["status"] = "Ready"
             a["flight_roster_status"] = "FLIGHT_READY"
             a["active_work_order"] = None
@@ -457,6 +472,7 @@ def complete_work_order(req: WorkOrderCompleteRequest):
         "work_order": updated_order,
         "kpis": kpis
     }
+
 
 
 @app.post("/api/sortie/simulate")
@@ -575,7 +591,7 @@ def get_activity_log():
     and historical depot service records across all assets.
     """
     fleet = load_json(os.path.join(DATA_PROCESSED_DIR, "fleet_status.json"), default=[])
-    asset_map = {a["asset_id"].upper(): a for a in fleet}
+    asset_map = {normalize_id(a.get("asset_id")): a for a in fleet if a.get("asset_id")}
 
     wo_file = os.path.join(DATA_PROCESSED_DIR, "work_orders.json")
     work_orders = load_json(wo_file, default=[])
@@ -583,8 +599,8 @@ def get_activity_log():
     activity_log = []
 
     for wo in work_orders:
-        aid = wo.get("asset_id", "").upper()
-        asset_info = asset_map.get(aid, {})
+        aid_norm = normalize_id(wo.get("asset_id"))
+        asset_info = asset_map.get(aid_norm, {})
         wo_status = wo.get("status", "DISPATCHED")
         is_completed = wo_status == "COMPLETED"
         wo_id = wo.get("work_order_id")
@@ -592,7 +608,7 @@ def get_activity_log():
         if is_completed:
             # Completion Audit Event Entry
             activity_log.append({
-                "id": f"{wo_id}-COMPLETED" if wo_id else f"{aid}-COMPLETED-{wo.get('completed_at', '')}",
+                "id": f"{wo_id}-COMPLETED" if wo_id else f"{aid_norm}-COMPLETED-{wo.get('completed_at', '')}",
                 "work_order_id": wo_id,
                 "timestamp": wo.get("completed_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
                 "asset_id": wo.get("asset_id"),
@@ -611,7 +627,7 @@ def get_activity_log():
             })
             # Original Dispatch Event Entry
             activity_log.append({
-                "id": f"{wo_id}-DISPATCHED" if wo_id else f"{aid}-DISPATCHED-{wo.get('dispatched_at', '')}",
+                "id": f"{wo_id}-DISPATCHED" if wo_id else f"{aid_norm}-DISPATCHED-{wo.get('dispatched_at', '')}",
                 "work_order_id": wo_id,
                 "timestamp": wo.get("dispatched_at", wo.get("completed_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))),
                 "asset_id": wo.get("asset_id"),
@@ -625,12 +641,12 @@ def get_activity_log():
                 "assigned_crew": wo.get("assigned_crew", "Base Depot Crew"),
                 "estimated_hours": wo.get("estimated_labor_hours", 8),
                 "urgency": wo.get("urgency", "HIGH"),
-                "status": "DISPATCHED_TO_DEPOT",
-                "notes": f"Work Order {wo_id} issued. Inventory reserved & flight roster locked."
+                "status": "COMPLETED",
+                "notes": f"Work Order {wo_id} issued. Servicing completed & platform restored."
             })
         else:
             activity_log.append({
-                "id": f"{wo_id}-DISPATCHED" if wo_id else f"{aid}-DISPATCHED",
+                "id": f"{wo_id}-DISPATCHED" if wo_id else f"{aid_norm}-DISPATCHED",
                 "work_order_id": wo_id,
                 "timestamp": wo.get("dispatched_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
                 "asset_id": wo.get("asset_id"),
@@ -652,8 +668,8 @@ def get_activity_log():
         ingestion = HUMSDataIngestion(data_dir=DATA_RAW_DIR)
         _, _, services_df, _ = ingestion.load_data()
         for _, srow in services_df.iterrows():
-            aid = str(srow["asset_id"]).upper()
-            asset_info = asset_map.get(aid, {})
+            aid_norm = normalize_id(str(srow["asset_id"]))
+            asset_info = asset_map.get(aid_norm, {})
             activity_log.append({
                 "id": str(srow["record_id"]),
                 "timestamp": str(srow["service_date"]) + " 09:00:00",

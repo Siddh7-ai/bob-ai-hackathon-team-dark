@@ -535,9 +535,9 @@ export default function ActivityLog({ onSelectAsset, onDataChange, showActionOve
                         fontWeight: 800,
                         padding: '2px 8px',
                         borderRadius: '4px',
-                        backgroundColor: isDispatch ? 'var(--status-not-ready-bg)' : 'var(--status-ready-bg)',
-                        color: isDispatch ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)',
-                        border: isDispatch ? '1px solid var(--status-not-ready-border)' : '1px solid var(--status-ready-border)'
+                        backgroundColor: log.status === 'COMPLETED' ? 'var(--status-ready-bg)' : (isDispatch ? 'var(--status-not-ready-bg)' : 'var(--status-ready-bg)'),
+                        color: log.status === 'COMPLETED' ? 'var(--status-ready-text)' : (isDispatch ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)'),
+                        border: log.status === 'COMPLETED' ? '1px solid var(--status-ready-border)' : (isDispatch ? '1px solid var(--status-not-ready-border)' : '1px solid var(--status-ready-border)')
                       }}>
                         {log.status}
                       </span>
@@ -743,8 +743,8 @@ export default function ActivityLog({ onSelectAsset, onDataChange, showActionOve
                             fontWeight: 700,
                             padding: '2px 6px',
                             borderRadius: '4px',
-                            backgroundColor: isDispatch ? 'var(--status-not-ready-bg)' : 'var(--status-ready-bg)',
-                            color: isDispatch ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)'
+                            backgroundColor: log.status === 'COMPLETED' ? 'var(--status-ready-bg)' : (isDispatch ? 'var(--status-not-ready-bg)' : 'var(--status-ready-bg)'),
+                            color: log.status === 'COMPLETED' ? 'var(--status-ready-text)' : (isDispatch ? 'var(--status-not-ready-text)' : 'var(--status-ready-text)')
                           }}>
                             {log.status}
                           </span>
