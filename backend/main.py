@@ -90,13 +90,26 @@ def recalculate_and_save_kpis(fleet: List[Dict[str, Any]]) -> Dict[str, Any]:
     return kpis
 
 
+@app.get("/health")
+@app.get("/api/health")
+def health_check():
+    """
+    Lightweight, production-safe health check endpoint for Render free-tier deployment.
+    Returns status: ok instantly without disk or ML pipeline overhead.
+    """
+    return {"status": "ok"}
+
+
 @app.get("/")
 def root():
     return {
         "system": "HUMS Predictive Maintenance API",
         "status": "OPERATIONAL",
         "version": "1.0.0",
+        "health": "/health",
         "endpoints": [
+            "/health",
+            "/api/health",
             "/api/fleet/summary",
             "/api/assets",
             "/api/assets/{asset_id}",
@@ -704,8 +717,8 @@ if os.path.exists(FRONTEND_DIST_DIR):
 
     @app.get("/{full_path:path}")
     async def serve_frontend(full_path: str):
-        if full_path.startswith("api"):
-            raise HTTPException(status_code=404, detail="API route not found")
+        if full_path.startswith("api") or full_path in ["health", "api/health"]:
+            raise HTTPException(status_code=404, detail="Route not found")
         file_path = os.path.join(FRONTEND_DIST_DIR, full_path)
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return FileResponse(file_path)

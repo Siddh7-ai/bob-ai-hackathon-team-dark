@@ -17,6 +17,16 @@ def test_root_endpoint():
     assert "endpoints" in data
 
 
+def test_health_endpoint():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+    api_health = client.get("/api/health")
+    assert api_health.status_code == 200
+    assert api_health.json() == {"status": "ok"}
+
+
 def test_fleet_summary():
     response = client.get("/api/fleet/summary")
     assert response.status_code == 200
