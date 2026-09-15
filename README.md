@@ -87,7 +87,8 @@ pytest tests/ -v
 ---
 
 ## 🎬 Demo
-- **Demonstration Video Walkthrough**: [Watch Video Demo](https://drive.google.com/file/d/1LpsNgw3A14XSZXI2r_Xe5oeZmDLW1RQj/view?usp=drive_link)
+- **Demonstration Video Walkthrough**: [Watch Video Demo](https://drive.google.com/file/d/1fMeAKOXmUYbXuVdqfDswwQODCNxcYIpl/view?usp=drive_link)
+- **Presentation Slide Deck**: [View Presentation Deck](https://drive.google.com/drive/folders/1KMgeAmfkx8p2T_r8QBfbOAyHY7T_olpi?usp=drive_link)
 - **Live Production URL**: [https://iaf-hums-system.onrender.com](https://iaf-hums-system.onrender.com)
 - **Interactive REST API Documentation**: [https://iaf-hums-system.onrender.com/docs](https://iaf-hums-system.onrender.com/docs)
 - **GitHub Repository**: [https://github.com/Siddh7-ai/bob-ai-hackathon-team-dark](https://github.com/Siddh7-ai/bob-ai-hackathon-team-dark)

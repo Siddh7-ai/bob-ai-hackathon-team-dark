@@ -1,10 +1,12 @@
 # Presentation Slide Deck
 
-Place your final presentation slide deck in this directory as **`slides.pdf`** or **`slides.pptx`**.
+- **Presentation Slide Deck Link**: [View Presentation Deck](https://drive.google.com/drive/folders/1KMgeAmfkx8p2T_r8QBfbOAyHY7T_olpi?usp=drive_link)
+
+---
 
 ## Presentation Structure Guidelines (Per Hackathon Rubric)
 
-Your deck should cover the following 6 key areas:
+Your deck covers the following key areas:
 1. **Problem Statement**: Who is affected, quantified operational pain (unplanned aborts, high downtime).
 2. **Physics-Informed Solution**: How APEX HUMS uses NASA CMAPSS run-to-failure degradation modeling.
 3. **Key Technical Highlights**: Random Forest Classifier (98.6% Accuracy), Gradient Boosting RUL Regressor (4.89 cycles MAE), and Plain-English Briefings.
