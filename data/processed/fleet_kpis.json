@@ -1,14 +1,14 @@
 {
   "total_assets": 40,
-  "ready_count": 32,
-  "at_risk_count": 5,
-  "not_ready_count": 3,
-  "fleet_readiness_pct": 80.0,
-  "avg_fleet_health_score": 92.5,
-  "average_health_score": 92.5,
-  "mean_fleet_health": 92.5,
-  "actions_pending": 8,
-  "critical_maintenance_actions": 8,
-  "grounded_count": 3,
-  "last_updated": "2026-09-15 18:49:34"
+  "ready_count": 25,
+  "at_risk_count": 14,
+  "not_ready_count": 1,
+  "fleet_readiness_pct": 62.5,
+  "avg_fleet_health_score": 87.1,
+  "average_health_score": 87.1,
+  "mean_fleet_health": 87.1,
+  "actions_pending": 15,
+  "critical_maintenance_actions": 15,
+  "grounded_count": 1,
+  "last_updated": "2026-09-15 18:56:06"
 }

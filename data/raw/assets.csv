@@ -1,41 +1,41 @@
 asset_id,category,asset_type,model_name,image_url,unit,mission_criticality,commission_date,total_operating_cycles,last_service_date,simulated_signature,is_clean_control
-AC-1001,Aircraft,Fighter Jet,Su-30MKI Flanker-H,/images/assets/fighter_jet.jpg,101st Tactical Fighter Squadron,3.0,2023-08-13,250,2024-11-14,clean,True
-AC-1002,Aircraft,Transport Plane,An-32 Tactical Transport,/images/assets/an32_transport.jpg,4th Strike Fighter Wing,2.5,2023-05-26,191,2024-09-29,clean,True
-AC-1003,Aircraft,Surveillance Plane,Dornier 228 Maritime,/images/assets/dornier_228.jpg,22nd Heavy Cargo Airlift Wing,2.8,2022-06-02,241,2024-10-20,clean,True
-AC-1004,Aircraft,Cargo Plane,IL-76 Gajraj Heavy Lifter,/images/assets/il76_gajraj.jpg,12th Air Surveillance Squadron,2.6,2022-12-15,180,2024-11-14,clean,True
-AC-1005,Helicopters,Transport Helicopter,Chinook CH-47F Heavy Lift,/images/assets/chinook_ch47.jpg,10th Mountain Aviation Support,2.2,2023-01-02,236,2024-10-17,clean,True
-AC-1006,Helicopters,Attack Helicopter,Rudra Armed Helicopter,/images/assets/rudra_armed_heli.jpg,15th Tactical Helicopter Squadron,2.8,2022-12-28,257,2024-09-29,clean,True
-AC-1007,Helicopters,Rescue Helicopter,Chetak Search & Rescue,/images/assets/chetak_sar.jpg,82nd Airborne Combat Aviation,2.0,2023-03-26,180,2024-09-23,clean,True
-AC-1008,Helicopters,Medical Helicopter,Mi-17 MEDEVAC Unit,/images/assets/transport_helicopter.jpg,10th Mountain Aviation Support,2.2,2022-12-10,204,2024-09-29,hydraulic_fuel,False
-AC-1009,Vehicles,Tank,T-72 Ajeya Combat Tank,/images/assets/t72_ajeya.jpg,50th Tactical Logistics Regiment,2.0,2022-04-03,147,2024-11-10,bearing_gearbox,False
-AC-1010,Vehicles,Armored Vehicle,BMP-2 Sarath Infantry Vehicle,/images/assets/armored_vehicle.jpg,3rd Armoured Brigade,1.8,2023-09-23,200,2024-09-27,turbine_thermal,False
-AC-1011,Vehicles,Military Truck,Tatra 8x8 Heavy Tactical Truck,/images/assets/tatra_8x8.jpg,7th Mechanized Recon Cavalry,1.4,2022-05-27,141,2024-12-01,hydraulic_fuel,False
-AC-1012,Vehicles,Fuel Vehicle,Jet-A1 Mobile Dispenser,/images/assets/jet_a1_dispenser.jpg,50th Tactical Logistics Regiment,1.6,2023-11-09,233,2024-11-05,bearing_gearbox,False
-AC-1013,Vehicles,Transport Vehicle,Light Specialist Vehicle (LSV) 4x4,/images/assets/lsv_4x4.jpg,3rd Armoured Brigade,1.3,2022-05-19,137,2024-09-30,turbine_thermal,False
-AC-1014,Aircraft,Fighter Jet,Tejas Mk1A,/images/assets/tejas_mk1a.jpg,4th Strike Fighter Wing,3.0,2022-05-10,97,2024-10-24,hydraulic_fuel,False
-AC-1015,Aircraft,Transport Plane,C-295MW,/images/assets/c295_transport.jpg,22nd Heavy Cargo Airlift Wing,2.5,2023-01-28,168,2024-11-05,bearing_gearbox,False
-AC-1016,Aircraft,Surveillance Plane,Netra AEW&C,/images/assets/surveillance_plane.jpg,12th Air Surveillance Squadron,2.8,2022-07-28,136,2024-11-26,turbine_thermal,False
-AC-1017,Aircraft,Cargo Plane,C-17 Globemaster III,/images/assets/cargo_plane.jpg,101st Tactical Fighter Squadron,2.6,2023-09-09,213,2024-10-21,hydraulic_fuel,False
-AC-1018,Helicopters,Transport Helicopter,ALH Dhruv Mk-III,/images/assets/rescue_medical_helicopter.jpg,15th Tactical Helicopter Squadron,2.2,2023-10-02,255,2024-09-24,bearing_gearbox,False
-AC-1019,Helicopters,Attack Helicopter,AH-64E Apache Guardian,/images/assets/attack_helicopter.jpg,82nd Airborne Combat Aviation,2.8,2022-03-19,163,2024-10-23,turbine_thermal,False
-AC-1020,Helicopters,Rescue Helicopter,ALH Dhruv SAR Lifesaver,/images/assets/rescue_medical_helicopter.jpg,10th Mountain Aviation Support,2.0,2022-04-19,174,2024-10-18,hydraulic_fuel,False
-AC-1021,Helicopters,Medical Helicopter,ALH Dhruv Air Ambulance,/images/assets/rescue_medical_helicopter.jpg,15th Tactical Helicopter Squadron,2.2,2023-11-23,245,2024-11-29,bearing_gearbox,False
-AC-1022,Vehicles,Tank,T-90 Bhishma Main Battle Tank,/images/assets/tank_t90.jpg,3rd Armoured Brigade,2.0,2022-04-04,207,2024-11-10,turbine_thermal,False
-AC-1023,Vehicles,Armored Vehicle,K9 Vajra-T Self-Propelled Howitzer,/images/assets/k9_vajra.jpg,7th Mechanized Recon Cavalry,1.8,2023-06-25,153,2024-11-19,hydraulic_fuel,False
-AC-1024,Vehicles,Military Truck,Swaraj Mazda Gun Towing Truck,/images/assets/swaraj_mazda.jpg,50th Tactical Logistics Regiment,1.4,2023-01-11,154,2024-10-23,bearing_gearbox,False
-AC-1025,Vehicles,Fuel Vehicle,Tactical Airfield Fuel Bowser 6x6,/images/assets/fuel_vehicle.jpg,3rd Armoured Brigade,1.6,2022-09-06,157,2024-11-04,turbine_thermal,False
-AC-1026,Vehicles,Transport Vehicle,Troop Carrier Heavy Transport,/images/assets/tatra_8x8.jpg,7th Mechanized Recon Cavalry,1.3,2023-02-04,173,2024-09-24,hydraulic_fuel,False
-AC-1027,Aircraft,Fighter Jet,Rafale DH,/images/assets/rafale_dh.jpg,22nd Heavy Cargo Airlift Wing,3.0,2021-11-01,107,2024-10-09,bearing_gearbox,False
-AC-1028,Aircraft,Transport Plane,C-130J Super Hercules,/images/assets/c130j_hercules.jpg,12th Air Surveillance Squadron,2.5,2023-02-13,198,2024-10-17,turbine_thermal,False
-AC-1029,Aircraft,Surveillance Plane,Phalcon AWACS,/images/assets/phalcon_awacs.jpg,101st Tactical Fighter Squadron,2.8,2022-12-13,268,2024-12-01,hydraulic_fuel,False
-AC-1030,Aircraft,Cargo Plane,IL-76 Gajraj Heavy Lifter,/images/assets/il76_gajraj.jpg,4th Strike Fighter Wing,2.6,2022-01-25,180,2024-11-26,bearing_gearbox,False
-AC-1031,Helicopters,Transport Helicopter,Mi-17V-5 Tactical Transport,/images/assets/transport_helicopter.jpg,82nd Airborne Combat Aviation,2.2,2023-03-24,155,2024-11-11,turbine_thermal,False
-AC-1032,Helicopters,Attack Helicopter,LCH Prachand Combat Heli,/images/assets/lch_prachand.jpg,10th Mountain Aviation Support,2.8,2023-05-01,161,2024-10-09,hydraulic_fuel,False
-AC-1033,Helicopters,Rescue Helicopter,Chetak Search & Rescue,/images/assets/chetak_sar.jpg,15th Tactical Helicopter Squadron,2.0,2023-01-25,118,2024-10-08,bearing_gearbox,False
-AC-1034,Helicopters,Medical Helicopter,Mi-17 MEDEVAC Unit,/images/assets/transport_helicopter.jpg,82nd Airborne Combat Aviation,2.2,2023-07-04,204,2024-11-02,turbine_thermal,False
-AC-1035,Vehicles,Tank,Arjun Mk-1A Heavy Tank,/images/assets/arjun_mk1a.jpg,7th Mechanized Recon Cavalry,2.0,2023-09-08,100,2024-11-10,hydraulic_fuel,False
-AC-1036,Vehicles,Armored Vehicle,WhAP 8x8 Armoured Carrier,/images/assets/whap_8x8.jpg,50th Tactical Logistics Regiment,1.8,2023-03-25,198,2024-11-01,bearing_gearbox,False
-AC-1037,Vehicles,Military Truck,Ashok Leyland Stallion 4x4,/images/assets/military_truck.jpg,3rd Armoured Brigade,1.4,2023-01-20,90,2024-10-23,turbine_thermal,False
-AC-1038,Vehicles,Fuel Vehicle,Heavy Refueler Tanker Bowser,/images/assets/fuel_vehicle.jpg,7th Mechanized Recon Cavalry,1.6,2023-11-21,187,2024-12-02,hydraulic_fuel,False
-AC-1039,Vehicles,Transport Vehicle,Airfield Equipment Tug,/images/assets/airfield_tug.jpg,50th Tactical Logistics Regiment,1.3,2023-08-10,140,2024-11-28,bearing_gearbox,False
-AC-1040,Aircraft,Fighter Jet,Mirage 2000,/images/assets/mirage_2000.jpg,12th Air Surveillance Squadron,3.0,2021-12-03,150,2024-10-05,turbine_thermal,False
+AC-1001,Aircraft,Fighter Jet,Su-30MKI Flanker-H,/images/assets/fighter_jet.jpg,101st Tactical Fighter Squadron,3.0,2022-02-27,213,2024-11-22,clean,True
+AC-1002,Aircraft,Transport Plane,An-32 Tactical Transport,/images/assets/an32_transport.jpg,4th Strike Fighter Wing,2.5,2023-03-11,229,2024-10-29,clean,True
+AC-1003,Aircraft,Surveillance Plane,Dornier 228 Maritime,/images/assets/dornier_228.jpg,22nd Heavy Cargo Airlift Wing,2.8,2023-05-29,260,2024-11-19,clean,True
+AC-1004,Aircraft,Cargo Plane,IL-76 Gajraj Heavy Lifter,/images/assets/il76_gajraj.jpg,12th Air Surveillance Squadron,2.6,2023-02-22,233,2024-10-06,clean,True
+AC-1005,Helicopters,Transport Helicopter,Chinook CH-47F Heavy Lift,/images/assets/chinook_ch47.jpg,10th Mountain Aviation Support,2.2,2023-07-06,213,2024-09-20,clean,True
+AC-1006,Helicopters,Attack Helicopter,Rudra Armed Helicopter,/images/assets/rudra_armed_heli.jpg,15th Tactical Helicopter Squadron,2.8,2022-04-05,199,2024-10-02,clean,True
+AC-1007,Helicopters,Rescue Helicopter,Chetak Search & Rescue,/images/assets/chetak_sar.jpg,82nd Airborne Combat Aviation,2.0,2021-12-04,231,2024-09-23,clean,True
+AC-1008,Helicopters,Medical Helicopter,Mi-17 MEDEVAC Unit,/images/assets/transport_helicopter.jpg,10th Mountain Aviation Support,2.2,2022-11-11,175,2024-11-26,hydraulic_fuel,False
+AC-1009,Vehicles,Tank,T-72 Ajeya Combat Tank,/images/assets/t72_ajeya.jpg,50th Tactical Logistics Regiment,2.0,2023-11-18,211,2024-09-23,bearing_gearbox,False
+AC-1010,Vehicles,Armored Vehicle,BMP-2 Sarath Infantry Vehicle,/images/assets/armored_vehicle.jpg,3rd Armoured Brigade,1.8,2022-07-01,164,2024-10-12,turbine_thermal,False
+AC-1011,Vehicles,Military Truck,Tatra 8x8 Heavy Tactical Truck,/images/assets/tatra_8x8.jpg,7th Mechanized Recon Cavalry,1.4,2021-11-17,201,2024-10-09,hydraulic_fuel,False
+AC-1012,Vehicles,Fuel Vehicle,Jet-A1 Mobile Dispenser,/images/assets/jet_a1_dispenser.jpg,50th Tactical Logistics Regiment,1.6,2022-05-17,178,2024-11-23,bearing_gearbox,False
+AC-1013,Vehicles,Transport Vehicle,Light Specialist Vehicle (LSV) 4x4,/images/assets/lsv_4x4.jpg,3rd Armoured Brigade,1.3,2022-03-23,241,2024-11-17,turbine_thermal,False
+AC-1014,Aircraft,Fighter Jet,Tejas Mk1A,/images/assets/tejas_mk1a.jpg,4th Strike Fighter Wing,3.0,2023-09-02,133,2024-10-17,hydraulic_fuel,False
+AC-1015,Aircraft,Transport Plane,C-295MW,/images/assets/c295_transport.jpg,22nd Heavy Cargo Airlift Wing,2.5,2022-03-14,145,2024-10-24,bearing_gearbox,False
+AC-1016,Aircraft,Surveillance Plane,Netra AEW&C,/images/assets/surveillance_plane.jpg,12th Air Surveillance Squadron,2.8,2022-11-20,125,2024-11-20,turbine_thermal,False
+AC-1017,Aircraft,Cargo Plane,C-17 Globemaster III,/images/assets/cargo_plane.jpg,101st Tactical Fighter Squadron,2.6,2022-11-04,230,2024-11-07,hydraulic_fuel,False
+AC-1018,Helicopters,Transport Helicopter,ALH Dhruv Mk-III,/images/assets/rescue_medical_helicopter.jpg,15th Tactical Helicopter Squadron,2.2,2023-01-02,167,2024-11-07,bearing_gearbox,False
+AC-1019,Helicopters,Attack Helicopter,AH-64E Apache Guardian,/images/assets/attack_helicopter.jpg,82nd Airborne Combat Aviation,2.8,2023-10-02,230,2024-10-15,turbine_thermal,False
+AC-1020,Helicopters,Rescue Helicopter,ALH Dhruv SAR Lifesaver,/images/assets/rescue_medical_helicopter.jpg,10th Mountain Aviation Support,2.0,2021-11-17,218,2024-10-09,hydraulic_fuel,False
+AC-1021,Helicopters,Medical Helicopter,ALH Dhruv Air Ambulance,/images/assets/rescue_medical_helicopter.jpg,15th Tactical Helicopter Squadron,2.2,2023-06-21,238,2024-11-29,bearing_gearbox,False
+AC-1022,Vehicles,Tank,T-90 Bhishma Main Battle Tank,/images/assets/tank_t90.jpg,3rd Armoured Brigade,2.0,2022-02-03,188,2024-10-02,turbine_thermal,False
+AC-1023,Vehicles,Armored Vehicle,K9 Vajra-T Self-Propelled Howitzer,/images/assets/k9_vajra.jpg,7th Mechanized Recon Cavalry,1.8,2022-04-28,102,2024-11-11,hydraulic_fuel,False
+AC-1024,Vehicles,Military Truck,Swaraj Mazda Gun Towing Truck,/images/assets/swaraj_mazda.jpg,50th Tactical Logistics Regiment,1.4,2021-12-26,151,2024-09-18,bearing_gearbox,False
+AC-1025,Vehicles,Fuel Vehicle,Tactical Airfield Fuel Bowser 6x6,/images/assets/fuel_vehicle.jpg,3rd Armoured Brigade,1.6,2022-09-22,176,2024-11-26,turbine_thermal,False
+AC-1026,Vehicles,Transport Vehicle,Troop Carrier Heavy Transport,/images/assets/tatra_8x8.jpg,7th Mechanized Recon Cavalry,1.3,2023-06-18,95,2024-10-24,hydraulic_fuel,False
+AC-1027,Aircraft,Fighter Jet,Rafale DH,/images/assets/rafale_dh.jpg,22nd Heavy Cargo Airlift Wing,3.0,2022-09-24,138,2024-11-13,bearing_gearbox,False
+AC-1028,Aircraft,Transport Plane,C-130J Super Hercules,/images/assets/c130j_hercules.jpg,12th Air Surveillance Squadron,2.5,2023-08-14,223,2024-10-18,turbine_thermal,False
+AC-1029,Aircraft,Surveillance Plane,Phalcon AWACS,/images/assets/phalcon_awacs.jpg,101st Tactical Fighter Squadron,2.8,2022-07-29,126,2024-11-16,hydraulic_fuel,False
+AC-1030,Aircraft,Cargo Plane,IL-76 Gajraj Heavy Lifter,/images/assets/il76_gajraj.jpg,4th Strike Fighter Wing,2.6,2022-04-05,195,2024-10-08,bearing_gearbox,False
+AC-1031,Helicopters,Transport Helicopter,Mi-17V-5 Tactical Transport,/images/assets/transport_helicopter.jpg,82nd Airborne Combat Aviation,2.2,2023-08-16,105,2024-11-13,turbine_thermal,False
+AC-1032,Helicopters,Attack Helicopter,LCH Prachand Combat Heli,/images/assets/lch_prachand.jpg,10th Mountain Aviation Support,2.8,2021-10-14,164,2024-10-27,hydraulic_fuel,False
+AC-1033,Helicopters,Rescue Helicopter,Chetak Search & Rescue,/images/assets/chetak_sar.jpg,15th Tactical Helicopter Squadron,2.0,2023-05-31,163,2024-11-26,bearing_gearbox,False
+AC-1034,Helicopters,Medical Helicopter,Mi-17 MEDEVAC Unit,/images/assets/transport_helicopter.jpg,82nd Airborne Combat Aviation,2.2,2022-06-29,157,2024-10-15,turbine_thermal,False
+AC-1035,Vehicles,Tank,Arjun Mk-1A Heavy Tank,/images/assets/arjun_mk1a.jpg,7th Mechanized Recon Cavalry,2.0,2022-06-24,197,2024-11-20,hydraulic_fuel,False
+AC-1036,Vehicles,Armored Vehicle,WhAP 8x8 Armoured Carrier,/images/assets/whap_8x8.jpg,50th Tactical Logistics Regiment,1.8,2023-07-09,253,2024-10-15,bearing_gearbox,False
+AC-1037,Vehicles,Military Truck,Ashok Leyland Stallion 4x4,/images/assets/military_truck.jpg,3rd Armoured Brigade,1.4,2023-11-09,268,2024-11-08,turbine_thermal,False
+AC-1038,Vehicles,Fuel Vehicle,Heavy Refueler Tanker Bowser,/images/assets/fuel_vehicle.jpg,7th Mechanized Recon Cavalry,1.6,2021-10-12,188,2024-11-28,hydraulic_fuel,False
+AC-1039,Vehicles,Transport Vehicle,Airfield Equipment Tug,/images/assets/airfield_tug.jpg,50th Tactical Logistics Regiment,1.3,2023-06-26,141,2024-11-01,bearing_gearbox,False
+AC-1040,Aircraft,Fighter Jet,Mirage 2000,/images/assets/mirage_2000.jpg,12th Air Surveillance Squadron,3.0,2023-08-22,156,2024-09-18,turbine_thermal,False

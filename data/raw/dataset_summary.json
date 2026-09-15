@@ -1,8 +1,8 @@
 {
   "num_assets": 40,
   "clean_assets_count": 7,
-  "total_sensor_cycles": 7148,
-  "total_service_records": 76,
+  "total_sensor_cycles": 7420,
+  "total_service_records": 80,
   "asset_types": {
     "Fighter Jet": 4,
     "Transport Plane": 3,
@@ -24,5 +24,5 @@
     "turbine_thermal": 11,
     "clean": 7
   },
-  "generated_timestamp": "2026-09-15T09:50:55.307152+00:00"
+  "generated_timestamp": "2026-09-15T13:23:07.978703+00:00"
 }

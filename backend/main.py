@@ -692,3 +692,22 @@ def get_activity_log():
 
     activity_log.sort(key=lambda x: x["timestamp"], reverse=True)
     return activity_log
+
+
+# Serve static frontend production build if dist directory exists (Unified Cloud Deployment)
+FRONTEND_DIST_DIR = os.path.join(PROJECT_ROOT, "frontend", "dist")
+if os.path.exists(FRONTEND_DIST_DIR):
+    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import FileResponse
+
+    app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST_DIR, "assets")), name="static_assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        if full_path.startswith("api"):
+            raise HTTPException(status_code=404, detail="API route not found")
+        file_path = os.path.join(FRONTEND_DIST_DIR, full_path)
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(FRONTEND_DIST_DIR, "index.html"))
+
