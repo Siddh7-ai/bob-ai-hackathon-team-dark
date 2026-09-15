@@ -15,11 +15,11 @@ export default function Header({ activeTab, kpis }) {
   }, []);
 
   const titles = {
-    fleet: { title: 'Fleet Telemetry & Health Monitoring', sub: 'Real-time multi-sensor telemetry & RUL predictions across air assets' },
-    maintenance: { title: 'Prioritised Maintenance Action Queue', sub: 'Weighted ML ranking based on health score, risk, and remaining cycles' },
-    sortie: { title: 'Combat Sortie "What-If" Tactical Planner', sub: 'Simulate mission duration stress and harsh environments across squadrons' },
-    matrix: { title: 'Squadron Readiness & Base Matrix', sub: 'Unit-by-unit platform operational availability & depot status' },
-    log: { title: 'Activity Audit Trail & Work Orders', sub: 'Unified log of real-time dispatched work orders & historical service records' }
+    fleet: { title: 'Fleet Overview & Telemetry', sub: 'Real-time multi-sensor telemetry & RUL predictions across air assets' },
+    maintenance: { title: 'Maintenance Queue & Action Items', sub: 'Weighted ML ranking based on health score, risk, and remaining cycles' },
+    sortie: { title: 'Mission Readiness & Tactical Simulator', sub: 'Simulate mission duration stress and harsh environments across squadrons' },
+    matrix: { title: 'Squadron Matrix & Base Readiness', sub: 'Unit-by-unit platform operational availability & depot status' },
+    log: { title: 'Activity Audit Log & Work Orders', sub: 'Unified log of real-time dispatched work orders & historical service records' }
   };
 
   const current = titles[activeTab] || titles.fleet;

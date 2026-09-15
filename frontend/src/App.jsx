@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import FleetKpiOverview from './components/FleetKpiOverview';
 import AssetList from './components/AssetList';
@@ -39,6 +39,28 @@ export default function App() {
   const [unacknowledgedLogIds, setUnacknowledgedLogIds] = useState(new Set());
   const [activeNewLogIds, setActiveNewLogIds] = useState(new Set());
 
+  // Mutable refs to eliminate stale closure bugs inside interval timers & background sync
+  const readLogIdsRef = useRef(readLogIds);
+  const activeTabRef = useRef(activeTab);
+  const unacknowledgedLogIdsRef = useRef(unacknowledgedLogIds);
+  const activeNewLogIdsRef = useRef(activeNewLogIds);
+
+  useEffect(() => {
+    readLogIdsRef.current = readLogIds;
+  }, [readLogIds]);
+
+  useEffect(() => {
+    activeTabRef.current = activeTab;
+  }, [activeTab]);
+
+  useEffect(() => {
+    unacknowledgedLogIdsRef.current = unacknowledgedLogIds;
+  }, [unacknowledgedLogIds]);
+
+  useEffect(() => {
+    activeNewLogIdsRef.current = activeNewLogIds;
+  }, [activeNewLogIds]);
+
   // Sync activity notifications and calculate exact unread badge count
   const syncActivityNotifications = async () => {
     try {
@@ -46,8 +68,12 @@ export default function App() {
       if (res.ok) {
         const logs = await res.json();
         if (Array.isArray(logs)) {
-          if (readLogIds === null) {
+          const currentRead = readLogIdsRef.current;
+          const currentTab = activeTabRef.current;
+
+          if (currentRead === null) {
             const initialSet = new Set(logs.map(l => l.id || (l.asset_id + '-' + l.timestamp)));
+            readLogIdsRef.current = initialSet;
             setReadLogIds(initialSet);
             localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...initialSet]));
             setUnacknowledgedLogIds(new Set());
@@ -56,19 +82,17 @@ export default function App() {
             const unread = new Set();
             logs.forEach(l => {
               const logId = l.id || (l.asset_id + '-' + l.timestamp);
-              if (!readLogIds.has(logId)) {
+              if (!currentRead.has(logId)) {
                 unread.add(logId);
               }
             });
 
-            if (activeTab === 'log') {
+            if (currentTab === 'log') {
               if (unread.size > 0) {
-                setReadLogIds(prev => {
-                  const next = new Set(prev || []);
-                  unread.forEach(id => next.add(id));
-                  localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
-                  return next;
-                });
+                const updated = new Set([...currentRead, ...unread]);
+                readLogIdsRef.current = updated;
+                setReadLogIds(updated);
+                localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...updated]));
                 setActiveNewLogIds(prev => new Set([...prev, ...unread]));
                 setUnacknowledgedLogIds(new Set());
               }
@@ -86,13 +110,17 @@ export default function App() {
   };
 
   const markAllLogsAsRead = () => {
-    setReadLogIds(prev => {
-      const next = new Set(prev || []);
-      unacknowledgedLogIds.forEach(id => next.add(id));
-      activeNewLogIds.forEach(id => next.add(id));
-      localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
-      return next;
-    });
+    const currentRead = readLogIdsRef.current || new Set();
+    const unack = unacknowledgedLogIdsRef.current;
+    const activeNew = activeNewLogIdsRef.current;
+
+    const next = new Set(currentRead);
+    unack.forEach(id => next.add(id));
+    activeNew.forEach(id => next.add(id));
+
+    readLogIdsRef.current = next;
+    setReadLogIds(next);
+    localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
     setUnacknowledgedLogIds(new Set());
     setActiveNewLogIds(new Set());
     setUnreadLogCount(0);
@@ -116,19 +144,19 @@ export default function App() {
   const handleTabSelect = (tabId) => {
     if (tabId === 'log') {
       setActiveTab('log');
-      if (unacknowledgedLogIds.size > 0) {
-        setActiveNewLogIds(new Set(unacknowledgedLogIds));
-        setReadLogIds(prev => {
-          const next = new Set(prev || []);
-          unacknowledgedLogIds.forEach(id => next.add(id));
-          localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...next]));
-          return next;
-        });
+      const unack = unacknowledgedLogIdsRef.current;
+      if (unack && unack.size > 0) {
+        setActiveNewLogIds(new Set(unack));
+        const currentRead = readLogIdsRef.current || new Set();
+        const updated = new Set([...currentRead, ...unack]);
+        readLogIdsRef.current = updated;
+        setReadLogIds(updated);
+        localStorage.setItem('iaf_hums_read_log_ids', JSON.stringify([...updated]));
         setUnacknowledgedLogIds(new Set());
       }
       setUnreadLogCount(0);
     } else {
-      if (activeTab === 'log' && (unacknowledgedLogIds.size > 0 || activeNewLogIds.size > 0)) {
+      if (activeTabRef.current === 'log') {
         markAllLogsAsRead();
       }
       setActiveTab(tabId);

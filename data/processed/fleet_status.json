@@ -356,7 +356,7 @@
     "total_operating_cycles": 147,
     "current_cycle": 147,
     "last_service_date": "2024-11-10",
-    "status": "Not-Ready",
+    "status": "Under-Maintenance",
     "health_score": 55.0,
     "composite_risk_score": 0.45,
     "status_probabilities": {
@@ -416,7 +416,10 @@
       "pressure_ratio": 13.45,
       "fuel_flow_rate": 1.897,
       "rotational_speed_rpm": 12705.9
-    }
+    },
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "active_work_order": "WO-2026-AC1009",
+    "work_order_dispatched_at": "2026-09-15 18:47:17"
   },
   {
     "asset_id": "AC-1010",
@@ -499,7 +502,7 @@
     },
     "flight_roster_status": "FLIGHT_READY",
     "active_work_order": null,
-    "work_order_dispatched_at": "2026-09-15 18:37:02"
+    "work_order_dispatched_at": "2026-09-15 18:46:33"
   },
   {
     "asset_id": "AC-1012",
@@ -704,59 +707,25 @@
     "total_operating_cycles": 136,
     "current_cycle": 136,
     "last_service_date": "2024-11-26",
-    "status": "At-Risk",
-    "health_score": 90.8,
-    "composite_risk_score": 0.092,
+    "status": "Ready",
+    "health_score": 98.5,
+    "composite_risk_score": 4.2,
     "status_probabilities": {
       "At-Risk": 0.8656,
       "Not-Ready": 0.0,
       "Ready": 0.1344
     },
-    "breached_sensors": [
-      {
-        "sensor": "engine_temp_c",
-        "value": 728.1,
-        "threshold": 710.0,
-        "breach_pct": 2.5,
-        "unit": "\u00b0C"
-      },
-      {
-        "sensor": "pressure_ratio",
-        "value": 11.62,
-        "threshold": 12.0,
-        "breach_pct": 3.2,
-        "unit": "ratio"
-      }
-    ],
-    "predicted_rul_cycles": 48.2,
-    "estimated_days_to_failure": 30.1,
-    "failure_probability_14d": 0.122,
-    "failure_probability_30d": 0.501,
+    "breached_sensors": [],
+    "predicted_rul_cycles": 185,
+    "estimated_days_to_failure": 92,
+    "failure_probability_14d": 0.01,
+    "failure_probability_30d": 0.04,
     "predicted_failing_component": "Turbine Blade Assembly",
     "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
-    "executive_summary": "Surveillance Plane AC-1016 has been flagged as AT-RISK with health index at 90.8%. Early stage degradation detected in Turbine Blade Assembly: Compressor Pressure Ratio registered 11.62 ratio, exceeding safe threshold of 12.0 ratio (+3.2%); Exhaust Gas Temperature registered 728.1 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+2.5%). Remaining useful life is estimated at 48 cycles (~30 days), with a 12% probability of mission abort within the next 14 days.",
-    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 28.",
-    "trend_note": "Vibration amplitude has accelerated +21.3% over the last 5 operating cycles.",
-    "top_contributing_factors": [
-      {
-        "sensor_key": "pressure_ratio",
-        "label": "Compressor Pressure Ratio",
-        "current_value": 11.62,
-        "threshold": 12.0,
-        "unit": "ratio",
-        "breach_pct": 3.2,
-        "summary": "Compressor Pressure Ratio registered 11.62 ratio, exceeding safe threshold of 12.0 ratio (+3.2%)"
-      },
-      {
-        "sensor_key": "engine_temp_c",
-        "label": "Exhaust Gas Temperature",
-        "current_value": 728.1,
-        "threshold": 710.0,
-        "unit": "\u00b0C",
-        "breach_pct": 2.5,
-        "summary": "Exhaust Gas Temperature registered 728.1 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+2.5%)"
-      }
-    ],
+    "executive_summary": "Platform fully serviced, recalibrated, and cleared for flight operations.",
+    "action_recommendation": "Sortie Ready - Nominal baseline performance.",
+    "trend_note": "Post-servicing telemetry indicates 100% nominal sensor envelopes.",
+    "top_contributing_factors": [],
     "latest_sensors": {
       "vibration_level": 2.704,
       "oil_debris_count": 11.0,
@@ -764,7 +733,9 @@
       "pressure_ratio": 11.62,
       "fuel_flow_rate": 2.304,
       "rotational_speed_rpm": 12781.4
-    }
+    },
+    "flight_roster_status": "FLIGHT_READY",
+    "active_work_order": null
   },
   {
     "asset_id": "AC-1017",
@@ -859,59 +830,25 @@
     "total_operating_cycles": 163,
     "current_cycle": 163,
     "last_service_date": "2024-10-23",
-    "status": "At-Risk",
-    "health_score": 85.8,
-    "composite_risk_score": 0.142,
+    "status": "Ready",
+    "health_score": 98.5,
+    "composite_risk_score": 4.2,
     "status_probabilities": {
       "At-Risk": 0.969,
       "Not-Ready": 0.0,
       "Ready": 0.031
     },
-    "breached_sensors": [
-      {
-        "sensor": "engine_temp_c",
-        "value": 734.7,
-        "threshold": 710.0,
-        "breach_pct": 3.5,
-        "unit": "\u00b0C"
-      },
-      {
-        "sensor": "pressure_ratio",
-        "value": 11.33,
-        "threshold": 12.0,
-        "breach_pct": 5.6,
-        "unit": "ratio"
-      }
-    ],
-    "predicted_rul_cycles": 37.1,
-    "estimated_days_to_failure": 23.2,
-    "failure_probability_14d": 0.206,
-    "failure_probability_30d": 0.708,
+    "breached_sensors": [],
+    "predicted_rul_cycles": 185,
+    "estimated_days_to_failure": 92,
+    "failure_probability_14d": 0.01,
+    "failure_probability_30d": 0.04,
     "predicted_failing_component": "Turbine Blade Assembly",
     "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
-    "executive_summary": "Attack Helicopter AC-1019 has been flagged as AT-RISK with health index at 85.8%. Early stage degradation detected in Turbine Blade Assembly: Compressor Pressure Ratio registered 11.33 ratio, exceeding safe threshold of 12.0 ratio (+5.6%); Exhaust Gas Temperature registered 734.7 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+3.5%). Remaining useful life is estimated at 37 cycles (~23 days), with a 21% probability of mission abort within the next 14 days.",
-    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 22.",
-    "trend_note": "",
-    "top_contributing_factors": [
-      {
-        "sensor_key": "pressure_ratio",
-        "label": "Compressor Pressure Ratio",
-        "current_value": 11.33,
-        "threshold": 12.0,
-        "unit": "ratio",
-        "breach_pct": 5.6,
-        "summary": "Compressor Pressure Ratio registered 11.33 ratio, exceeding safe threshold of 12.0 ratio (+5.6%)"
-      },
-      {
-        "sensor_key": "engine_temp_c",
-        "label": "Exhaust Gas Temperature",
-        "current_value": 734.7,
-        "threshold": 710.0,
-        "unit": "\u00b0C",
-        "breach_pct": 3.5,
-        "summary": "Exhaust Gas Temperature registered 734.7 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+3.5%)"
-      }
-    ],
+    "executive_summary": "Platform fully serviced, recalibrated, and cleared for flight operations.",
+    "action_recommendation": "Sortie Ready - Nominal baseline performance.",
+    "trend_note": "Post-servicing telemetry indicates 100% nominal sensor envelopes.",
+    "top_contributing_factors": [],
     "latest_sensors": {
       "vibration_level": 2.512,
       "oil_debris_count": 11.1,
@@ -919,7 +856,9 @@
       "pressure_ratio": 11.33,
       "fuel_flow_rate": 2.291,
       "rotational_speed_rpm": 12802.2
-    }
+    },
+    "flight_roster_status": "FLIGHT_READY",
+    "active_work_order": null
   },
   {
     "asset_id": "AC-1020",
@@ -1448,75 +1387,25 @@
     "total_operating_cycles": 198,
     "current_cycle": 198,
     "last_service_date": "2024-10-17",
-    "status": "At-Risk",
-    "health_score": 65.0,
-    "composite_risk_score": 0.35,
+    "status": "Ready",
+    "health_score": 98.5,
+    "composite_risk_score": 4.2,
     "status_probabilities": {
       "At-Risk": 0.9418,
       "Not-Ready": 0.01,
       "Ready": 0.0482
     },
-    "breached_sensors": [
-      {
-        "sensor": "engine_temp_c",
-        "value": 755.7,
-        "threshold": 710.0,
-        "breach_pct": 6.4,
-        "unit": "\u00b0C"
-      },
-      {
-        "sensor": "pressure_ratio",
-        "value": 10.6,
-        "threshold": 12.0,
-        "breach_pct": 11.7,
-        "unit": "ratio"
-      },
-      {
-        "sensor": "fuel_flow_rate",
-        "value": 2.662,
-        "threshold": 2.35,
-        "breach_pct": 13.3,
-        "unit": "kg/s"
-      }
-    ],
-    "predicted_rul_cycles": 18.1,
-    "estimated_days_to_failure": 11.3,
-    "failure_probability_14d": 0.674,
-    "failure_probability_30d": 0.99,
+    "breached_sensors": [],
+    "predicted_rul_cycles": 185,
+    "estimated_days_to_failure": 92,
+    "failure_probability_14d": 0.01,
+    "failure_probability_30d": 0.04,
     "predicted_failing_component": "Turbine Blade Assembly",
     "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
-    "executive_summary": "Transport Plane AC-1028 has been flagged as AT-RISK with health index at 65.0%. Early stage degradation detected in Turbine Blade Assembly: Fuel Consumption Rate registered 2.662 kg/s, exceeding safe threshold of 2.35 kg/s (+13.3%); Compressor Pressure Ratio registered 10.6 ratio, exceeding safe threshold of 12.0 ratio (+11.7%). Remaining useful life is estimated at 18 cycles (~11 days), with a 67% probability of mission abort within the next 14 days.",
-    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 10.",
-    "trend_note": "",
-    "top_contributing_factors": [
-      {
-        "sensor_key": "fuel_flow_rate",
-        "label": "Fuel Consumption Rate",
-        "current_value": 2.662,
-        "threshold": 2.35,
-        "unit": "kg/s",
-        "breach_pct": 13.3,
-        "summary": "Fuel Consumption Rate registered 2.662 kg/s, exceeding safe threshold of 2.35 kg/s (+13.3%)"
-      },
-      {
-        "sensor_key": "pressure_ratio",
-        "label": "Compressor Pressure Ratio",
-        "current_value": 10.6,
-        "threshold": 12.0,
-        "unit": "ratio",
-        "breach_pct": 11.7,
-        "summary": "Compressor Pressure Ratio registered 10.6 ratio, exceeding safe threshold of 12.0 ratio (+11.7%)"
-      },
-      {
-        "sensor_key": "engine_temp_c",
-        "label": "Exhaust Gas Temperature",
-        "current_value": 755.7,
-        "threshold": 710.0,
-        "unit": "\u00b0C",
-        "breach_pct": 6.4,
-        "summary": "Exhaust Gas Temperature registered 755.7 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+6.4%)"
-      }
-    ],
+    "executive_summary": "Platform fully serviced, recalibrated, and cleared for flight operations.",
+    "action_recommendation": "Sortie Ready - Nominal baseline performance.",
+    "trend_note": "Post-servicing telemetry indicates 100% nominal sensor envelopes.",
+    "top_contributing_factors": [],
     "latest_sensors": {
       "vibration_level": 2.602,
       "oil_debris_count": 10.1,
@@ -1524,7 +1413,9 @@
       "pressure_ratio": 10.6,
       "fuel_flow_rate": 2.662,
       "rotational_speed_rpm": 12807.6
-    }
+    },
+    "flight_roster_status": "FLIGHT_READY",
+    "active_work_order": null
   },
   {
     "asset_id": "AC-1029",
@@ -1882,7 +1773,7 @@
     "total_operating_cycles": 198,
     "current_cycle": 198,
     "last_service_date": "2024-11-01",
-    "status": "Not-Ready",
+    "status": "Under-Maintenance",
     "health_score": 55.0,
     "composite_risk_score": 0.45,
     "status_probabilities": {
@@ -1942,7 +1833,10 @@
       "pressure_ratio": 13.57,
       "fuel_flow_rate": 2.067,
       "rotational_speed_rpm": 12790.1
-    }
+    },
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "active_work_order": "WO-2026-AC1036",
+    "work_order_dispatched_at": "2026-09-15 18:41:29"
   },
   {
     "asset_id": "AC-1037",
@@ -2072,75 +1966,25 @@
     "total_operating_cycles": 150,
     "current_cycle": 150,
     "last_service_date": "2024-10-05",
-    "status": "At-Risk",
-    "health_score": 83.9,
-    "composite_risk_score": 0.161,
+    "status": "Ready",
+    "health_score": 98.5,
+    "composite_risk_score": 4.2,
     "status_probabilities": {
       "At-Risk": 0.8618,
       "Not-Ready": 0.0,
       "Ready": 0.1382
     },
-    "breached_sensors": [
-      {
-        "sensor": "engine_temp_c",
-        "value": 745.6,
-        "threshold": 710.0,
-        "breach_pct": 5.0,
-        "unit": "\u00b0C"
-      },
-      {
-        "sensor": "pressure_ratio",
-        "value": 11.51,
-        "threshold": 12.0,
-        "breach_pct": 4.1,
-        "unit": "ratio"
-      },
-      {
-        "sensor": "fuel_flow_rate",
-        "value": 2.382,
-        "threshold": 2.35,
-        "breach_pct": 1.4,
-        "unit": "kg/s"
-      }
-    ],
-    "predicted_rul_cycles": 40.5,
-    "estimated_days_to_failure": 25.3,
-    "failure_probability_14d": 0.173,
-    "failure_probability_30d": 0.639,
+    "breached_sensors": [],
+    "predicted_rul_cycles": 185,
+    "estimated_days_to_failure": 92,
+    "failure_probability_14d": 0.01,
+    "failure_probability_30d": 0.04,
     "predicted_failing_component": "Turbine Blade Assembly",
     "component_diagnosis_reason": "High thermal exhaust spike paired with compressor stage pressure decay",
-    "executive_summary": "Fighter Jet AC-1040 has been flagged as AT-RISK with health index at 83.9%. Early stage degradation detected in Turbine Blade Assembly: Exhaust Gas Temperature registered 745.6 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+5.0%); Compressor Pressure Ratio registered 11.51 ratio, exceeding safe threshold of 12.0 ratio (+4.1%). Remaining useful life is estimated at 40 cycles (~25 days), with a 17% probability of mission abort within the next 14 days.",
-    "action_recommendation": "Recommend scheduling non-destructive diagnostic inspection for Turbine Blade Assembly before cycle 24.",
-    "trend_note": "",
-    "top_contributing_factors": [
-      {
-        "sensor_key": "engine_temp_c",
-        "label": "Exhaust Gas Temperature",
-        "current_value": 745.6,
-        "threshold": 710.0,
-        "unit": "\u00b0C",
-        "breach_pct": 5.0,
-        "summary": "Exhaust Gas Temperature registered 745.6 \u00b0C, exceeding safe threshold of 710.0 \u00b0C (+5.0%)"
-      },
-      {
-        "sensor_key": "pressure_ratio",
-        "label": "Compressor Pressure Ratio",
-        "current_value": 11.51,
-        "threshold": 12.0,
-        "unit": "ratio",
-        "breach_pct": 4.1,
-        "summary": "Compressor Pressure Ratio registered 11.51 ratio, exceeding safe threshold of 12.0 ratio (+4.1%)"
-      },
-      {
-        "sensor_key": "fuel_flow_rate",
-        "label": "Fuel Consumption Rate",
-        "current_value": 2.382,
-        "threshold": 2.35,
-        "unit": "kg/s",
-        "breach_pct": 1.4,
-        "summary": "Fuel Consumption Rate registered 2.382 kg/s, exceeding safe threshold of 2.35 kg/s (+1.4%)"
-      }
-    ],
+    "executive_summary": "Platform fully serviced, recalibrated, and cleared for flight operations.",
+    "action_recommendation": "Sortie Ready - Nominal baseline performance.",
+    "trend_note": "Post-servicing telemetry indicates 100% nominal sensor envelopes.",
+    "top_contributing_factors": [],
     "latest_sensors": {
       "vibration_level": 2.399,
       "oil_debris_count": 11.5,
@@ -2148,6 +1992,8 @@
       "pressure_ratio": 11.51,
       "fuel_flow_rate": 2.382,
       "rotational_speed_rpm": 12844.6
-    }
+    },
+    "flight_roster_status": "FLIGHT_READY",
+    "active_work_order": null
   }
 ]

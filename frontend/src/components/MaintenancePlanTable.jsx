@@ -4,7 +4,7 @@ import { CheckCheck, CheckCircle2, PackageCheck, X, ShieldCheck, FileText, Shiel
 import ConfirmationModal from './ConfirmationModal';
 import FighterJetLoader from './FighterJetLoader';
 
-export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispatched, onDataChange }) {
+export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispatched, onDataChange, showActionOverlay, hideActionOverlay, showToast }) {
   const [dispatchedOrders, setDispatchedOrders] = useState({});
   const [isOrdersLoading, setIsOrdersLoading] = useState(true);
   const [pendingConfirmItem, setPendingConfirmItem] = useState(null);
@@ -50,6 +50,13 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
   const executeConfirmedCompleteRepair = async (item, woId) => {
     const savedScroll = window.scrollY;
     setCompletingAssetId(item.asset_id);
+    if (showActionOverlay) {
+      showActionOverlay(
+        `COMPLETING SERVICING FOR ${item.asset_id}`,
+        `Recalibrating sensor telemetry, restoring flight clearance, and updating fleet KPIs...`,
+        item.asset_id
+      );
+    }
     try {
       const res = await fetch('/api/work-orders/complete', {
         method: 'POST',
@@ -64,16 +71,25 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
       if (res.ok) {
         setDispatchedOrders(prev => {
           const next = { ...prev };
+          const cleanAid = (item.asset_id || '').replace(/-/g, '').toUpperCase();
           delete next[item.asset_id];
+          delete next[cleanAid];
           return next;
         });
         if (onOrderDispatched) onOrderDispatched();
         if (onDataChange) onDataChange();
+        if (showToast) {
+          showToast(
+            `PLATFORM ${item.asset_id} RESTORED TO FLIGHT READY`,
+            `Work Order ${woId} completed. Subsystem recalibrated to 100% nominal baseline.`
+          );
+        }
       }
     } catch (err) {
       console.error('Failed to complete repair from plan table:', err);
     } finally {
       setCompletingAssetId(null);
+      if (hideActionOverlay) hideActionOverlay();
       if (savedScroll > 0) {
         requestAnimationFrame(() => {
           window.scrollTo({ top: savedScroll, behavior: 'instant' });
@@ -188,6 +204,12 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
               order: data.work_order
             }
           }));
+        }
+        if (showToast) {
+          showToast(
+            `WORK ORDER DISPATCHED: ${item.asset_id}`,
+            `Work Order ${woId} issued for ${item.asset_id}. Inventory reserved & flight roster locked.`
+          );
         }
       }
     } catch (err) {

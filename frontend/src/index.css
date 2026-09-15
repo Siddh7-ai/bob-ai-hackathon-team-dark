@@ -390,6 +390,46 @@ body::-webkit-scrollbar {
   padding: 8px;
 }
 
+/* Animated Yellow Notification Beacon Keyframes for Activity Audit Log */
+@keyframes yellowPing {
+  0% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0 rgba(255, 183, 3, 0.9);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2.4);
+    box-shadow: 0 0 0 12px rgba(255, 183, 3, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0 rgba(255, 183, 3, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes yellowDotPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px #FFB703, 0 0 16px rgba(255, 183, 3, 0.8);
+  }
+  50% {
+    transform: scale(1.35);
+    box-shadow: 0 0 14px #FFB703, 0 0 24px rgba(255, 183, 3, 0.95);
+  }
+}
+
+@keyframes iconGlowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(255, 183, 3, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(255, 183, 3, 0.95));
+  }
+}
+
+
 
 
 

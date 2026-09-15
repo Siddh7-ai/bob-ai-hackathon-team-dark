@@ -6,7 +6,7 @@ import { getAssetRealImage } from '../utils/assetImages';
 import FighterJetLoader from './FighterJetLoader';
 import ConfirmationModal from './ConfirmationModal';
 
-export default function AssetDetailModal({ assetId, onClose, onDataChange, onOrderDispatched }) {
+export default function AssetDetailModal({ assetId, onClose, onDataChange, onOrderDispatched, showActionOverlay, hideActionOverlay, showToast }) {
   const [detailData, setDetailData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [workOrder, setWorkOrder] = useState(null);
@@ -24,7 +24,8 @@ export default function AssetDetailModal({ assetId, onClose, onDataChange, onOrd
         .then(([data, orders]) => {
           if (data) setDetailData(data);
           if (Array.isArray(orders)) {
-            const match = orders.find(o => o.asset_id.toUpperCase() === assetId.toUpperCase() && o.status !== 'COMPLETED');
+            const normTarget = assetId.replace(/-/g, '').toUpperCase();
+            const match = orders.find(o => (o.asset_id || '').replace(/-/g, '').toUpperCase() === normTarget && o.status !== 'COMPLETED');
             setWorkOrder(match || null);
           }
           setLoading(false);
@@ -38,6 +39,13 @@ export default function AssetDetailModal({ assetId, onClose, onDataChange, onOrd
 
   const executeCompleteRepair = async () => {
     setIsCompleting(true);
+    if (showActionOverlay) {
+      showActionOverlay(
+        `COMPLETING SERVICING FOR ${assetId}`,
+        `Recalibrating sensor telemetry, restoring flight clearance, and updating fleet KPIs...`,
+        assetId
+      );
+    }
     try {
       const res = await fetch('/api/work-orders/complete', {
         method: 'POST',
@@ -52,11 +60,18 @@ export default function AssetDetailModal({ assetId, onClose, onDataChange, onOrd
         fetchModalData();
         if (onOrderDispatched) onOrderDispatched();
         if (onDataChange) onDataChange();
+        if (showToast) {
+          showToast(
+            `PLATFORM ${assetId} RESTORED TO FLIGHT READY`,
+            `Work order completed. Sensor telemetry recalibrated to 100% nominal baseline.`
+          );
+        }
       }
     } catch (err) {
       console.error('Failed to complete repair from modal:', err);
     } finally {
       setIsCompleting(false);
+      if (hideActionOverlay) hideActionOverlay();
     }
   };
 

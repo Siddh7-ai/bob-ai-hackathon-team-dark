@@ -30,14 +30,14 @@ export default function Sidebar({
   const navItems = [
     {
       id: 'fleet',
-      label: 'Fleet Telemetry',
+      label: 'Fleet Overview',
       icon: Activity,
       count: kpis?.total_assets,
       color: 'var(--accent-iaf)'
     },
     {
       id: 'maintenance',
-      label: 'Prioritised Maintenance',
+      label: 'Maintenance Queue',
       icon: Wrench,
       count: kpis?.critical_maintenance_actions,
       alert: true,
@@ -45,20 +45,20 @@ export default function Sidebar({
     },
     {
       id: 'sortie',
-      label: 'Combat Sortie Simulator',
+      label: 'Mission Simulator',
       icon: Zap,
       tag: 'SIM',
       color: 'var(--status-ready-dot)'
     },
     {
       id: 'matrix',
-      label: 'Squadron Readiness',
+      label: 'Squadron Matrix',
       icon: ShieldCheck,
       color: 'var(--status-ready-text)'
     },
     {
       id: 'log',
-      label: 'Activity Audit Log',
+      label: 'Activity Log',
       icon: FileText,
       unread: unreadLogCount,
       color: 'var(--text-secondary)'
@@ -149,6 +149,7 @@ export default function Sidebar({
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             const IconComponent = item.icon;
+            const hasUnreadLogs = item.id === 'log' && item.unread > 0;
 
             return (
               <button
@@ -162,41 +163,89 @@ export default function Sidebar({
                   alignItems: 'center',
                   padding: isHovered ? '0 12px' : '0 14px',
                   borderRadius: '8px',
-                  border: isActive ? '1px solid var(--accent-iaf)' : '1px solid transparent',
-                  backgroundColor: isActive ? 'var(--accent-iaf-subtle)' : 'transparent',
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: isActive 
+                    ? '1px solid var(--accent-iaf)' 
+                    : (hasUnreadLogs ? '1px solid rgba(255, 183, 3, 0.6)' : '1px solid transparent'),
+                  backgroundColor: isActive 
+                    ? 'var(--accent-iaf-subtle)' 
+                    : (hasUnreadLogs ? 'rgba(255, 183, 3, 0.08)' : 'transparent'),
+                  color: isActive ? 'var(--text-primary)' : (hasUnreadLogs ? '#FFB703' : 'var(--text-secondary)'),
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
                   position: 'relative',
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap'
+                  overflow: 'visible',
+                  whiteSpace: 'nowrap',
+                  boxShadow: hasUnreadLogs ? '0 0 12px rgba(255, 183, 3, 0.25)' : 'none'
                 }}
               >
+                {/* Icon Container with Pulsing Animated Yellow Beacon Dot */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   width: '20px',
                   flexShrink: 0,
-                  color: isActive ? 'var(--accent-iaf)' : 'currentColor'
+                  color: isActive ? 'var(--accent-iaf)' : (hasUnreadLogs ? '#FFB703' : 'currentColor'),
+                  position: 'relative'
                 }}>
-                  <IconComponent size={19} />
+                  <IconComponent 
+                    size={19} 
+                    style={hasUnreadLogs ? { animation: 'iconGlowPulse 1.5s ease-in-out 4 forwards', color: '#FFB703' } : {}}
+                  />
+
+                  {/* Pulsing Animated Yellow Beacon Dot on Icon (Runs 4 times = ~6s when new log arrives, then rests as solid dot) */}
+                  {hasUnreadLogs && (
+                    <span key={`dot-${item.unread}`} style={{
+                      position: 'absolute',
+                      top: '-6px',
+                      right: '-8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '12px',
+                      height: '12px',
+                      pointerEvents: 'none',
+                      zIndex: 20
+                    }}>
+                      {/* Radar Ping Wave (4 cycles, then rests) */}
+                      <span style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '50%',
+                        backgroundColor: '#FFB703',
+                        animation: 'yellowPing 1.5s cubic-bezier(0, 0, 0.2, 1) 4 forwards'
+                      }} />
+                      {/* Glowing Solid Core (4 cycles, then rests) */}
+                      <span style={{
+                        position: 'relative',
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        backgroundColor: '#FFB703',
+                        border: '1.5px solid var(--bg-surface)',
+                        animation: 'yellowDotPulse 1.5s ease-in-out 4 forwards',
+                        boxShadow: '0 0 10px #FFB703, 0 0 18px rgba(255, 183, 3, 0.9)'
+                      }} />
+                    </span>
+                  )}
                 </div>
 
-                {/* Collapsed Badge Dot Indicator */}
-                <span style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '12px',
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: item.unread > 0 ? '#FFB703' : 'var(--status-not-ready-dot)',
-                  boxShadow: item.unread > 0 ? '0 0 6px #FFB703' : 'none',
-                  opacity: !isHovered && (item.unread > 0 || item.alert) ? 1 : 0,
-                  transition: 'opacity 0.15s ease',
-                  pointerEvents: 'none'
-                }} />
+                {/* Collapsed Badge Dot Indicator (For non-log alert items e.g. Wrench alert) */}
+                {!hasUnreadLogs && item.alert && (
+                  <span style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '12px',
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--status-not-ready-dot)',
+                    opacity: !isHovered ? 1 : 0,
+                    transition: 'opacity 0.15s ease',
+                    pointerEvents: 'none'
+                  }} />
+                )}
 
                 {/* Expanded Label & Badges */}
                 <div style={{
@@ -212,25 +261,26 @@ export default function Sidebar({
                 }}>
                   <span style={{
                     fontSize: '13px',
-                    fontWeight: isActive ? 700 : 500,
-                    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    fontWeight: (isActive || hasUnreadLogs) ? 700 : 500,
+                    color: isActive ? 'var(--text-primary)' : (hasUnreadLogs ? '#FFB703' : 'var(--text-secondary)')
                   }}>
                     {item.label}
                   </span>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     {item.unread > 0 && (
-                      <span className="mono-num" style={{
+                      <span key={`badge-${item.unread}`} className="mono-num" style={{
                         fontSize: '10px',
                         fontWeight: 900,
-                        padding: '1px 7px',
+                        padding: '2px 8px',
                         borderRadius: '10px',
                         backgroundColor: '#FFB703',
                         color: '#000000',
                         border: '1px solid #FFB703',
-                        boxShadow: '0 0 6px rgba(255, 183, 3, 0.4)'
+                        boxShadow: '0 0 10px rgba(255, 183, 3, 0.6)',
+                        animation: 'yellowDotPulse 1.5s ease-in-out 4 forwards'
                       }}>
-                        {item.unread}
+                        {item.unread} NEW
                       </span>
                     )}
 

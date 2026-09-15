@@ -20,8 +20,8 @@
     "dispatched_at": "2026-09-14 23:34:23",
     "dispatched_time": "11:34:23 PM",
     "status": "COMPLETED",
-    "completed_at": "2026-09-15 12:39:41",
-    "technician_notes": "Depot maintenance servicing complete. Subsystem recalibrated and cleared for flight operations."
+    "completed_at": "2026-09-15 18:39:18",
+    "technician_notes": "Depot maintenance complete. Subsystem recalibrated to nominal baseline."
   },
   {
     "work_order_id": "WO-2026-AC1013",
@@ -92,7 +92,7 @@
     "dispatched_at": "2026-09-15 12:34:19",
     "dispatched_time": "12:34:19 PM",
     "status": "COMPLETED",
-    "completed_at": "2026-09-15 12:56:22",
+    "completed_at": "2026-09-15 18:43:27",
     "technician_notes": "Depot maintenance complete. Subsystem recalibrated to nominal baseline."
   },
   {
@@ -452,8 +452,8 @@
     "dispatched_at": "2026-09-15 12:36:45",
     "dispatched_time": "12:36:45 PM",
     "status": "COMPLETED",
-    "completed_at": "2026-09-15 12:38:02",
-    "technician_notes": "Depot maintenance servicing complete. Subsystem recalibrated and cleared for flight operations."
+    "completed_at": "2026-09-15 18:49:34",
+    "technician_notes": "Depot maintenance complete. Subsystem recalibrated to nominal baseline."
   },
   {
     "work_order_id": "WO-2026-AC1019",
@@ -477,8 +477,8 @@
     "dispatched_at": "2026-09-15 12:41:23",
     "dispatched_time": "12:41:23 PM",
     "status": "COMPLETED",
-    "completed_at": "2026-09-15 14:15:32",
-    "technician_notes": "Sortie preparation complete. Asset health recalibrated & cleared for flight."
+    "completed_at": "2026-09-15 18:39:39",
+    "technician_notes": "Depot maintenance complete. Subsystem recalibrated to nominal baseline."
   },
   {
     "work_order_id": "WO-2026-AC1031",
@@ -556,6 +556,29 @@
     "technician_notes": "Depot maintenance complete. Subsystem recalibrated to nominal baseline."
   },
   {
+    "work_order_id": "WO-2026-AC1036",
+    "asset_id": "AC-1036",
+    "model_name": "WhAP 8x8 Armoured Carrier",
+    "unit": "50th Tactical Logistics Regiment",
+    "action_code": "EMERGENCY_REPLACE",
+    "action_label": "Emergency Overhaul & Component Replacement",
+    "failing_component": "Main Bearing / Gearbox",
+    "parts_reserved": [
+      "Main Bearing / Gearbox Replacement Kit",
+      "High-temp Seals",
+      "Fluid Flush Pack"
+    ],
+    "parts_reserved_count": 3,
+    "estimated_labor_hours": 18,
+    "urgency": "IMMEDIATE",
+    "assigned_crew": "Alpha Maintenance Squad - Bay 3",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-15 18:41:29",
+    "dispatched_time": "06:41:29 PM",
+    "status": "DISPATCHED"
+  },
+  {
     "work_order_id": "WO-2026-AC1011",
     "asset_id": "AC-1011",
     "model_name": "Tatra Heavy Truck",
@@ -572,10 +595,33 @@
     "assigned_crew": "Alpha Maintenance Squad - Bay 3",
     "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
     "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
-    "dispatched_at": "2026-09-15 18:37:02",
-    "dispatched_time": "06:37:02 PM",
+    "dispatched_at": "2026-09-15 18:46:33",
+    "dispatched_time": "06:46:33 PM",
     "status": "COMPLETED",
-    "completed_at": "2026-09-15 18:37:02",
+    "completed_at": "2026-09-15 18:46:33",
     "technician_notes": "Hydraulic system overhauled and recalibrated."
+  },
+  {
+    "work_order_id": "WO-2026-AC1009",
+    "asset_id": "AC-1009",
+    "model_name": "T-72 Ajeya Combat Tank",
+    "unit": "50th Tactical Logistics Regiment",
+    "action_code": "EMERGENCY_REPLACE",
+    "action_label": "Emergency Overhaul & Component Replacement",
+    "failing_component": "Main Bearing / Gearbox",
+    "parts_reserved": [
+      "Main Bearing / Gearbox Replacement Kit",
+      "High-temp Seals",
+      "Fluid Flush Pack"
+    ],
+    "parts_reserved_count": 3,
+    "estimated_labor_hours": 18,
+    "urgency": "IMMEDIATE",
+    "assigned_crew": "Alpha Maintenance Squad - Bay 3",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-15 18:47:17",
+    "dispatched_time": "06:47:17 PM",
+    "status": "DISPATCHED"
   }
 ]
