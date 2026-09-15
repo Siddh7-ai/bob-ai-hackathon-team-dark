@@ -280,6 +280,7 @@ export default function App() {
               <SortiePlanner
                 assets={assets}
                 onSelectAsset={(id) => setSelectedAssetId(id)}
+                onOrderDispatched={handleOrderDispatched}
                 onDataChange={fetchDashboardData}
                 showActionOverlay={showActionOverlay}
                 hideActionOverlay={hideActionOverlay}
@@ -297,6 +298,7 @@ export default function App() {
             {activeTab === 'log' && (
               <ActivityLog
                 onSelectAsset={(id) => setSelectedAssetId(id)}
+                onOrderDispatched={handleOrderDispatched}
                 onDataChange={() => {
                   fetchDashboardData();
                   syncActivityNotifications();
@@ -315,6 +317,7 @@ export default function App() {
         <AssetDetailModal
           assetId={selectedAssetId}
           onClose={() => setSelectedAssetId(null)}
+          onOrderDispatched={handleOrderDispatched}
           onDataChange={fetchDashboardData}
           showActionOverlay={showActionOverlay}
           hideActionOverlay={hideActionOverlay}

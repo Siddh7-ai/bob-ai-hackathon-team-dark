@@ -6,7 +6,7 @@ import { getAssetRealImage } from '../utils/assetImages';
 import FighterJetLoader from './FighterJetLoader';
 import ConfirmationModal from './ConfirmationModal';
 
-export default function AssetDetailModal({ assetId, onClose, onDataChange }) {
+export default function AssetDetailModal({ assetId, onClose, onDataChange, onOrderDispatched }) {
   const [detailData, setDetailData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [workOrder, setWorkOrder] = useState(null);
@@ -50,6 +50,7 @@ export default function AssetDetailModal({ assetId, onClose, onDataChange }) {
       });
       if (res.ok) {
         fetchModalData();
+        if (onOrderDispatched) onOrderDispatched();
         if (onDataChange) onDataChange();
       }
     } catch (err) {

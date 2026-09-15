@@ -19,7 +19,7 @@ import {
 import FighterJetLoader from './FighterJetLoader';
 import ConfirmationModal from './ConfirmationModal';
 
-export default function SortiePlanner({ assets = [], onSelectAsset, onDataChange, showActionOverlay, hideActionOverlay, showToast }) {
+export default function SortiePlanner({ assets = [], onSelectAsset, onOrderDispatched, onDataChange, showActionOverlay, hideActionOverlay, showToast }) {
   const [durationHours, setDurationHours] = useState(8);
   const [environment, setEnvironment] = useState('STANDARD'); // STANDARD | DESERT_HEAT | HIGH_ALTITUDE_LEH
   const [unitFilter, setUnitFilter] = useState('ALL');
@@ -195,7 +195,7 @@ export default function SortiePlanner({ assets = [], onSelectAsset, onDataChange
   }, [durationHours, environment, unitFilter, assets]);
 
   // Quick Dispatch Pre-emptive Work Order from Sortie Planner
-  const handleQuickDispatch = async (asset) => {
+  const executeQuickDispatch = async (asset) => {
     const savedScroll = window.scrollY;
     setDispatchingAsset(asset.asset_id);
     if (showActionOverlay) {
@@ -223,6 +223,7 @@ export default function SortiePlanner({ assets = [], onSelectAsset, onDataChange
       });
 
       if (res.ok) {
+        if (onOrderDispatched) onOrderDispatched();
         if (onDataChange) await onDataChange();
         await runSimulation();
         triggerToast(
@@ -241,8 +242,41 @@ export default function SortiePlanner({ assets = [], onSelectAsset, onDataChange
     }
   };
 
+  const handleQuickDispatch = (asset) => {
+    setConfirmModalConfig({
+      isOpen: true,
+      title: 'Confirm Pre-emptive Work Order',
+      subtitle: `Pre-flight Servicing Dispatch for ${asset.asset_id}`,
+      iconType: 'wrench',
+      badgeText: 'PRE-EMPTIVE DISPATCH',
+      badgeType: 'warning',
+      summaryItems: [
+        { label: 'Platform ID', value: asset.asset_id, highlight: true },
+        { label: 'Model', value: asset.model_name || 'Military Platform' },
+        { label: 'Failing Subsystem', value: asset.predicted_failing_component || 'High-Stress Subsystem', color: 'var(--status-not-ready-text)' },
+        { label: 'Est. Labor', value: '6 hours' }
+      ],
+      impactItems: [
+        `Issues pre-emptive work order for ${asset.asset_id} prior to mission launch.`,
+        'Reserves pre-flight calibration kit & high-temp seals from logistics inventory.',
+        'Grounds platform for depot servicing until maintenance signoff.'
+      ],
+      reflectionItems: [
+        'Flight roster status locks to "GROUNDED FOR MAINTENANCE".',
+        'Work order status updates to "DISPATCHED" in the audit log.',
+        'Activity notification badge increments on the sidebar.'
+      ],
+      confirmText: 'Confirm & Issue Pre-emptive Order',
+      confirmColor: 'var(--accent-iaf)',
+      onConfirm: async () => {
+        setConfirmModalConfig(null);
+        await executeQuickDispatch(asset);
+      }
+    });
+  };
+
   // Quick Complete Repair from Sortie Planner
-  const handleQuickCompleteRepair = async (asset) => {
+  const executeQuickCompleteRepair = async (asset) => {
     const savedScroll = window.scrollY;
     setDispatchingAsset(asset.asset_id);
     if (showActionOverlay) {
@@ -263,6 +297,7 @@ export default function SortiePlanner({ assets = [], onSelectAsset, onDataChange
       });
 
       if (res.ok) {
+        if (onOrderDispatched) onOrderDispatched();
         if (onDataChange) await onDataChange();
         await runSimulation();
         triggerToast(
@@ -279,6 +314,38 @@ export default function SortiePlanner({ assets = [], onSelectAsset, onDataChange
         window.scrollTo({ top: savedScroll, behavior: 'instant' });
       });
     }
+  };
+
+  const handleQuickCompleteRepair = (asset) => {
+    setConfirmModalConfig({
+      isOpen: true,
+      title: 'Confirm Work Order Signoff',
+      subtitle: `Servicing Completion Signoff for ${asset.asset_id}`,
+      iconType: 'check',
+      badgeText: 'SORTIE SIGNOFF',
+      badgeType: 'success',
+      summaryItems: [
+        { label: 'Platform ID', value: asset.asset_id, highlight: true },
+        { label: 'Model', value: asset.model_name || 'Military Platform' },
+        { label: 'Subsystem Serviced', value: asset.predicted_failing_component || 'Subsystem', color: 'var(--status-ready-text)' }
+      ],
+      impactItems: [
+        `Registers formal maintenance completion for ${asset.asset_id}.`,
+        'Recalibrates sensor telemetry back to nominal baseline tolerances.',
+        'Restores composite health score and resets flight clearance roster.'
+      ],
+      reflectionItems: [
+        'Platform status immediately updates to "Ready" (Flight Ready).',
+        'Work order status updates to "COMPLETED" in the unified audit log.',
+        'Sortie clearance rate KPI percentage recalculates dynamically.'
+      ],
+      confirmText: 'Confirm & Sign Off Servicing',
+      confirmColor: 'var(--status-ready-dot)',
+      onConfirm: async () => {
+        setConfirmModalConfig(null);
+        await executeQuickCompleteRepair(asset);
+      }
+    });
   };
 
   // Confirmation Trigger: Recalculate Scenario Button

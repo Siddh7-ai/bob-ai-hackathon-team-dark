@@ -8,19 +8,55 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
   const [dispatchedOrders, setDispatchedOrders] = useState({});
   const [isOrdersLoading, setIsOrdersLoading] = useState(true);
   const [pendingConfirmItem, setPendingConfirmItem] = useState(null);
+  const [confirmModalConfig, setConfirmModalConfig] = useState(null);
   const [activeReceipt, setActiveReceipt] = useState(null);
   const [copiedId, setCopiedId] = useState(false);
   const [completingAssetId, setCompletingAssetId] = useState(null);
 
-  const handleCompleteRepairFromPlan = async (assetId) => {
+  const handleInitiateCompleteRepair = (item) => {
+    const woId = dispatchedOrders[item.asset_id]?.order?.work_order_id || `WO-2026-${(item.asset_id || 'ASSET').replace('-', '').toUpperCase()}`;
+    setConfirmModalConfig({
+      isOpen: true,
+      title: 'Confirm Work Order Completion & Signoff',
+      subtitle: `Depot Servicing Signoff for ${item.asset_id}`,
+      iconType: 'check',
+      badgeText: 'DEPOT SIGNOFF',
+      badgeType: 'success',
+      summaryItems: [
+        { label: 'Platform ID', value: item.asset_id, highlight: true },
+        { label: 'Model', value: item.model_name || item.asset_type || 'Platform' },
+        { label: 'Subsystem Serviced', value: item.predicted_failing_component || 'Subsystem', color: 'var(--status-ready-text)' },
+        { label: 'Work Order ID', value: woId }
+      ],
+      impactItems: [
+        `Registers formal maintenance completion for ${item.asset_id} in depot records.`,
+        'Recalibrates sensor envelopes back to nominal baseline tolerances and clears active anomaly alerts.',
+        'Restores composite health score to 100% and resets flight readiness roster status.'
+      ],
+      reflectionItems: [
+        'Platform status immediately updates to "Ready" (Flight Ready).',
+        'Work order status updates to "COMPLETED" in the unified audit log.',
+        'Fleet readiness KPIs dynamically increment across the mission dashboard.'
+      ],
+      confirmText: 'Confirm & Sign Off Repair',
+      confirmColor: 'var(--status-ready-dot)',
+      onConfirm: async () => {
+        setConfirmModalConfig(null);
+        await executeConfirmedCompleteRepair(item, woId);
+      }
+    });
+  };
+
+  const executeConfirmedCompleteRepair = async (item, woId) => {
     const savedScroll = window.scrollY;
-    setCompletingAssetId(assetId);
+    setCompletingAssetId(item.asset_id);
     try {
       const res = await fetch('/api/work-orders/complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          asset_id: assetId,
+          asset_id: item.asset_id,
+          work_order_id: woId,
           notes: 'Depot maintenance complete. Subsystem recalibrated to nominal baseline.'
         })
       });
@@ -28,9 +64,10 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
       if (res.ok) {
         setDispatchedOrders(prev => {
           const next = { ...prev };
-          delete next[assetId];
+          delete next[item.asset_id];
           return next;
         });
+        if (onOrderDispatched) onOrderDispatched();
         if (onDataChange) onDataChange();
       }
     } catch (err) {
@@ -338,7 +375,7 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
                             <span>DISPATCHED</span>
                           </span>
                           <button
-                            onClick={() => handleCompleteRepairFromPlan(item.asset_id)}
+                            onClick={() => handleInitiateCompleteRepair(item)}
                             disabled={completingAssetId === item.asset_id}
                             style={{
                               padding: '3px 8px',
@@ -408,6 +445,14 @@ export default function MaintenancePlanTable({ plan, onSelectAsset, onOrderDispa
           ]}
           confirmText="Confirm & Issue Work Order"
           confirmColor="var(--accent-iaf)"
+        />
+      )}
+
+      {/* Completion Confirmation Modal */}
+      {confirmModalConfig && (
+        <ConfirmationModal
+          {...confirmModalConfig}
+          onClose={() => setConfirmModalConfig(null)}
         />
       )}
 
