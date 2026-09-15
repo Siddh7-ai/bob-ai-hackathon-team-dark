@@ -348,84 +348,18 @@ export default function SortiePlanner({ assets = [], onSelectAsset, onOrderDispa
     });
   };
 
-  // Confirmation Trigger: Recalculate Scenario Button
-  const handleRequestRecalculate = () => {
-    const envMultiplier = environment === 'DESERT_HEAT' ? 1.35 : (environment === 'HIGH_ALTITUDE_LEH' ? 1.25 : 1.0);
-    const requiredRul = Math.round(Number(durationHours) * 2.2 * envMultiplier);
-    const envName = environment === 'DESERT_HEAT' 
-      ? 'Thar Desert Heat (+35% Stress Multiplier)' 
-      : (environment === 'HIGH_ALTITUDE_LEH' ? 'Leh Thin Air (+25% Stress Multiplier)' : 'Standard Baseline (Nominal Temp & Altitude)');
-    const durLabel = durationHours === 4 ? '4h (CAP Patrol)' : (durationHours === 16 ? '16h (Long Range Strike)' : '8h (Strike Ops)');
-
-    setConfirmModalConfig({
-      isOpen: true,
-      title: 'Confirm Scenario Recalculation',
-      subtitle: 'Tactical Sortie Mission Simulation Engine',
-      iconType: 'zap',
-      badgeText: 'TACTICAL RE-EVALUATION',
-      badgeType: 'accent',
-      summaryItems: [
-        { label: 'Sortie Duration', value: durLabel, highlight: true },
-        { label: 'Environment', value: environment.replace(/_/g, ' ') },
-        { label: 'Target Squadrons', value: unitFilter === 'ALL' ? 'Entire Fleet (40 Assets)' : unitFilter },
-        { label: 'Required RUL Baseline', value: `${requiredRul} cycles` }
-      ],
-      impactItems: [
-        `Re-runs combat stress simulation applying endurance profile for ${durLabel} under ${envName}.`,
-        `Establishes a strict minimum fatigue tolerance of ${requiredRul} RUL cycles for safe mission clearance.`,
-        `Cross-evaluates every platform's real-time ML health score, sensor telemetry envelopes, and active depot status against the sortie envelope.`
-      ],
-      reflectionItems: [
-        'Platform clearance roster will re-assess every platform: sufficient RUL assets are marked "✓ SORTIE CLEARED", while degraded/depot assets are marked "⚠️ HIGH RISK / UNFIT".',
-        'Mission Clearance Rate KPI percentage and squadron availability cards will recalculate in real-time.',
-        'Targeted command action options (Pre-emptive Servicing vs. Depot Repair) will update for all unfit platforms.'
-      ],
-      confirmText: 'Confirm & Run Simulation',
-      confirmColor: 'var(--accent-iaf)',
-      onConfirm: async () => {
-        setConfirmModalConfig(null);
-        await runSimulation();
-        triggerToast('Combat sortie scenario successfully recalculated.');
-      }
-    });
+  // Direct Trigger: Recalculate Scenario Button
+  const handleRequestRecalculate = async () => {
+    setLoading(true);
+    await runSimulation();
+    triggerToast('Combat sortie scenario successfully recalculated.');
   };
 
-  // Confirmation Trigger: Duration Buttons
+  // Direct Trigger: Duration Buttons
   const handleSelectDuration = (targetHours, optLabel) => {
     if (targetHours === durationHours) return;
-    const envMultiplier = environment === 'DESERT_HEAT' ? 1.35 : (environment === 'HIGH_ALTITUDE_LEH' ? 1.25 : 1.0);
-    const targetRequiredRul = Math.round(Number(targetHours) * 2.2 * envMultiplier);
-
-    setConfirmModalConfig({
-      isOpen: true,
-      title: 'Confirm Mission Duration Adjustment',
-      subtitle: `Transition Mission Profile to ${optLabel}`,
-      iconType: 'clock',
-      badgeText: 'MISSION PARAMETER CHANGE',
-      badgeType: 'accent',
-      summaryItems: [
-        { label: 'Current Profile', value: `${durationHours}h Sortie` },
-        { label: 'New Profile', value: optLabel, highlight: true },
-        { label: 'Required RUL Envelope', value: `${targetRequiredRul} cycles` }
-      ],
-      impactItems: [
-        `Adjusts flight endurance requirement from ${durationHours} hours to ${targetHours} hours.`,
-        `Recalculates component strain models across propulsion, gearbox, and hydraulic systems.`,
-        `Re-evaluates whether platforms have sufficient RUL cycles to safely complete this extended flight.`
-      ],
-      reflectionItems: [
-        `Sortie baseline threshold updates to ${targetRequiredRul} cycles across the squadron roster.`,
-        `Platforms whose available RUL is lower than ${targetRequiredRul} cycles will transition to High Risk / Unfit.`,
-        'Fleet Mission Clearance Rate KPI will update dynamically.'
-      ],
-      confirmText: `Apply ${optLabel}`,
-      confirmColor: 'var(--accent-iaf)',
-      onConfirm: async () => {
-        setConfirmModalConfig(null);
-        setDurationHours(targetHours);
-        triggerToast(`Mission duration updated to ${optLabel}.`);
-      }
-    });
+    setDurationHours(targetHours);
+    triggerToast(`Mission duration updated to ${optLabel}.`);
   };
 
   // Confirmation Trigger: Pre-emptive Maintenance Dispatch

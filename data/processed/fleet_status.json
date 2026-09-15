@@ -1147,7 +1147,7 @@
     "total_operating_cycles": 188,
     "current_cycle": 188,
     "last_service_date": "2024-10-02",
-    "status": "At-Risk",
+    "status": "Under-Maintenance",
     "health_score": 67.0,
     "composite_risk_score": 0.33,
     "status_probabilities": {
@@ -1223,7 +1223,10 @@
       "pressure_ratio": 10.88,
       "fuel_flow_rate": 2.464,
       "rotational_speed_rpm": 12887.2
-    }
+    },
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "active_work_order": "WO-2026-AC1022",
+    "work_order_dispatched_at": "2026-09-15 22:41:18"
   },
   {
     "asset_id": "AC-1023",
@@ -1476,7 +1479,7 @@
     "total_operating_cycles": 138,
     "current_cycle": 138,
     "last_service_date": "2024-11-13",
-    "status": "At-Risk",
+    "status": "Under-Maintenance",
     "health_score": 59.2,
     "composite_risk_score": 0.408,
     "status_probabilities": {
@@ -1536,7 +1539,10 @@
       "pressure_ratio": 13.44,
       "fuel_flow_rate": 2.003,
       "rotational_speed_rpm": 12785.6
-    }
+    },
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "active_work_order": "WO-2026-AC1027",
+    "work_order_dispatched_at": "2026-09-15 22:37:46"
   },
   {
     "asset_id": "AC-1028",

@@ -623,5 +623,49 @@
     "status": "COMPLETED",
     "completed_at": "2026-09-15 21:10:58",
     "technician_notes": "Hydraulic system overhauled and recalibrated."
+  },
+  {
+    "work_order_id": "WO-2026-AC1027",
+    "asset_id": "AC-1027",
+    "model_name": "Rafale DH",
+    "unit": "22nd Heavy Cargo Airlift Wing",
+    "action_code": "DEPOT_REPAIR",
+    "action_label": "Depot-Level Precision Repair & Recalibration",
+    "failing_component": "Main Bearing / Gearbox",
+    "parts_reserved": [
+      "Main Bearing / Gearbox Gasket Set",
+      "Borescope Inspection Kit"
+    ],
+    "parts_reserved_count": 2,
+    "estimated_labor_hours": 8,
+    "urgency": "HIGH",
+    "assigned_crew": "Bravo Depot Repair Team - Hangar 2",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-15 22:37:46",
+    "dispatched_time": "10:37:46 PM",
+    "status": "DISPATCHED"
+  },
+  {
+    "work_order_id": "WO-2026-AC1022",
+    "asset_id": "AC-1022",
+    "model_name": "T-90 Bhishma Main Battle Tank",
+    "unit": "3rd Armoured Brigade",
+    "action_code": "DEPOT_REPAIR",
+    "action_label": "Depot-Level Precision Repair & Recalibration",
+    "failing_component": "Turbine Blade Assembly",
+    "parts_reserved": [
+      "Turbine Blade Assembly Gasket Set",
+      "Borescope Inspection Kit"
+    ],
+    "parts_reserved_count": 2,
+    "estimated_labor_hours": 8,
+    "urgency": "HIGH",
+    "assigned_crew": "Bravo Depot Repair Team - Hangar 2",
+    "inventory_status": "RESERVED_FROM_BASE_LOGISTICS",
+    "flight_roster_status": "GROUNDED_FOR_MAINTENANCE",
+    "dispatched_at": "2026-09-15 22:41:18",
+    "dispatched_time": "10:41:18 PM",
+    "status": "DISPATCHED"
   }
 ]
