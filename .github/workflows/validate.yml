@@ -1,0 +1,56 @@
+name: Validate Submission
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate submission structure & YAML
+        run: |
+          python -c "
+          import os, sys, yaml
+
+          print('=== Running Submission Validation Checks ===')
+
+          # 1. Check submission.yaml exists
+          if not os.path.exists('submission.yaml'):
+              print('ERROR: submission.yaml file is missing!')
+              sys.exit(1)
+
+          # 2. Check submission.yaml valid YAML and required fields
+          with open('submission.yaml', 'r') as f:
+              data = yaml.safe_load(f)
+
+          assert data is not None, 'submission.yaml is empty!'
+          assert 'team' in data, 'Missing team block in submission.yaml'
+          assert 'submission' in data, 'Missing submission block in submission.yaml'
+          assert data['team']['name'], 'Team name is empty!'
+          assert data['team']['track'], 'Track is empty!'
+          assert data['team']['lead']['name'], 'Team lead name is empty!'
+          assert data['team']['lead']['email'], 'Team lead email is empty!'
+
+          # 3. Check docs/setup-guide.md exists
+          if not os.path.exists('docs/setup-guide.md'):
+              print('ERROR: docs/setup-guide.md file is missing!')
+              sys.exit(1)
+
+          # 4. Check demo/demo-video-link.txt exists
+          if not os.path.exists('demo/demo-video-link.txt'):
+              print('ERROR: demo/demo-video-link.txt file is missing!')
+              sys.exit(1)
+
+          print('✅ All submission validation checks passed successfully!')
+          "

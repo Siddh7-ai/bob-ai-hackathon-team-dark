@@ -1,0 +1,26 @@
+team:
+  name: "Team Dark"
+  track: "AI"
+  lead:
+    name: "Siddharthsinh Raulji"
+    email: "d25dce156@charusat.edu.in"
+  members:
+    - name: "Dharmit Monani"
+      email: "d25dce159@charusat.edu.in"
+    - name: "Japesh Patel"
+      email: "d25dce157@charusat.edu.in"
+    - name: "Het Pansara"
+      email: "d25dce161@charusat.edu.in"
+
+submission:
+  title: "APEX HUMS — Mission Fleet Readiness & Predictive Maintenance System"
+  problem_statement: >
+    Military airbases and defense forces suffer from high maintenance costs and catastrophic asset failure risks due to traditional scheduled servicing. Commanders lack real-time visibility into telemetry degradation, making it impossible to predict Remaining Useful Life (RUL) or quantify 14-day and 30-day mission abort probabilities.
+  solution_summary: >
+    APEX HUMS is a physics-informed, explainable fleet readiness decision-support platform modeled after NASA CMAPSS run-to-failure dynamics. It ingests multi-sensor telemetry, classifies assets into Ready/At-Risk/Not-Ready states with 98.6% accuracy, predicts component RUL (MAE 4.89 cycles), and outputs plain-language executive diagnostic briefings with a defensible multi-factor maintenance queue.
+  key_features:
+    - "Multi-Class Fleet Readiness Classifier based on military operating envelopes"
+    - "Plain-language executive diagnostic briefings translating sensor anomalies into action directives"
+    - "Gradient Boosting RUL regressor with 14-day and 30-day mission abort probability estimation"
+    - "Defensible multi-factor priority maintenance queue with parts reservation and labor estimates"
+    - "Interactive combat sortie simulator for pre-mission fleet risk evaluation"
